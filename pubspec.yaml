@@ -4,5 +4,5 @@ description: Code Editor + Preview
 author: Chris Strom <chris@eeecomputes.com>
 homepage: https://github.com/eee-c/ice-code-editor
 dependencies:
-  unittest: any
+  unittest: 0.4.0
   js: any
