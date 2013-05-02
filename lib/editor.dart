@@ -1,3 +1,5 @@
+library ice;
+
 import 'dart:html';
 import 'package:js/js.dart' as js;
 
@@ -7,5 +9,6 @@ class Editor {
 
   Editor(el, {this.edit_only:false, this.autoupdate:true, this.title}) {
     var context = js.context;
+    context.ace.edit(el);
   }
 }
