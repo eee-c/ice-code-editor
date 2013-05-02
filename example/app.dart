@@ -5,7 +5,7 @@ main() {
   var port = Platform.environment['PORT'] == null ?
     8000 : int.parse(Platform.environment['PORT']);
 
-  HttpServer.bind('127.0.0.1', port).then((app) {
+  HttpServer.bind('0.0.0.0', port).then((app) {
 
     app.listen((HttpRequest req) {
       if (Public.matcher(req)) {
