@@ -26,4 +26,19 @@ main() {
       expect(document.query('.ace_content'), isNotNull);
     });
   });
+
+  group("content", () {
+    var el;
+    setUp(() {
+      el = new Element.html('<div id=ice>');
+      document.body.nodes.add(el);
+    });
+    tearDown(()=> document.body.nodes.remove(el));
+
+    test("can set the content", () {
+      var it = new Editor('ice');
+      it.content = 'asdf';
+      expect(it.content, equals('asdf'));
+    });
+  });
 }

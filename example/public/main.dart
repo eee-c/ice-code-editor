@@ -1,2 +1,10 @@
 import 'package:ice_code_editor/editor.dart' as ICE;
-main() => new ICE.Editor('ace');
+
+main() {
+  var ice = new ICE.Editor('ace');
+  ice.content = '''
+main() {
+  print("Dart rocks");
+}''';
+
+}
