@@ -8,24 +8,25 @@ class Editor {
   bool edit_only, autoupdate;
   String title;
   var _ace;
+  Completer _waitForAce;
 
   Editor(id, {this.edit_only:false, this.autoupdate:true, this.title}) {
     var script = new ScriptElement();
     script.src = "packages/ice_code_editor/ace/ace.js";
     document.head.nodes.add(script);
 
+    this._waitForAce = new Completer();
+
     script.onLoad.listen((event) {
       this._ace = js.context.ace.edit(id);
       js.retain(this._ace);
+      this._waitForAce.complete();
     });
   }
 
   set content(String data) {
-    if (this._ace == null) {
-      // TODO: completer?
-      // this.waitForAce.then(updateAceValue);
-      var wait = new Duration(milliseconds: 50);
-      new Timer(wait, (){ this.content = data;});
+    if (!_waitForAce.isCompleted) {
+      editorReady.then((_) => this.content = data);
       return;
     }
 
@@ -34,4 +35,5 @@ class Editor {
   }
 
   String get content => _ace.getValue();
+  Future get editorReady => _waitForAce.future;
 }

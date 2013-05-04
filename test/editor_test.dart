@@ -1,6 +1,7 @@
 import 'package:unittest/unittest.dart';
 import 'package:ice_code_editor/editor.dart';
 import 'dart:html';
+import 'dart:async';
 
 main() {
   group("defaults", () {
@@ -19,11 +20,16 @@ main() {
     test("defaults to disable edit-only mode", () {
       var it = new Editor('ice');
       expect(it.edit_only, equals(false));
+      expect(it.editorReady, completes);
     });
 
     test("starts an ACE instance", (){
       var it = new Editor('ice');
-      expect(document.query('.ace_content'), isNotNull);
+      it.editorReady.then(
+        expectAsync1((_) {
+          expect(document.query('.ace_content'), isNotNull);
+        })
+      );
     });
   });
 
@@ -37,8 +43,15 @@ main() {
 
     test("can set the content", () {
       var it = new Editor('ice');
+
       it.content = 'asdf';
-      expect(it.content, equals('asdf'));
+
+      it.editorReady.then(
+        expectAsync1((_) {
+          expect(it.content, equals('asdf'));
+        })
+      );
+
     });
   });
 }
