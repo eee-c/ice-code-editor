@@ -49,21 +49,6 @@ class Editor {
     new Timer(wait, (){
       iframe.contentWindow.postMessage(_ace.getValue(), window.location.href);
     });
-
-    // var content = iframe.contentWindow.document;
-    // var content = iframe.document;
-
-    // content.open();
-    // content.write(
-    //   "<body></body>" +
-    //   _ace.getValue()
-    // );
-    // content.close();
-
-    // content.body.style.margin = '0';
-    // iframe.srcdoc = _ace.getValue();
-    // iframe.seamless = true;
-    //    this.onUpdate();
   }
 
   removePreview() {
@@ -74,10 +59,11 @@ class Editor {
 
   createPreviewIframe() {
     var iframe = new IFrameElement();
-    iframe.width = "${this._preview_el.clientWidth}";
-    iframe.height = "${this._preview_el.clientHeight}";
-    iframe.style.border = '0';
-    iframe.src = 'packages/ice_code_editor/html/preview_frame.html';
+    iframe
+      ..width = "${this._preview_el.clientWidth}"
+      ..height = "${this._preview_el.clientHeight}"
+      ..style.border = '0'
+      ..src = 'packages/ice_code_editor/html/preview_frame.html';
 
     this._preview_el.children.add( iframe );
 
@@ -106,11 +92,9 @@ class Editor {
     if (__el != null) return __el;
 
     if (this._el.runtimeType == Element) {
-      print("Element");
       __el = _el;
     }
     else {
-      print("Looking up $_el");
       __el = document.query(_el);
     }
     return __el;
