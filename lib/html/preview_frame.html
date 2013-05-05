@@ -1,0 +1,14 @@
+<body></body>
+<script>
+window.addEventListener("message", receiveMessage, false);
+
+function receiveMessage(event) {
+
+  // IE will hang on document.open() for some reason...
+  // document.open();
+  document.write(event.data);
+  document.close();
+
+  document.body.style.margin = '0';
+}
+</script>

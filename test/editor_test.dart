@@ -1,7 +1,6 @@
 import 'package:unittest/unittest.dart';
 import 'package:ice_code_editor/editor.dart';
 import 'dart:html';
-import 'dart:async';
 
 main() {
   group("defaults", () {
@@ -13,18 +12,18 @@ main() {
     tearDown(()=> document.body.nodes.remove(el));
 
     test("defaults to auto-update the preview", () {
-      var it = new Editor('ice');
+      var it = new Editor('#ice');
       expect(it.autoupdate, equals(true));
     });
 
     test("defaults to disable edit-only mode", () {
-      var it = new Editor('ice');
+      var it = new Editor('#ice');
       expect(it.edit_only, equals(false));
       expect(it.editorReady, completes);
     });
 
     test("starts an ACE instance", (){
-      var it = new Editor('ice');
+      var it = new Editor('#ice');
       it.editorReady.then(
         expectAsync1((_) {
           expect(document.query('.ace_content'), isNotNull);
@@ -42,7 +41,7 @@ main() {
     tearDown(()=> document.body.nodes.remove(el));
 
     test("can set the content", () {
-      var it = new Editor('ice');
+      var it = new Editor('#ice');
 
       it.content = 'asdf';
 
