@@ -12,7 +12,7 @@ class Editor {
   Element __el, __editor_el, __preview_el;
 
   var _ace;
-  Completer _waitForAce;
+  Completer _waitForAce, _waitForPreview;
 
   Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
     this._startAce();
@@ -104,6 +104,7 @@ class Editor {
     if (__editor_el != null) return __editor_el;
 
     __editor_el = new DivElement();
+    __editor_el.classes.add('ice-code-editor');
     this.el.children.add(__editor_el);
     return __editor_el;
   }
@@ -122,18 +123,35 @@ class Editor {
 
   _startAce() {
     var script = new ScriptElement();
-    script.src = "packages/ice_code_editor/ace/ace.js";
+    script.src = "packages/ice_code_editor/js/ace/ace.js";
     document.head.nodes.add(script);
 
     this._waitForAce = new Completer();
     script.onLoad.listen((event) {
       _ace = js.context.ace.edit(_editor_el);
       js.retain(_ace);
+
+      _ace
+        ..setFontSize('18px')
+        ..setPrintMarginColumn(false)
+        ..setDisplayIndentGuides(false);
+
+      _ace.getSession()
+        ..setUseWrapMode(true)
+        ..setUseSoftTabs(true)
+        ..setTabSize(2);
+
       _waitForAce.complete();
     });
   }
 
   _applyStyles() {
+    var style = new LinkElement()
+      ..type = "text/css"
+      ..rel = "stylesheet"
+      ..href = "packages/ice_code_editor/css/ice.css";
+    document.head.nodes.add(style);
+
     this.el.style
       ..position = 'relative';
 
@@ -143,7 +161,9 @@ class Editor {
       ..top = '0'
       ..bottom = '0'
       ..left = '0'
-      ..right = '0';
+      ..right = '0'
+      ..zIndex = '20'
+      ..backgroundColor = 'rgba(255,255,255,0.0)';
 
     this._preview_el.style
       ..margin = '0'
@@ -151,6 +171,7 @@ class Editor {
       ..top = '0'
       ..bottom = '0'
       ..left = '0'
-      ..right = '0';
+      ..right = '0'
+      ..zIndex = '10';
   }
 }

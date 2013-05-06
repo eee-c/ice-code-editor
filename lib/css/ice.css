@@ -1,0 +1,22 @@
+@font-face {
+	font-family: 'inconsolata';
+	src: url('../fonts/inconsolata.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.ice-code-editor .ace_content {
+	font-family: inconsolata;
+  /* Don't set font-size here. Use ACE setFontSize() method to get proper */
+	/* line spacing  */
+}
+
+
+.ice-code-editor.ace-chrome .ace_scroller,
+.ice-code-editor.ace-tm .ace_scroller {
+  background-color: rgba(255,255,255,0.0);
+}
+
+.ace_content {
+	background: rgba(255,255,255,0.75);
+}
