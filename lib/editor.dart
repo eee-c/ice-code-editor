@@ -29,6 +29,7 @@ class Editor {
     this._ace.setValue(data, -1);
     this._ace.focus();
     this.updatePreview();
+    _ace.getSession().on('change',new js.Callback.many((e,a)=>this.updatePreview()));
   }
 
   // worry about waitForAce?
@@ -53,7 +54,7 @@ class Editor {
 
   removePreview() {
     while (this._preview_el.children.length > 0) {
-      this._preview_el.removeChild(this._preview_el.firstChild);
+      	  this._preview_el.children.first.remove();
     }
   }
 
