@@ -5,15 +5,24 @@
 	font-style: normal;
 }
 
-.ice-code-editor .ace_content {
+.ice-code-editor-editor, .ice-code-editor-preview,
+.ice-code-editor-editor.ace_editor {
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.ice-code-editor-editor .ace_content {
 	font-family: inconsolata;
   /* Don't set font-size here. Use ACE setFontSize() method to get proper */
 	/* line spacing  */
 }
 
-
-.ice-code-editor.ace-chrome .ace_scroller,
-.ice-code-editor.ace-tm .ace_scroller {
+.ice-code-editor-editor,
+.ice-code-editor-editor.ace-chrome .ace_scroller,
+.ice-code-editor-editor.ace-tm .ace_scroller {
   background-color: rgba(255,255,255,0.0);
 }
 
