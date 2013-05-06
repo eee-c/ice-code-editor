@@ -129,15 +129,19 @@ class Editor {
 
     this._waitForAce = new Completer();
     script.onLoad.listen((event) {
+      js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
       _ace = js.context.ace.edit(_editor_el);
       js.retain(_ace);
 
       _ace
+        ..setTheme("ace/theme/chrome")
         ..setFontSize('18px')
         ..setPrintMarginColumn(false)
         ..setDisplayIndentGuides(false);
 
       _ace.getSession()
+        ..setMode("ace/mode/javascript")
         ..setUseWrapMode(true)
         ..setUseSoftTabs(true)
         ..setTabSize(2);
