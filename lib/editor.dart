@@ -29,7 +29,15 @@ class Editor {
     this._ace.setValue(data, -1);
     this._ace.focus();
     this.updatePreview();
-    _ace.getSession().on('change',new js.Callback.many((e,a)=>this.updatePreview()));
+    _ace.getSession().on('change',new js.Callback.many((e,a)=>this.resetUpdateTimer()));
+  }
+
+  Timer _update_timer;
+  void resetUpdateTimer() {
+    if (_update_timer != null) _update_timer.cancel();
+
+    var wait = new Duration(seconds: 1.5);
+    _update_timer = new Timer(wait, ()=> this.updatePreview());
   }
 
   // worry about waitForAce?
@@ -127,6 +135,11 @@ class Editor {
     var script = new ScriptElement()
       ..src = "packages/ice_code_editor/js/ace/ace.js";
     document.head.nodes.add(script);
+
+    // TODO: ask why onKeyDown does not work for arrow keys
+    document.onKeyUp.listen((e) {
+      if (_update_timer != null) resetUpdateTimer();
+    });
 
     this._waitForAce = new Completer();
     script.onLoad.listen((event) {
