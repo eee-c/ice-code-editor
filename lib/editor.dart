@@ -3,6 +3,7 @@ library ice;
 import 'dart:html';
 import 'dart:async';
 import 'package:js/js.dart' as js;
+import 'package:js/js_wrapping.dart' as jsw;
 
 class Editor {
   bool edit_only, autoupdate;
@@ -26,10 +27,10 @@ class Editor {
       return;
     }
 
-    this._ace.setValue(data, -1);
+    this._ace.value = data;
     this._ace.focus();
     this.updatePreview();
-    _ace.getSession().on('change',new js.Callback.many((e,a)=>this.resetUpdateTimer()));
+    _ace.session.onChange.listen((e)=> this.resetUpdateTimer());
   }
 
   Timer _update_timer;
@@ -41,7 +42,7 @@ class Editor {
   }
 
   // worry about waitForAce?
-  String get content => _ace.getValue();
+  String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
 
 
@@ -56,7 +57,7 @@ class Editor {
 
     var wait = new Duration(milliseconds: 900);
     new Timer(wait, (){
-      iframe.contentWindow.postMessage(_ace.getValue(), window.location.href);
+      iframe.contentWindow.postMessage(_ace.value, window.location.href);
     });
   }
 
@@ -145,20 +146,20 @@ class Editor {
     script.onLoad.listen((event) {
       js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
-      _ace = js.context.ace.edit(_editor_el);
+      _ace = Ace.edit(_editor_el);
       js.retain(_ace);
 
       _ace
-        ..setTheme("ace/theme/chrome")
-        ..setFontSize('18px')
-        ..setPrintMarginColumn(false)
-        ..setDisplayIndentGuides(false);
+        ..theme = "ace/theme/chrome"
+        ..fontSize = '18px'
+        ..printMarginColumn = false
+        ..displayIndentGuides = false;
 
-      _ace.getSession()
-        ..setMode("ace/mode/javascript")
-        ..setUseWrapMode(true)
-        ..setUseSoftTabs(true)
-        ..setTabSize(2);
+      _ace.session
+        ..mode = "ace/mode/javascript"
+        ..useWrapMode = true
+        ..useSoftTabs = true
+        ..tabSize = 2;
 
       _waitForAce.complete();
     });
@@ -181,5 +182,47 @@ class Editor {
     this._preview_el.style
       ..position = 'absolute'
       ..zIndex = '10';
+  }
+}
+
+class Ace extends jsw.TypedProxy {
+  static Ace edit(dynamic el) => Ace.cast(js.context['ace'].edit(el));
+
+  static Ace cast(js.Proxy proxy) =>
+    proxy == null ? null : new Ace.fromProxy(proxy);
+
+  Ace.fromProxy(js.Proxy proxy) : super.fromProxy(proxy);
+
+  set fontSize(String size) => $unsafe.setFontSize(size);
+  set theme(String theme) => $unsafe.setTheme(theme);
+  set printMarginColumn(bool b) => $unsafe.setPrintMarginColumn(b);
+  set displayIndentGuides(bool b) => $unsafe.setDisplayIndentGuides(b);
+
+  set value(String content) => $unsafe.setValue(content, -1);
+  String get value => $unsafe.getValue();
+  void focus() => $unsafe.focus();
+
+  AceSession get session => AceSession.cast($unsafe.getSession());
+}
+
+class AceSession extends jsw.TypedProxy {
+  static AceSession cast(js.Proxy proxy) =>
+    proxy == null ? null : new AceSession.fromProxy(proxy);
+  AceSession.fromProxy(js.Proxy proxy) : super.fromProxy(proxy);
+
+  set mode(String m) => $unsafe.setMode(m);
+  set useWrapMode(bool b) => $unsafe.setUseWrapMode(b);
+  set useSoftTabs(bool b) => $unsafe.setUseSoftTabs(b);
+  set tabSize(int size) => $unsafe.setTabSize(size);
+
+  StreamController _onChange;
+  get onChange {
+    if (_onChange != null) return _onChange.stream;
+
+    _onChange = new StreamController();
+    $unsafe.on('change', new js.Callback.many((e,a){
+      _onChange.add(e);
+    }));
+    return _onChange.stream;
   }
 }
