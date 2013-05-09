@@ -37,7 +37,7 @@ class Editor {
   void resetUpdateTimer() {
     if (_update_timer != null) _update_timer.cancel();
 
-    var wait = new Duration(seconds: 1.5);
+    var wait = new Duration(seconds: 2);
     _update_timer = new Timer(wait, ()=> this.updatePreview());
   }
 
@@ -85,17 +85,17 @@ class Editor {
   /// the display is correct.
   // worry about waitForAce?
   showCode() {
-    editor_el.style.display = '';
+    _editor_el.style.display = '';
     _ace.renderer.onResize();
     _ace.focus();
   }
 
   /// Hide the code layer
   hideCode() {
-    editor_el.style.display = 'none';
+    _editor_el.style.display = 'none';
     if (this.edit_only) return;
 
-    preview_el.children[0].focus();
+    _preview_el.children[0].focus();
   }
 
   Element get el {
