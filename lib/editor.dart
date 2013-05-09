@@ -133,9 +133,18 @@ class Editor {
   }
 
   _startAce() {
-    var script = new ScriptElement()
-      ..src = "packages/ice_code_editor/js/ace/ace.js";
-    document.head.nodes.add(script);
+    var scripts = [
+      "packages/ice_code_editor/js/deflate/rawdeflate.js",
+      "packages/ice_code_editor/js/deflate/rawinflate.js",
+      "packages/ice_code_editor/js/ace/ace.js"
+    ];
+
+    var script;
+    scripts.forEach((src) {
+      script = new ScriptElement()
+        ..src = src;
+      document.head.nodes.add(script);
+    });
 
     // TODO: ask why onKeyDown does not work for arrow keys
     document.onKeyUp.listen((e) {
