@@ -133,26 +133,37 @@ class Editor {
   }
 
   _startAce() {
-    var scripts = [
+    var script_paths = [
+      "packages/ice_code_editor/js/ace/ace.js",
+      "packages/ice_code_editor/js/ace/keybinding-emacs.js",
       "packages/ice_code_editor/js/deflate/rawdeflate.js",
-      "packages/ice_code_editor/js/deflate/rawinflate.js",
-      "packages/ice_code_editor/js/ace/ace.js"
+      "packages/ice_code_editor/js/deflate/rawinflate.js"
     ];
 
-    var script;
-    scripts.forEach((src) {
-      script = new ScriptElement()
-        ..src = src;
-      document.head.nodes.add(script);
-    });
+    var scripts = script_paths.
+      map((path) {
+        var script = new ScriptElement()
+          ..async = false
+          ..src = path;
+        document.head.nodes.add(script);
+        return script;
+      }).
+      toList();
 
     // TODO: ask why onKeyDown does not work for arrow keys
     document.onKeyUp.listen((e) {
       if (_update_timer != null) resetUpdateTimer();
     });
 
+    document.onKeyPress.listen((event) {
+      if (event.keyCode == 9829) {
+        event.preventDefault();
+        _ace.toggleEmacs();
+      }
+    });
+
     this._waitForAce = new Completer();
-    script.onLoad.listen((event) {
+    scripts.first.onLoad.listen((event) {
       js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
       _ace = Ace.edit(_editor_el);
@@ -212,6 +223,31 @@ class Ace extends jsw.TypedProxy {
   void focus() => $unsafe.focus();
 
   AceSession get session => AceSession.cast($unsafe.getSession());
+
+  void toggleEmacs() {
+    if ($unsafe.getKeyboardHandler() == commandManager) {
+      $unsafe.setKeyboardHandler(emacsManager);
+    }
+    else {
+      $unsafe.setKeyboardHandler(commandManager);
+    }
+  }
+
+  var _commandManager;
+  get commandManager {
+    if (_commandManager != null) return _commandManager;
+    _commandManager = $unsafe.getKeyboardHandler();
+    js.retain(_commandManager);
+    return _commandManager;
+  }
+
+  var _emacsManager;
+  get emacsManager {
+    if (_emacsManager != null) return _emacsManager;
+    _emacsManager = js.context.ace.require("ace/keyboard/emacs").handler;
+    js.retain(_emacsManager);
+    return _emacsManager;
+  }
 }
 
 class AceSession extends jsw.TypedProxy {
