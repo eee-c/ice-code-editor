@@ -30,21 +30,28 @@ class Editor {
     this._ace.value = data;
     this._ace.focus();
     this.updatePreview();
-    _ace.session.onChange.listen((e)=> this.resetUpdateTimer());
+    _ace.session.onChange.listen((e)=> this.delayedUpdatePreview());
   }
 
   Timer _update_timer;
-  void resetUpdateTimer() {
+  void delayedUpdatePreview() {
     if (_update_timer != null) _update_timer.cancel();
 
     var wait = new Duration(seconds: 2);
-    _update_timer = new Timer(wait, ()=> this.updatePreview());
+    _update_timer = new Timer(wait, (){
+      this.updatePreview();
+      _update_timer = null;
+    });
+  }
+
+  void _extendDelayedUpdatePreview() {
+    if (_update_timer == null) return;
+    delayedUpdatePreview();
   }
 
   // worry about waitForAce?
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
-
 
   /// Update the preview layer with the current contents of the editor
   /// layer.
@@ -150,9 +157,12 @@ class Editor {
       }).
       toList();
 
-    // TODO: ask why onKeyDown does not work for arrow keys
+    // Using keyup b/c ACE swallows keydown events
     document.onKeyUp.listen((e) {
-      if (_update_timer != null) resetUpdateTimer();
+      // only handling arrow keys
+      if (e.keyCode < 37) return;
+      if (e.keyCode > 40) return;
+      _extendDelayedUpdatePreview();
     });
 
     document.onKeyPress.listen((event) {
