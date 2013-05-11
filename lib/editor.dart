@@ -1,4 +1,4 @@
-library ice;
+library ice_editor;
 
 import 'dart:html';
 import 'dart:async';

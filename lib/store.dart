@@ -1,4 +1,4 @@
-library ice;
+library ice_store;
 
 import 'dart:html';
 import 'dart:collection';
@@ -6,7 +6,17 @@ import 'dart:crypto';
 import 'dart:json' as JSON;
 import 'package:js/js.dart' as js;
 
+/**
+ * Persistent storage for ICE projects.
+ *
+ * Projects are unique by title, which is used to lookup projects in the
+ * store. The list of projects is guaranteed to remain ordered by last
+ * modification so that the most recently worked on projects are listed
+ * first. After every update, the list is sync'd with localStorage to prevent
+ * work from being lost.
+ */
 class Store implements HashMap<String, HashMap> {
+  /// The key used to identify the data in localStorage.
   const String codeEditor = 'codeeditor';
   List _projects;
 
