@@ -61,7 +61,7 @@ class Store implements HashMap<String, HashMap> {
       );
   }
 
-  // The list of all projects in the store.
+  /// The list of all projects in the store.
   List get projects {
     if (_projects != null) return _projects;
 
@@ -69,8 +69,8 @@ class Store implements HashMap<String, HashMap> {
     return _projects = (json == null) ? [] : JSON.parse(json);
   }
 
-  // Force the list of projects to refresh itself by reloading from
-  // localStorage.
+  /// Force the list of projects to refresh itself by reloading from
+  /// localStorage.
   void refresh() => _projects = null;
 
   void _sync() {
