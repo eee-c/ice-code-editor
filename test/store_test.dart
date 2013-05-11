@@ -53,7 +53,7 @@ main() {
     });
   });
 
-  group("store/retrieve", (){
+  group("localStorage", (){
     var it;
     setUp(()=> it = new Store());
 
