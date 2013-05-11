@@ -85,6 +85,7 @@ class Store implements HashMap&lt;String, HashMap&gt; {
      );
  }
 
+ // The list of all projects in the store.
  List get projects {
    if (_projects != null) return _projects;
 
@@ -92,8 +93,9 @@ class Store implements HashMap&lt;String, HashMap&gt; {
    return _projects = (json == null) ? [] : JSON.parse(json);
  }
 
+ // Force the list of projects to refresh itself by reloading from
+ // localStorage.
  void refresh() =&gt; _projects = null;
-
 
  void _sync() {
    window.localStorage[codeEditor] = JSON.stringify(projects);
@@ -423,7 +425,7 @@ String toString() =&gt; Maps.mapToString(this);
         <div class="clear"></div>
         </div>
         <div class="footer">
-          <div>This page was generated at 2013-05-11 12:10:19.654</div>
+          <div>This page was generated at 2013-05-11 12:28:49.007</div>
         </div>
         <script async src="../client-live-nav.js"></script>
         </body></html>
