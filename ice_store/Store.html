@@ -1,0 +1,430 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Store class / ice_store Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="ice_store" data-type="Store">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../ice_store.html">ice_store</a> &rsaquo; <a href="../ice_store/Store.html">Store</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Store</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Persistent storage for ICE projects.</p>
+<p>Projects are unique by title, which is used to lookup projects in the
+store. The list of projects is guaranteed to remain ordered by last
+modification so that the most recently worked on projects are listed
+first. After every update, the list is sync'd with localStorage to prevent
+work from being lost.</p>
+<pre class="source">
+class Store implements HashMap&lt;String, HashMap&gt; {
+ /// The key used to identify the data in localStorage.
+ const String codeEditor = 'codeeditor';
+ List _projects;
+
+ Store() { }
+
+ static String encode(String string) {
+   var gzip = js.context.RawDeflate.deflate(string);
+   return CryptoUtils.bytesToBase64(gzip.codeUnits);
+ }
+ static String decode(String string) {
+   var bytes = CryptoUtils.base64StringToBytes(string);
+   var gzip = new String.fromCharCodes(bytes);
+   return js.context.RawDeflate.inflate(gzip);
+ }
+
+ int get length =&gt; projects.length;
+
+ void operator []=(String key, Object data) {
+   data['title'] = key;
+
+   _updateAtIndex(_indexOfKey(key), data);
+
+   _sync();
+ }
+
+ int _indexOfKey(String key) =&gt; projects.indexOf(this[key]);
+
+ void _updateAtIndex(i, data) {
+   if (i == -1) {
+     projects.insert(0, data);
+   }
+   else {
+     projects[i] = data;
+   }
+ }
+
+ HashMap operator [](String key) {
+   return projects.
+     firstWhere(
+       (p) =&gt; p['title'] == key,
+       orElse: () =&gt; null
+     );
+ }
+
+ List get projects {
+   if (_projects != null) return _projects;
+
+   var json = window.localStorage[codeEditor];
+   return _projects = (json == null) ? [] : JSON.parse(json);
+ }
+
+ void refresh() =&gt; _projects = null;
+
+
+ void _sync() {
+   window.localStorage[codeEditor] = JSON.stringify(projects);
+ }
+}
+</pre>
+</div>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_collection/HashMap.html">HashMap&lt;String, HashMap&gt;</a></span></p>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="encode">
+<button class="show-code">Code</button>
+String <strong>encode</strong>(String string) <a class="anchor-link" href="#encode"
+              title="Permalink to Store.encode">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String encode(String string) {
+ var gzip = js.context.RawDeflate.deflate(string);
+ return CryptoUtils.bytesToBase64(gzip.codeUnits);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="decode">
+<button class="show-code">Code</button>
+String <strong>decode</strong>(String string) <a class="anchor-link" href="#decode"
+              title="Permalink to Store.decode">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String decode(String string) {
+ var bytes = CryptoUtils.base64StringToBytes(string);
+ var gzip = new String.fromCharCodes(bytes);
+ return js.context.RawDeflate.inflate(gzip);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Store">
+<button class="show-code">Code</button>
+new <strong>Store</strong>() <a class="anchor-link" href="#Store"
+              title="Permalink to Store.Store">#</a></h4>
+<div class="doc">
+<pre class="source">
+Store() { }
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="codeEditor">
+<button class="show-code">Code</button>
+const String         <strong>codeEditor</strong> <a class="anchor-link"
+            href="#codeEditor"
+            title="Permalink to Store.codeEditor">#</a>
+        </h4>
+        <div class="doc">
+<p>The key used to identify the data in localStorage.</p>
+<pre class="source">
+const String codeEditor = 'codeeditor'
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="isEmpty">
+<button class="show-code">Code</button>
+final bool         <strong>isEmpty</strong> <a class="anchor-link"
+            href="#isEmpty"
+            title="Permalink to Store.isEmpty">#</a>
+        </h4>
+        <div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Returns true if there is no {key, value} pair in the map.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external bool get isEmpty;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="keys">
+<button class="show-code">Code</button>
+final Iterable&lt;<a href="../ice_store/Store.html">K</a>&gt;         <strong>keys</strong> <a class="anchor-link"
+            href="#keys"
+            title="Permalink to Store.keys">#</a>
+        </h4>
+        <div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>The keys of <code>this</code>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external Iterable&lt;K&gt; get keys;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="length">
+<button class="show-code">Code</button>
+final int         <strong>length</strong> <a class="anchor-link"
+            href="#length"
+            title="Permalink to Store.length">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>The number of {key, value} pairs in the map.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+int get length =&gt; projects.length;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="projects">
+<button class="show-code">Code</button>
+final List         <strong>projects</strong> <a class="anchor-link"
+            href="#projects"
+            title="Permalink to Store.projects">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+List get projects {
+ if (_projects != null) return _projects;
+
+ var json = window.localStorage[codeEditor];
+ return _projects = (json == null) ? [] : JSON.parse(json);
+}
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="values">
+<button class="show-code">Code</button>
+final Iterable&lt;<a href="../ice_store/Store.html">V</a>&gt;         <strong>values</strong> <a class="anchor-link"
+            href="#values"
+            title="Permalink to Store.values">#</a>
+        </h4>
+        <div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>The values of <code>this</code>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external Iterable&lt;V&gt; get values;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Operators</h3>
+<div class="method"><h4 id="[]">
+<button class="show-code">Code</button>
+HashMap <strong>operator []</strong>(String key) <a class="anchor-link" href="#[]"
+              title="Permalink to Store.operator []">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns the value for the given 
+<span class="param">key</span> or null if 
+<span class="param">key</span> is not
+in the map. Because null values are supported, one should either
+use containsKey to distinguish between an absent key and a null
+value, or use the <code>putIfAbsent</code> method.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+HashMap operator [](String key) {
+ return projects.
+   firstWhere(
+     (p) =&gt; p['title'] == key,
+     orElse: () =&gt; null
+   );
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="[]=">
+<button class="show-code">Code</button>
+void <strong>operator []=</strong>(String key, Object data) <a class="anchor-link" href="#[]="
+              title="Permalink to Store.operator []=">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Associates the 
+<span class="param">key</span> with the given <code>value</code>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+void operator []=(String key, Object data) {
+ data['title'] = key;
+
+ _updateAtIndex(_indexOfKey(key), data);
+
+ _sync();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method inherited"><h4 id="addAll">
+<button class="show-code">Code</button>
+void <strong>addAll</strong>(Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; other) <a class="anchor-link" href="#addAll"
+              title="Permalink to Store.addAll">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<pre class="source">
+external void addAll(Map&lt;K, V&gt; other);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="clear">
+<button class="show-code">Code</button>
+void <strong>clear</strong>() <a class="anchor-link" href="#clear"
+              title="Permalink to Store.clear">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Removes all pairs from the map.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external void clear();
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="containsKey">
+<button class="show-code">Code</button>
+bool <strong>containsKey</strong>(<a href="../ice_store/Store.html">K</a> key) <a class="anchor-link" href="#containsKey"
+              title="Permalink to Store.containsKey">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Returns whether this map contains the given 
+<span class="param">key</span>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external bool containsKey(K key);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="containsValue">
+<button class="show-code">Code</button>
+bool <strong>containsValue</strong>(<a href="../ice_store/Store.html">V</a> value) <a class="anchor-link" href="#containsValue"
+              title="Permalink to Store.containsValue">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Returns whether this map contains the given 
+<span class="param">value</span>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external bool containsValue(V value);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="forEach">
+<button class="show-code">Code</button>
+void <strong>forEach</strong>(void action(<a href="../ice_store/Store.html">K</a> key, <a href="../ice_store/Store.html">V</a> value)) <a class="anchor-link" href="#forEach"
+              title="Permalink to Store.forEach">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Applies <code>f</code> to each {key, value} pair of the map.</p>
+<p>It is an error to add or remove keys from the map during iteration.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external void forEach(void action(K key, V value));
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="putIfAbsent">
+<button class="show-code">Code</button>
+<a href="../ice_store/Store.html">V</a> <strong>putIfAbsent</strong>(<a href="../ice_store/Store.html">K</a> key, <a href="../ice_store/Store.html">V</a> ifAbsent()) <a class="anchor-link" href="#putIfAbsent"
+              title="Permalink to Store.putIfAbsent">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>If 
+<span class="param">key</span> is not associated to a value, calls 
+<span class="param">ifAbsent</span> and
+updates the map by mapping 
+<span class="param">key</span> to the value returned by
+
+<span class="param">ifAbsent</span>. Returns the value in the map.</p>
+<p>It is an error to add or remove keys from map during the call to
+
+<span class="param">ifAbsent</span>.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external V putIfAbsent(K key, V ifAbsent());
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="refresh">
+<button class="show-code">Code</button>
+void <strong>refresh</strong>() <a class="anchor-link" href="#refresh"
+              title="Permalink to Store.refresh">#</a></h4>
+<div class="doc">
+<pre class="source">
+void refresh() =&gt; _projects = null;
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="remove">
+<button class="show-code">Code</button>
+<a href="../ice_store/Store.html">V</a> <strong>remove</strong>(<a href="../ice_store/Store.html">K</a> key) <a class="anchor-link" href="#remove"
+              title="Permalink to Store.remove">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Removes the association for the given 
+<span class="param">key</span>. Returns the value for
+
+<span class="param">key</span> in the map or null if 
+<span class="param">key</span> is not in the map. Note that values
+can be null and a returned null value does not always imply that the
+key is absent.</p>
+<div class="docs-inherited-from">docs inherited from Map&lt;<a href="../ice_store/Store.html">K</a>, <a href="../ice_store/Store.html">V</a>&gt; </div></div>
+<pre class="source">
+external V remove(K key);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Store.toString">#</a></h4>
+<div class="inherited-from">inherited from HashMap </div><div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString() =&gt; Maps.mapToString(this);
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-05-11 12:10:19.654</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
