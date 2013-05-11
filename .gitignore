@@ -4,3 +4,4 @@ out
 *.js.deps
 *.js.map
 *.dart.js
+docs
