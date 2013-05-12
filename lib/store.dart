@@ -34,7 +34,15 @@ class Store implements HashMap<String, HashMap> {
 
   int get length => projects.length;
 
-  void operator []=(String key, Object data) {
+  HashMap operator [](String key) {
+    return projects.
+      firstWhere(
+        (p) => p['title'] == key,
+        orElse: () => null
+      );
+  }
+
+  void operator []=(String key, HashMap data) {
     data['title'] = key;
 
     _updateAtIndex(_indexOfKey(key), data);
@@ -53,12 +61,13 @@ class Store implements HashMap<String, HashMap> {
     }
   }
 
-  HashMap operator [](String key) {
-    return projects.
-      firstWhere(
-        (p) => p['title'] == key,
-        orElse: () => null
-      );
+  bool get isEmpty => projects.isEmpty;
+  Iterable<String> get keys => projects.map((p)=> p['title']);
+  Iterable<HashMap> get values => projects.map((p)=> p);
+  bool containsKey(key) => keys.contains(key);
+  bool containsValue(value) => values.contains(value);
+  void forEach(f) {
+    projects.forEach((p)=> f(p['title'], p));
   }
 
   /// The list of all projects in the store.
