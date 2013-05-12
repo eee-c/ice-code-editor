@@ -69,6 +69,29 @@ class Store implements HashMap<String, HashMap> {
   void forEach(f) {
     projects.forEach((p)=> f(p['title'], p));
   }
+  HashMap remove(key) {
+    var i = _indexOfKey(key);
+    if (i == -1) return null;
+
+    var removed = projects.removeAt(i);
+    _sync();
+    return removed;
+  }
+  void clear() {
+    _projects = [];
+    _sync();
+  }
+  HashMap putIfAbsent(key, f) {
+    var i = _indexOfKey(key);
+    if (i == -1) {
+      this[key] = f();
+    }
+    return this[key];
+  }
+  void addAll(recs) {
+    recs.forEach((key, rec)=> this[key] = rec);
+  }
+
 
   /// The list of all projects in the store.
   List get projects {
