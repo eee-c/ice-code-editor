@@ -1,4 +1,4 @@
-import 'package:ice_code_editor/editor.dart' as ICE;
+import 'package:ice_code_editor/ice.dart' as ICE;
 
 main() {
   var ice = new ICE.Editor('#ice');

@@ -1,9 +1,4 @@
-library ice_editor;
-
-import 'dart:html';
-import 'dart:async';
-import 'package:js/js.dart' as js;
-import 'package:js/js_wrapping.dart' as jsw;
+part of ice;
 
 class Editor {
   bool edit_only, autoupdate;

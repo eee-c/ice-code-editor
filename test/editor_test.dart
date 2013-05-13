@@ -1,5 +1,5 @@
 import 'package:unittest/unittest.dart';
-import 'package:ice_code_editor/editor.dart';
+import 'package:ice_code_editor/ice.dart';
 import 'dart:html';
 
 main() {

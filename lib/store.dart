@@ -1,10 +1,4 @@
-library ice_store;
-
-import 'dart:html';
-import 'dart:collection';
-import 'dart:crypto';
-import 'dart:json' as JSON;
-import 'package:js/js.dart' as js;
+part of ice;
 
 /**
  * Persistent storage for ICE projects.

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+dart_analyzer $* 2>&1 | \
+  sed -n '/js-0.0.22\/lib\/src\/wrapping/,/~~/!p' | \
+  sed -n '/is not a member of Proxy/,/~~/!p' | \
+  sed -n '/"Proxy" has no method named/,/~~/!p' | \
+  sed -n '/dart:mirrors is not fully implemented yet/,/~~/!p'
