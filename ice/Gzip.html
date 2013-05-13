@@ -1,0 +1,88 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Gzip class / ice Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="ice" data-type="Gzip">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../ice.html">ice</a> &rsaquo; <a href="../ice/Gzip.html">Gzip</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Gzip</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Gzip {
+ static String encode(String string) {
+   var gzip = js.context.RawDeflate.deflate(string);
+   return CryptoUtils.bytesToBase64(gzip.codeUnits);
+ }
+
+ static String decode(String string) {
+   var bytes = CryptoUtils.base64StringToBytes(string);
+   var gzip = new String.fromCharCodes(bytes);
+   return js.context.RawDeflate.inflate(gzip);
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="encode">
+<button class="show-code">Code</button>
+String <strong>encode</strong>(String string) <a class="anchor-link" href="#encode"
+              title="Permalink to Gzip.encode">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String encode(String string) {
+ var gzip = js.context.RawDeflate.deflate(string);
+ return CryptoUtils.bytesToBase64(gzip.codeUnits);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="decode">
+<button class="show-code">Code</button>
+String <strong>decode</strong>(String string) <a class="anchor-link" href="#decode"
+              title="Permalink to Gzip.decode">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String decode(String string) {
+ var bytes = CryptoUtils.base64StringToBytes(string);
+ var gzip = new String.fromCharCodes(bytes);
+ return js.context.RawDeflate.inflate(gzip);
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-05-12 23:55:09.735</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

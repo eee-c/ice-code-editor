@@ -1,0 +1,479 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Editor class / ice Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="ice" data-type="Editor">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../ice.html">ice</a> &rsaquo; <a href="../ice/Editor.html">Editor</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Editor</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Editor {
+ bool edit_only, autoupdate;
+ String title;
+
+ var _el;
+ Element __el, __editor_el, __preview_el;
+
+ var _ace;
+ Completer _waitForAce, _waitForPreview;
+
+ Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
+   this._startAce();
+   this._applyStyles();
+ }
+
+ // worry about waitForAce?
+ set content(String data) {
+   if (!_waitForAce.isCompleted) {
+     editorReady.then((_) =&gt; this.content = data);
+     return;
+   }
+
+   this._ace.value = data;
+   this._ace.focus();
+   this.updatePreview();
+   _ace.session.onChange.listen((e)=&gt; this.delayedUpdatePreview());
+ }
+
+ Timer _update_timer;
+ void delayedUpdatePreview() {
+   if (_update_timer != null) _update_timer.cancel();
+
+   var wait = new Duration(seconds: 2);
+   _update_timer = new Timer(wait, (){
+     this.updatePreview();
+     _update_timer = null;
+   });
+ }
+
+ void _extendDelayedUpdatePreview() {
+   if (_update_timer == null) return;
+   delayedUpdatePreview();
+ }
+
+ // worry about waitForAce?
+ String get content =&gt; _ace.value;
+ Future get editorReady =&gt; _waitForAce.future;
+
+ /// Update the preview layer with the current contents of the editor
+ /// layer.
+ // worry about waitForAce?
+ updatePreview() {
+   if (this.edit_only) return;
+
+   this.removePreview();
+   var iframe = this.createPreviewIframe();
+
+   var wait = new Duration(milliseconds: 900);
+   new Timer(wait, (){
+     iframe.contentWindow.postMessage(_ace.value, window.location.href);
+   });
+ }
+
+ removePreview() {
+   while (this._preview_el.children.length &gt; 0) {
+     	  this._preview_el.children.first.remove();
+   }
+ }
+
+ createPreviewIframe() {
+   var iframe = new IFrameElement();
+   iframe
+     ..width = "${this._preview_el.clientWidth}"
+     ..height = "${this._preview_el.clientHeight}"
+     ..style.border = '0'
+     ..src = 'packages/ice_code_editor/html/preview_frame.html';
+
+   this._preview_el.children.add( iframe );
+
+   return iframe;
+ }
+
+
+ /// Show the code layer, calling the ACE resize methods to ensure that
+ /// the display is correct.
+ // worry about waitForAce?
+ showCode() {
+   _editor_el.style.display = '';
+   _ace.renderer.onResize();
+   _ace.focus();
+ }
+
+ /// Hide the code layer
+ hideCode() {
+   _editor_el.style.display = 'none';
+   if (this.edit_only) return;
+
+   _preview_el.children[0].focus();
+ }
+
+ Element get el {
+   if (__el != null) return __el;
+
+   if (this._el.runtimeType == Element) {
+     __el = _el;
+   }
+   else {
+     __el = document.query(_el);
+   }
+   return __el;
+ }
+
+ Element get _editor_el {
+   if (__editor_el != null) return __editor_el;
+
+   __editor_el = new DivElement()
+     ..classes.add('ice-code-editor-editor');
+   this.el.children.add(__editor_el);
+   return __editor_el;
+ }
+
+ Element get _preview_el {
+   if (__preview_el != null) return __preview_el;
+
+   __preview_el = new DivElement()
+     ..classes.add('ice-code-editor-preview');
+
+   if (!this.edit_only) {
+     this.el.children.add(__preview_el);
+   }
+
+   return __preview_el;
+ }
+
+ _startAce() {
+   var script_paths = [
+     "packages/ice_code_editor/js/ace/ace.js",
+     "packages/ice_code_editor/js/ace/keybinding-emacs.js",
+     "packages/ice_code_editor/js/deflate/rawdeflate.js",
+     "packages/ice_code_editor/js/deflate/rawinflate.js"
+   ];
+
+   var scripts = script_paths.
+     map((path) {
+       var script = new ScriptElement()
+         ..async = false
+         ..src = path;
+       document.head.nodes.add(script);
+       return script;
+     }).
+     toList();
+
+   // Using keyup b/c ACE swallows keydown events
+   document.onKeyUp.listen((e) {
+     // only handling arrow keys
+     if (e.keyCode &lt; 37) return;
+     if (e.keyCode &gt; 40) return;
+     _extendDelayedUpdatePreview();
+   });
+
+   document.onKeyPress.listen((event) {
+     if (event.keyCode == 9829) {
+       event.preventDefault();
+       _ace.toggleEmacs();
+     }
+   });
+
+   this._waitForAce = new Completer();
+   scripts.first.onLoad.listen((event) {
+     js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
+     _ace = Ace.edit(_editor_el);
+     js.retain(_ace);
+
+     _ace
+       ..theme = "ace/theme/chrome"
+       ..fontSize = '18px'
+       ..printMarginColumn = false
+       ..displayIndentGuides = false;
+
+     _ace.session
+       ..mode = "ace/mode/javascript"
+       ..useWrapMode = true
+       ..useSoftTabs = true
+       ..tabSize = 2;
+
+     _waitForAce.complete();
+   });
+ }
+
+ _applyStyles() {
+   var style = new LinkElement()
+     ..type = "text/css"
+     ..rel = "stylesheet"
+     ..href = "packages/ice_code_editor/css/ice.css";
+   document.head.nodes.add(style);
+
+   this.el.style
+     ..position = 'relative';
+
+   this._editor_el.style
+     ..position = 'absolute'
+     ..zIndex = '20';
+
+   this._preview_el.style
+     ..position = 'absolute'
+     ..zIndex = '10';
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Editor">
+<button class="show-code">Code</button>
+new <strong>Editor</strong>(_el, {bool edit_only: false, bool autoupdate: true, String title}) <a class="anchor-link" href="#Editor"
+              title="Permalink to Editor.Editor">#</a></h4>
+<div class="doc">
+<pre class="source">
+Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
+ this._startAce();
+ this._applyStyles();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="autoupdate">
+<button class="show-code">Code</button>
+bool         <strong>autoupdate</strong> <a class="anchor-link"
+            href="#autoupdate"
+            title="Permalink to Editor.autoupdate">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool edit_only, autoupdate
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="content">
+<button class="show-code">Code</button>
+String         <strong>content</strong> <a class="anchor-link"
+            href="#content"
+            title="Permalink to Editor.content">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String get content =&gt; _ace.value;
+</pre>
+<pre class="source">
+set content(String data) {
+ if (!_waitForAce.isCompleted) {
+   editorReady.then((_) =&gt; this.content = data);
+   return;
+ }
+
+ this._ace.value = data;
+ this._ace.focus();
+ this.updatePreview();
+ _ace.session.onChange.listen((e)=&gt; this.delayedUpdatePreview());
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="edit_only">
+<button class="show-code">Code</button>
+bool         <strong>edit_only</strong> <a class="anchor-link"
+            href="#edit_only"
+            title="Permalink to Editor.edit_only">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool edit_only
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="editorReady">
+<button class="show-code">Code</button>
+final Future         <strong>editorReady</strong> <a class="anchor-link"
+            href="#editorReady"
+            title="Permalink to Editor.editorReady">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Future get editorReady =&gt; _waitForAce.future;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="el">
+<button class="show-code">Code</button>
+final Element         <strong>el</strong> <a class="anchor-link"
+            href="#el"
+            title="Permalink to Editor.el">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Element get el {
+ if (__el != null) return __el;
+
+ if (this._el.runtimeType == Element) {
+   __el = _el;
+ }
+ else {
+   __el = document.query(_el);
+ }
+ return __el;
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="title">
+<button class="show-code">Code</button>
+String         <strong>title</strong> <a class="anchor-link"
+            href="#title"
+            title="Permalink to Editor.title">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String title
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="createPreviewIframe">
+<button class="show-code">Code</button>
+dynamic <strong>createPreviewIframe</strong>() <a class="anchor-link" href="#createPreviewIframe"
+              title="Permalink to Editor.createPreviewIframe">#</a></h4>
+<div class="doc">
+<pre class="source">
+createPreviewIframe() {
+ var iframe = new IFrameElement();
+ iframe
+   ..width = "${this._preview_el.clientWidth}"
+   ..height = "${this._preview_el.clientHeight}"
+   ..style.border = '0'
+   ..src = 'packages/ice_code_editor/html/preview_frame.html';
+
+ this._preview_el.children.add( iframe );
+
+ return iframe;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="delayedUpdatePreview">
+<button class="show-code">Code</button>
+void <strong>delayedUpdatePreview</strong>() <a class="anchor-link" href="#delayedUpdatePreview"
+              title="Permalink to Editor.delayedUpdatePreview">#</a></h4>
+<div class="doc">
+<pre class="source">
+void delayedUpdatePreview() {
+ if (_update_timer != null) _update_timer.cancel();
+
+ var wait = new Duration(seconds: 2);
+ _update_timer = new Timer(wait, (){
+   this.updatePreview();
+   _update_timer = null;
+ });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hideCode">
+<button class="show-code">Code</button>
+dynamic <strong>hideCode</strong>() <a class="anchor-link" href="#hideCode"
+              title="Permalink to Editor.hideCode">#</a></h4>
+<div class="doc">
+<p>Hide the code layer</p>
+<pre class="source">
+hideCode() {
+ _editor_el.style.display = 'none';
+ if (this.edit_only) return;
+
+ _preview_el.children[0].focus();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="removePreview">
+<button class="show-code">Code</button>
+dynamic <strong>removePreview</strong>() <a class="anchor-link" href="#removePreview"
+              title="Permalink to Editor.removePreview">#</a></h4>
+<div class="doc">
+<pre class="source">
+removePreview() {
+ while (this._preview_el.children.length &gt; 0) {
+   	  this._preview_el.children.first.remove();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="showCode">
+<button class="show-code">Code</button>
+dynamic <strong>showCode</strong>() <a class="anchor-link" href="#showCode"
+              title="Permalink to Editor.showCode">#</a></h4>
+<div class="doc">
+<p>Show the code layer, calling the ACE resize methods to ensure that
+the display is correct.</p>
+<pre class="source">
+showCode() {
+ _editor_el.style.display = '';
+ _ace.renderer.onResize();
+ _ace.focus();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="updatePreview">
+<button class="show-code">Code</button>
+dynamic <strong>updatePreview</strong>() <a class="anchor-link" href="#updatePreview"
+              title="Permalink to Editor.updatePreview">#</a></h4>
+<div class="doc">
+<p>Update the preview layer with the current contents of the editor
+layer.</p>
+<pre class="source">
+updatePreview() {
+ if (this.edit_only) return;
+
+ this.removePreview();
+ var iframe = this.createPreviewIframe();
+
+ var wait = new Duration(milliseconds: 900);
+ new Timer(wait, (){
+   iframe.contentWindow.postMessage(_ace.value, window.location.href);
+ });
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-05-12 23:55:09.940</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
