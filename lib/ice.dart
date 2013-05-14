@@ -11,3 +11,4 @@ import 'package:js/js_wrapping.dart' as jsw;
 part 'editor.dart';
 part 'store.dart';
 part 'gzip.dart';
+part 'full.dart';

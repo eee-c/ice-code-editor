@@ -119,4 +119,8 @@ main() {
       });
     });
   });
+  // open & move to front
+  // next project named
+  // template
+  // create from template
 }
