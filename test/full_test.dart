@@ -11,6 +11,7 @@ main() {
         var el = document.query('#ice');
         var editor_el = el.query('.ice-code-editor-editor');
         expect(editor_el.clientWidth, window.innerWidth);
+        expect(editor_el.clientHeight, closeTo(window.innerHeight,1.0));
       };
       it.editorReady.then(expectAsync1(_test));
     });
