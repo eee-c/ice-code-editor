@@ -10,6 +10,7 @@ class Full {
 
     _fullScreenStyles();
     _ice = new Editor('#ice');
+    editorReady.then((_)=> _applyStyles());
   }
 
   Future get editorReady => _ice.editorReady;
@@ -22,13 +23,17 @@ class Full {
 
   _applyStyles() {
 
-    // var editor_el = el.query('.ice-code-editor-editor');
+     var editor_el = el.query('.ice-code-editor-editor');
 
-    // editor_el.style
-    //   ..top = '0'
-    //   ..bottom = '0'
-    //   ..left = '0'
-    //   ..right = '0'
-    //   ..backgroundColor = 'rgba(255,255,255,0.0)';
+     editor_el.style
+       ..top = '0'
+       ..bottom = '0'
+       ..left = '0'
+       ..right = '0'
+       ..backgroundColor = 'rgba(255,255,255,0.0)';
+
+     el.style
+       ..height = '100%'
+       ..width = '100%';
   }
 }
