@@ -1,8 +1,6 @@
-import 'package:unittest/unittest.dart';
-import 'package:ice_code_editor/ice.dart';
-import 'dart:html';
+part of ice_tests;
 
-main() {
+gzip_tests() {
   group("gzipping", () {
     test("it can encode text", (){
       expect(Gzip.encode("Howdy, Bob!"), equals("88gvT6nUUXDKT1IEAA=="));

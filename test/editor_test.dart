@@ -1,8 +1,6 @@
-import 'package:unittest/unittest.dart';
-import 'package:ice_code_editor/ice.dart';
-import 'dart:html';
+part of ice_test;
 
-main() {
+editor_tests() {
   group("defaults", () {
     setUp(() {
       var el = new Element.html('<div id=ice-${currentTestCase.id}>');

@@ -1,8 +1,6 @@
-import 'package:unittest/unittest.dart';
-import 'package:ice_code_editor/ice.dart';
-import 'dart:html';
+part of ice_tests;
 
-main() {
+store_tests() {
   group("store/retrieve", (){
     var it;
     setUp(()=> it = new Store()..clear());
