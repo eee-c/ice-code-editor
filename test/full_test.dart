@@ -5,7 +5,7 @@ import 'package:ice_code_editor/ice.dart';
 main() {
   group("initial UI", (){
     test("the editor is full-screen", (){
-      var it = new Full();
+      var it = new Full(enable_javascript_mode: false);
 
       _test(_) {
         var el = document.query('#ice');

@@ -1,7 +1,7 @@
 part of ice;
 
 class Editor {
-  bool edit_only, autoupdate;
+  bool edit_only, autoupdate, enable_javascript_mode;
   String title;
 
   var _el;
@@ -10,7 +10,7 @@ class Editor {
   var _ace;
   Completer _waitForAce, _waitForPreview;
 
-  Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
+  Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title, this.enable_javascript_mode:true}) {
     this._startAce();
     this._applyStyles();
   }
@@ -59,6 +59,7 @@ class Editor {
 
     var wait = new Duration(milliseconds: 900);
     new Timer(wait, (){
+      if (iframe.contentWindow == null) return;
       iframe.contentWindow.postMessage(_ace.value, window.location.href);
     });
   }
@@ -134,7 +135,11 @@ class Editor {
     return __preview_el;
   }
 
-  _startAce() {
+  static List _scripts;
+  static get _isAceJsAttached => (_scripts != null);
+  static _attachScripts() {
+    if (_scripts != null) return;
+
     var script_paths = [
       "packages/ice_code_editor/js/ace/ace.js",
       "packages/ice_code_editor/js/ace/keybinding-emacs.js",
@@ -152,6 +157,47 @@ class Editor {
       }).
       toList();
 
+    return _scripts = scripts;
+  }
+
+  _startAce() {
+    this._waitForAce = new Completer();
+
+    if (_isAceJsAttached) {
+      _startJsAce();
+    }
+    else {
+      var scripts = _attachScripts();
+      scripts.first.onLoad.listen((_)=> _startJsAce());
+    }
+
+    _attachKeyHandlersForAce();
+  }
+
+  _startJsAce() {
+    js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
+    _ace = Ace.edit(_editor_el);
+    js.retain(_ace);
+
+    _ace
+      ..theme = "ace/theme/chrome"
+      ..fontSize = '18px'
+      ..printMarginColumn = false
+      ..displayIndentGuides = false;
+
+    if (enable_javascript_mode) {
+      _ace.session
+        ..mode = "ace/mode/javascript"
+        ..useWrapMode = true
+        ..useSoftTabs = true
+        ..tabSize = 2;
+    }
+
+    _waitForAce.complete();
+  }
+
+  _attachKeyHandlersForAce() {
     // Using keyup b/c ACE swallows keydown events
     document.onKeyUp.listen((e) {
       // only handling arrow keys
@@ -165,28 +211,6 @@ class Editor {
         event.preventDefault();
         _ace.toggleEmacs();
       }
-    });
-
-    this._waitForAce = new Completer();
-    scripts.first.onLoad.listen((event) {
-      js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
-
-      _ace = Ace.edit(_editor_el);
-      js.retain(_ace);
-
-      _ace
-        ..theme = "ace/theme/chrome"
-        ..fontSize = '18px'
-        ..printMarginColumn = false
-        ..displayIndentGuides = false;
-
-      _ace.session
-        ..mode = "ace/mode/javascript"
-        ..useWrapMode = true
-        ..useSoftTabs = true
-        ..tabSize = 2;
-
-      _waitForAce.complete();
     });
   }
 

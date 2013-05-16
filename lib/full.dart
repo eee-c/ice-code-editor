@@ -4,12 +4,12 @@ class Full {
   Element el;
   Editor _ice;
 
-  Full() {
+  Full({enable_javascript_mode: true}) {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
     _fullScreenStyles();
-    _ice = new Editor('#ice');
+    _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
     editorReady.then((_)=> _applyStyles());
   }
 
