@@ -11,8 +11,6 @@ class Full {
     _fullScreenStyles();
     _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
 
-    // Need this to attach session on change handlers
-    _ice.content = '';
     editorReady.then((_)=> _applyStyles());
   }
 

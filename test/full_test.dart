@@ -13,5 +13,7 @@ full_tests() {
       };
       it.editorReady.then(expectAsync1(_test));
     });
+
+    //test("has a default project", (){});
   });
 }

@@ -15,21 +15,23 @@ class Editor {
     this._applyStyles();
   }
 
-  // worry about waitForAce?
   set content(String data) {
     if (!_waitForAce.isCompleted) {
       editorReady.then((_) => this.content = data);
       return;
     }
 
-    this._ace.value = data;
-    this._ace.focus();
-    this.updatePreview();
-    _ace.session.onChange.listen((e)=> this.delayedUpdatePreview());
+    var original_autoupdate = autoupdate;
+    autoupdate = false;
+    _ace.value = data;
+    _ace.focus();
+    updatePreview();
+    autoupdate = original_autoupdate;
   }
 
   Timer _update_timer;
   void delayedUpdatePreview() {
+    if (!this.autoupdate) return;
     if (_update_timer != null) _update_timer.cancel();
 
     var wait = new Duration(seconds: 2);
@@ -193,6 +195,8 @@ class Editor {
         ..useSoftTabs = true
         ..tabSize = 2;
     }
+
+    _ace.session.onChange.listen((e)=> this.delayedUpdatePreview());
 
     _waitForAce.complete();
   }
