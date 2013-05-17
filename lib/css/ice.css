@@ -29,3 +29,50 @@
 .ace_content {
   background: rgba(255,255,255,0.75);
 }
+
+button {
+  font-family: sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 2px;
+  background-color: rgba(255,255,255,0.5);
+  margin: 2px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+
+ul.ice-menu {
+  margin: 0px;
+  padding: 5px;
+  border: 1px solid rgba(0,0,0,0.25);
+  font-family: Arial;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.5);
+}
+
+ul.ice-menu li {
+  display: block;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.ice-dialog {
+  position: absolute;
+  color: rgb(235,235,235);
+  padding: 40px 20px 20px 20px;
+  background-color: rgba(24, 24, 24, 0.95);
+  border-radius: 2px;
+  z-index: 1001;
+}
+
+.ice-dialog h1 {
+  margin: 0px 0px 5px;
+  font-size: 100%;
+}
