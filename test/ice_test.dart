@@ -2,6 +2,7 @@ library ice_test;
 
 import 'package:unittest/unittest.dart';
 import 'dart:html';
+import 'dart:async';
 import 'package:ice_code_editor/ice.dart';
 
 part 'editor_test.dart';
@@ -14,4 +15,15 @@ main(){
   store_tests();
   gzip_tests();
   full_tests();
+  pollForDone(testCases);
+}
+
+pollForDone(List tests) {
+  if (tests.every((t)=> t.isComplete)) {
+    window.postMessage('done', window.location.href);
+    return;
+  }
+
+  var wait = new Duration(milliseconds: 100);
+  new Timer(wait, ()=> pollForDone(tests));
 }
