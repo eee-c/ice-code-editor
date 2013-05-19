@@ -54,7 +54,7 @@ class Full {
 
     menu.children
       ..add(new Element.html('<li>New</li>'))
-      ..add(new Element.html('<li>Open</li>'))
+      ..add(_projectsMenuItem())
       ..add(new Element.html('<li>Save</li>'))
       ..add(new Element.html('<li>Make a Copy</li>'))
       ..add(_shareMenuItem())
@@ -63,7 +63,41 @@ class Full {
   }
 
   _hideMenu() {
+    // TODO: This is necessary in tests because the project menu listener is
+    // not being removed between tests
+    if (query('.ice-menu') == null) return;
     query('.ice-menu').remove();
+  }
+
+  _projectsMenuItem() {
+    document.onKeyUp.listen((e) {
+      if (e.keyCode == 27) _hideMenu();
+      if (e.$dom_keyIdentifier.codeUnits.first == 27) _hideMenu();
+    });
+
+    return new Element.html('<li>Projects</li>')
+      ..onClick.listen((e)=> _openProjectsMenu())
+      ..onClick.listen((e)=> _hideMenu());
+  }
+
+  _openProjectsMenu() {
+    var menu = new Element.html(
+        '''
+        <div class=ice-menu>
+        <h1>Saved Projects
+        </div>
+        '''
+    );
+
+    el.children.add(menu);
+
+    menu.style
+      ..maxHeight = '560px'
+      ..overflowY = 'auto'
+      ..position = 'absolute'
+      ..right = '17px'
+      ..top = '60px'
+      ..zIndex = '1000';
   }
 
   _shareMenuItem() {

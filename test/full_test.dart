@@ -72,8 +72,82 @@ full_tests() {
       );
     });
 
-    test("there is a modal overlay behind the dialog", (){});
-    test("share link is encoded", (){});
-    test("menu should close when share dialog activates", (){});
+    skip_test("there is a modal overlay behind the dialog", (){});
+    skip_test("share link is encoded", (){});
+    skip_test("menu should close when share dialog activates", (){});
+  });
+
+  group("project menu", (){
+    setUp(()=> new Full(enable_javascript_mode: false));
+    tearDown(()=> document.query('#ice').remove());
+
+    test("clicking the project menu item opens the project dialog", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Projects').
+        click();
+
+      expect(
+        queryAll('div').map((e)=> e.text).toList(),
+        contains(matches('Saved Projects'))
+      );
+    });
+
+    test("clicking the project menu item closes the main menu", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Projects').
+        click();
+
+      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+    });
+
+    test("the escape key closes the project dialog", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Projects').
+        click();
+
+      document.body.dispatchEvent(
+        new KeyboardEvent(
+          'keyup',
+          keyIdentifier: new String.fromCharCode(27)
+        )
+      );
+
+      expect(
+        queryAll('div').map((e)=> e.text).toList(),
+        isNot(contains(matches('Saved Projects')))
+      );
+    });
+
+    test("the menu button closes the projects dialog", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Projects').
+        click();
+
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      expect(
+        queryAll('div').map((e)=> e.text).toList(),
+        isNot(contains(matches('Saved Projects')))
+      );
+    });
+    skip_test("contains a default project on first load", (){});
   });
 }
