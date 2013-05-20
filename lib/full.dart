@@ -3,6 +3,7 @@ part of ice;
 class Full {
   Element el;
   Editor _ice;
+  Store _store;
 
   Full({enable_javascript_mode: true}) {
     el = new Element.html('<div id=ice>');
@@ -11,11 +12,15 @@ class Full {
     _attachToolbar();
     _fullScreenStyles();
     _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
+    _store = new Store();
 
     editorReady.then((_)=> _applyStyles());
+    editorReady.then((_)=> content = _store.projects.first['code']);
   }
 
   Future get editorReady => _ice.editorReady;
+  String get content => _ice.content;
+  void set content(data) => _ice.content = data;
 
   _attachToolbar() {
     var toolbar = new Element.html('<div class=ice-toolbar>');
@@ -53,9 +58,9 @@ class Full {
       ..zIndex = '999';
 
     menu.children
-      ..add(new Element.html('<li>New</li>'))
+      ..add(_newProjectMenuItem)
       ..add(_projectsMenuItem())
-      ..add(new Element.html('<li>Save</li>'))
+      ..add(_saveMenuItem)
       ..add(new Element.html('<li>Make a Copy</li>'))
       ..add(_shareMenuItem())
       ..add(new Element.html('<li>Download</li>'))
@@ -68,6 +73,36 @@ class Full {
     if (query('.ice-menu') == null) return;
     query('.ice-menu').remove();
   }
+
+  get _newProjectMenuItem {
+    return new Element.html('<li>New</li>')
+      ..onClick.listen((e)=> _openNewProjectDialog());
+  }
+
+  _openNewProjectDialog() {
+    _hideMenu();
+
+    var dialog = new Element.html(
+        '''
+        <div class=ice-dialog>
+        <label>Name:<input type="text" size="30"></label>
+        <button>Save</button>
+        </div>
+        '''
+    );
+
+    dialog.query('button').onClick.listen((e)=> _saveNewProject());
+
+    el.children.add(dialog);
+  }
+
+  _saveNewProject() {
+    var title = query('.ice-dialog').query('input').value;
+    _store[title] = {};
+
+    query('.ice-dialog').remove();
+  }
+
 
   _projectsMenuItem() {
     document.onKeyUp.listen((e) {
@@ -98,6 +133,17 @@ class Full {
       ..right = '17px'
       ..top = '60px'
       ..zIndex = '1000';
+  }
+
+  Element get _saveMenuItem {
+    return new Element.html('<li>Save</li>')
+      ..onClick.listen((e)=> _save());
+  }
+
+  void _save() {
+    var title = _store.isEmpty ? 'Untitled' : _store.projects.first['title'];
+
+    _store[title] = {'code': content};
   }
 
   _shareMenuItem() {

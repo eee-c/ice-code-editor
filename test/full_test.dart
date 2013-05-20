@@ -150,4 +150,92 @@ full_tests() {
     });
     skip_test("contains a default project on first load", (){});
   });
+
+  group("new project", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      new Store().clear();
+    });
+
+    test("clicking the new menu item closes the main menu", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='New').
+        click();
+
+      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+    });
+
+    test("can be named", (){
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='New').
+        click();
+
+      query('input').value = 'My New Project';
+
+      queryAll('button').
+        firstWhere((e)=> e.text=='Save').
+        click();
+
+      editor.content = 'asdf';
+
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Save').
+        click();
+
+      // TODO: check the projects menu (once implemented)
+      var store = new Store();
+      expect(store['My New Project'], isNotNull);
+      expect(store['My New Project']['code'], 'asdf');
+    });
+
+
+
+  });
+
+  group("saving projects", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      new Store().clear();
+    });
+
+    test("a saved project is loaded when the editor starts", (){
+      editor.content = 'asdf';
+
+      queryAll('button').
+        firstWhere((e)=> e.text=='☰').
+        click();
+
+      queryAll('li').
+        firstWhere((e)=> e.text=='Save').
+        click();
+
+      document.query('#ice').remove();
+      editor = new Full(enable_javascript_mode: false);
+
+      _test(_) {
+        expect(editor.content, equals('asdf'));
+      };
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    skip_test("", (){});
+  });
 }
