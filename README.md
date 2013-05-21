@@ -1,5 +1,7 @@
 # ICE Code Editor
 
+[![Build Status](https://drone.io/github.com/eee-c/ice-code-editor/status.png)](https://drone.io/github.com/eee-c/ice-code-editor/latest)
+
 The Code Editor + Visualization Preview used in the book "[3D Game Programming for Kids](http://gamingjs.com)."
 
 This is an attempt to convert the JavaScript version ([repository](https://github.com/eee-c/code-editor) / [live version](http://gamingjs.com/ice)) to Dart. The JavaScript version is a pain to maintain. I hope to leverage the benefits of Dart (cross-browser support, testing, documentation) by doing this.
