@@ -12,6 +12,14 @@ This is an attempt to convert the JavaScript version ([repository](https://githu
 
 The example app contained in `example` is a simple Dart web server. From the `example` directory, run the web server with `dart app.dart`, then open `http://localhost:8000` in Dartium. You should see a simple ACE Editor embedded in the page.
 
+## Core Collaborators
+
+(Santiago Arias)[https://github.com/santiaago]
+
 ## Contributors
 
-Santiago Arias @santiaago
+(Kate Bladow)[https://github.com/kbladow]
+(Damon Douglas)[https://github.com/damondouglas]
+(Morgan Nelson)[https://github.com/korishev]
+(Srdjan Pejic)[https://github.com/batasrki]
+(Michael Risse)[https://github.com/rissem]
