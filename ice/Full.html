@@ -1,0 +1,333 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Full class / ice Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="ice" data-type="Full">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../ice.html">ice</a> &rsaquo; <a href="../ice/Full.html">Full</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Full</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Full {
+ Element el;
+ Editor _ice;
+ Store _store;
+
+ Full({enable_javascript_mode: true}) {
+   el = new Element.html('&lt;div id=ice&gt;');
+   document.body.nodes.add(el);
+
+   _attachToolbar();
+   _fullScreenStyles();
+   _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
+   _store = new Store();
+
+   editorReady.then((_)=&gt; _applyStyles());
+   editorReady.then((_)=&gt; content = _store.projects.first['code']);
+ }
+
+ Future get editorReady =&gt; _ice.editorReady;
+ String get content =&gt; _ice.content;
+ void set content(data) =&gt; _ice.content = data;
+
+ _attachToolbar() {
+   var toolbar = new Element.html('&lt;div class=ice-toolbar&gt;');
+   toolbar.style
+     ..position = 'absolute'
+     ..top = '10px'
+     ..right = '20px'
+     ..zIndex = '999';
+
+   _attachMenuButton(toolbar);
+
+   el.children.add(toolbar);
+ }
+
+ _attachMenuButton(parent) {
+   var el = new Element.html('&lt;button&gt;☰&lt;/button&gt;');
+   parent.children.add(el);
+
+   el.onClick.listen((e)=&gt; this.toggleMenu());
+ }
+
+ toggleMenu() {
+   if (queryAll('.ice-menu').isEmpty) _showMenu();
+   else _hideMenu();
+ }
+
+ _showMenu() {
+   var menu = new Element.html('&lt;ul class=ice-menu&gt;');
+   el.children.add(menu);
+
+   menu.style
+     ..position = 'absolute'
+     ..right = '17px'
+     ..top = '55px'
+     ..zIndex = '999';
+
+   menu.children
+     ..add(_newProjectMenuItem)
+     ..add(_projectsMenuItem())
+     ..add(_saveMenuItem)
+     ..add(new Element.html('&lt;li&gt;Make a Copy&lt;/li&gt;'))
+     ..add(_shareMenuItem())
+     ..add(new Element.html('&lt;li&gt;Download&lt;/li&gt;'))
+     ..add(new Element.html('&lt;li&gt;Help&lt;/li&gt;'));
+ }
+
+ _hideMenu() {
+   // TODO: This is necessary in tests because the project menu listener is
+   // not being removed between tests
+   if (query('.ice-menu') == null) return;
+   query('.ice-menu').remove();
+ }
+
+ get _newProjectMenuItem {
+   return new Element.html('&lt;li&gt;New&lt;/li&gt;')
+     ..onClick.listen((e)=&gt; _openNewProjectDialog());
+ }
+
+ _openNewProjectDialog() {
+   _hideMenu();
+
+   var dialog = new Element.html(
+       '''
+       &lt;div class=ice-dialog&gt;
+       &lt;label&gt;Name:&lt;input type="text" size="30"&gt;&lt;/label&gt;
+       &lt;button&gt;Save&lt;/button&gt;
+       &lt;/div&gt;
+       '''
+   );
+
+   dialog.query('button').onClick.listen((e)=&gt; _saveNewProject());
+
+   el.children.add(dialog);
+ }
+
+ _saveNewProject() {
+   var title = query('.ice-dialog').query('input').value;
+   _store[title] = {};
+
+   query('.ice-dialog').remove();
+ }
+
+
+ _projectsMenuItem() {
+   document.onKeyUp.listen((e) {
+     if (e.keyCode == 27) _hideMenu();
+     if (e.$dom_keyIdentifier.codeUnits.first == 27) _hideMenu();
+   });
+
+   return new Element.html('&lt;li&gt;Projects&lt;/li&gt;')
+     ..onClick.listen((e)=&gt; _openProjectsMenu())
+     ..onClick.listen((e)=&gt; _hideMenu());
+ }
+
+ _openProjectsMenu() {
+   var menu = new Element.html(
+       '''
+       &lt;div class=ice-menu&gt;
+       &lt;h1&gt;Saved Projects
+       &lt;/div&gt;
+       '''
+   );
+
+   el.children.add(menu);
+
+   menu.style
+     ..maxHeight = '560px'
+     ..overflowY = 'auto'
+     ..position = 'absolute'
+     ..right = '17px'
+     ..top = '60px'
+     ..zIndex = '1000';
+ }
+
+ Element get _saveMenuItem {
+   return new Element.html('&lt;li&gt;Save&lt;/li&gt;')
+     ..onClick.listen((e)=&gt; _save());
+ }
+
+ void _save() {
+   var title = _store.isEmpty ? 'Untitled' : _store.projects.first['title'];
+
+   _store[title] = {'code': content};
+ }
+
+ _shareMenuItem() {
+   return new Element.html('&lt;li&gt;Share&lt;/li&gt;')
+     ..onClick.listen((e) =&gt; _openShareDialog());
+ }
+
+ _openShareDialog() {
+   var dialog = new Element.html(
+       '''
+       &lt;div class=ice-dialog&gt;
+       &lt;h1&gt;Copy this link to share your creation:&lt;/h1&gt;
+       &lt;input
+         value="http://gamingjs.com/ice/#B/${encodedContent}"
+         style="width=400px; padding=5px; border=0px"&gt;
+       &lt;/div&gt;
+       '''
+   );
+
+   el.children.add(dialog);
+
+   dialog.style
+     ..left = "${(window.innerWidth - dialog.offsetWidth)/2}px"
+     ..top = "${(window.innerHeight - dialog.offsetHeight)/2}px";
+ }
+
+ String get encodedContent =&gt; Gzip.encode(_ice.content);
+
+ _fullScreenStyles() {
+   document.body.style
+     ..margin = '0px'
+     ..overflow = 'hidden';
+ }
+
+ _applyStyles() {
+    var editor_el = el.query('.ice-code-editor-editor');
+
+    editor_el.style
+      ..top = '0'
+      ..bottom = '0'
+      ..left = '0'
+      ..right = '0'
+      ..backgroundColor = 'rgba(255,255,255,0.0)';
+
+    el.style
+      ..height = '100%'
+      ..width = '100%';
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Full">
+<button class="show-code">Code</button>
+new <strong>Full</strong>({enable_javascript_mode: true}) <a class="anchor-link" href="#Full"
+              title="Permalink to Full.Full">#</a></h4>
+<div class="doc">
+<pre class="source">
+Full({enable_javascript_mode: true}) {
+ el = new Element.html('&lt;div id=ice&gt;');
+ document.body.nodes.add(el);
+
+ _attachToolbar();
+ _fullScreenStyles();
+ _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
+ _store = new Store();
+
+ editorReady.then((_)=&gt; _applyStyles());
+ editorReady.then((_)=&gt; content = _store.projects.first['code']);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="content">
+<button class="show-code">Code</button>
+String         <strong>content</strong> <a class="anchor-link"
+            href="#content"
+            title="Permalink to Full.content">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String get content =&gt; _ice.content;
+</pre>
+<pre class="source">
+void set content(data) =&gt; _ice.content = data;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="editorReady">
+<button class="show-code">Code</button>
+final Future         <strong>editorReady</strong> <a class="anchor-link"
+            href="#editorReady"
+            title="Permalink to Full.editorReady">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Future get editorReady =&gt; _ice.editorReady;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="el">
+<button class="show-code">Code</button>
+Element         <strong>el</strong> <a class="anchor-link"
+            href="#el"
+            title="Permalink to Full.el">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Element el
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="encodedContent">
+<button class="show-code">Code</button>
+final String         <strong>encodedContent</strong> <a class="anchor-link"
+            href="#encodedContent"
+            title="Permalink to Full.encodedContent">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String get encodedContent =&gt; Gzip.encode(_ice.content);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toggleMenu">
+<button class="show-code">Code</button>
+dynamic <strong>toggleMenu</strong>() <a class="anchor-link" href="#toggleMenu"
+              title="Permalink to Full.toggleMenu">#</a></h4>
+<div class="doc">
+<pre class="source">
+toggleMenu() {
+ if (queryAll('.ice-menu').isEmpty) _showMenu();
+ else _hideMenu();
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-05-21 05:58:57.756</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

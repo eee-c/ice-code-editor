@@ -34,7 +34,7 @@
 <div class="doc">
 <pre class="source">
 class Editor {
- bool edit_only, autoupdate;
+ bool edit_only, autoupdate, enable_javascript_mode;
  String title;
 
  var _el;
@@ -43,26 +43,28 @@ class Editor {
  var _ace;
  Completer _waitForAce, _waitForPreview;
 
- Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
+ Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title, this.enable_javascript_mode:true}) {
    this._startAce();
    this._applyStyles();
  }
 
- // worry about waitForAce?
  set content(String data) {
    if (!_waitForAce.isCompleted) {
      editorReady.then((_) =&gt; this.content = data);
      return;
    }
 
-   this._ace.value = data;
-   this._ace.focus();
-   this.updatePreview();
-   _ace.session.onChange.listen((e)=&gt; this.delayedUpdatePreview());
+   var original_autoupdate = autoupdate;
+   autoupdate = false;
+   _ace.value = data;
+   _ace.focus();
+   updatePreview();
+   autoupdate = original_autoupdate;
  }
 
  Timer _update_timer;
  void delayedUpdatePreview() {
+   if (!this.autoupdate) return;
    if (_update_timer != null) _update_timer.cancel();
 
    var wait = new Duration(seconds: 2);
@@ -92,6 +94,7 @@ class Editor {
 
    var wait = new Duration(milliseconds: 900);
    new Timer(wait, (){
+     if (iframe.contentWindow == null) return;
      iframe.contentWindow.postMessage(_ace.value, window.location.href);
    });
  }
@@ -167,7 +170,11 @@ class Editor {
    return __preview_el;
  }
 
- _startAce() {
+ static List _scripts;
+ static get _isAceJsAttached =&gt; (_scripts != null);
+ static _attachScripts() {
+   if (_scripts != null) return;
+
    var script_paths = [
      "packages/ice_code_editor/js/ace/ace.js",
      "packages/ice_code_editor/js/ace/keybinding-emacs.js",
@@ -185,6 +192,49 @@ class Editor {
      }).
      toList();
 
+   return _scripts = scripts;
+ }
+
+ _startAce() {
+   this._waitForAce = new Completer();
+
+   if (_isAceJsAttached) {
+     _startJsAce();
+   }
+   else {
+     var scripts = _attachScripts();
+     scripts.first.onLoad.listen((_)=&gt; _startJsAce());
+   }
+
+   _attachKeyHandlersForAce();
+ }
+
+ _startJsAce() {
+   js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
+   _ace = Ace.edit(_editor_el);
+   js.retain(_ace);
+
+   _ace
+     ..theme = "ace/theme/chrome"
+     ..fontSize = '18px'
+     ..printMarginColumn = false
+     ..displayIndentGuides = false;
+
+   if (enable_javascript_mode) {
+     _ace.session
+       ..mode = "ace/mode/javascript"
+       ..useWrapMode = true
+       ..useSoftTabs = true
+       ..tabSize = 2;
+   }
+
+   _ace.session.onChange.listen((e)=&gt; this.delayedUpdatePreview());
+
+   _waitForAce.complete();
+ }
+
+ _attachKeyHandlersForAce() {
    // Using keyup b/c ACE swallows keydown events
    document.onKeyUp.listen((e) {
      // only handling arrow keys
@@ -198,28 +248,6 @@ class Editor {
        event.preventDefault();
        _ace.toggleEmacs();
      }
-   });
-
-   this._waitForAce = new Completer();
-   scripts.first.onLoad.listen((event) {
-     js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
-
-     _ace = Ace.edit(_editor_el);
-     js.retain(_ace);
-
-     _ace
-       ..theme = "ace/theme/chrome"
-       ..fontSize = '18px'
-       ..printMarginColumn = false
-       ..displayIndentGuides = false;
-
-     _ace.session
-       ..mode = "ace/mode/javascript"
-       ..useWrapMode = true
-       ..useSoftTabs = true
-       ..tabSize = 2;
-
-     _waitForAce.complete();
    });
  }
 
@@ -248,11 +276,11 @@ class Editor {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Editor">
 <button class="show-code">Code</button>
-new <strong>Editor</strong>(_el, {bool edit_only: false, bool autoupdate: true, String title}) <a class="anchor-link" href="#Editor"
+new <strong>Editor</strong>(_el, {bool edit_only: false, bool autoupdate: true, String title, bool enable_javascript_mode: true}) <a class="anchor-link" href="#Editor"
               title="Permalink to Editor.Editor">#</a></h4>
 <div class="doc">
 <pre class="source">
-Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title}) {
+Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title, this.enable_javascript_mode:true}) {
  this._startAce();
  this._applyStyles();
 }
@@ -291,10 +319,12 @@ set content(String data) {
    return;
  }
 
- this._ace.value = data;
- this._ace.focus();
- this.updatePreview();
- _ace.session.onChange.listen((e)=&gt; this.delayedUpdatePreview());
+ var original_autoupdate = autoupdate;
+ autoupdate = false;
+ _ace.value = data;
+ _ace.focus();
+ updatePreview();
+ autoupdate = original_autoupdate;
 }
 </pre>
 </div>
@@ -345,6 +375,18 @@ Element get el {
 </pre>
 </div>
 </div>
+<div class="field"><h4 id="enable_javascript_mode">
+<button class="show-code">Code</button>
+bool         <strong>enable_javascript_mode</strong> <a class="anchor-link"
+            href="#enable_javascript_mode"
+            title="Permalink to Editor.enable_javascript_mode">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool edit_only, autoupdate, enable_javascript_mode
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="title">
 <button class="show-code">Code</button>
 String         <strong>title</strong> <a class="anchor-link"
@@ -388,6 +430,7 @@ void <strong>delayedUpdatePreview</strong>() <a class="anchor-link" href="#delay
 <div class="doc">
 <pre class="source">
 void delayedUpdatePreview() {
+ if (!this.autoupdate) return;
  if (_update_timer != null) _update_timer.cancel();
 
  var wait = new Duration(seconds: 2);
@@ -461,6 +504,7 @@ updatePreview() {
 
  var wait = new Duration(milliseconds: 900);
  new Timer(wait, (){
+   if (iframe.contentWindow == null) return;
    iframe.contentWindow.postMessage(_ace.value, window.location.href);
  });
 }
@@ -472,7 +516,7 @@ updatePreview() {
         <div class="clear"></div>
         </div>
         <div class="footer">
-          <div>This page was generated at 2013-05-12 23:55:09.940</div>
+          <div>This page was generated at 2013-05-21 05:58:57.967</div>
         </div>
         <script async src="../client-live-nav.js"></script>
         </body></html>
