@@ -131,17 +131,9 @@ full_tests() {
     });
 
     test("the menu button closes the projects dialog", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Projects').
-        click();
-
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+      helpers.click('button', text: '☰');
 
       expect(
         queryAll('div').map((e)=> e.text).toList(),
@@ -173,29 +165,17 @@ full_tests() {
     });
 
     test("can be named", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='New').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
 
       query('input').value = 'My New Project';
 
-      queryAll('button').
-        firstWhere((e)=> e.text=='Save').
-        click();
+      helpers.click('button', text: 'Save');
 
       editor.content = 'asdf';
 
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Save').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
 
       // TODO: check the projects menu (once implemented)
       var store = new Store();
