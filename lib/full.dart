@@ -119,7 +119,7 @@ class Full {
     var menu = new Element.html(
         '''
         <div class=ice-menu>
-        <h1>Saved Projects
+        <h1>Saved Projects</h1>
         </div>
         '''
     );

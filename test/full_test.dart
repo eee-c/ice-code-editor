@@ -82,17 +82,12 @@ full_tests() {
     tearDown(()=> document.query('#ice').remove());
 
     test("clicking the project menu item opens the project dialog", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Projects').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
 
       expect(
-        queryAll('div').map((e)=> e.text).toList(),
-        contains(matches('Saved Projects'))
+        queryAll('div'),
+        helpers.elements_contain('Saved Projects')
       );
     });
 
@@ -126,7 +121,7 @@ full_tests() {
 
       expect(
         queryAll('div').map((e)=> e.text).toList(),
-        isNot(contains(matches('Saved Projects')))
+        isNot(contains(matches(new RegExp('Saved'))))
       );
     });
 
@@ -136,8 +131,8 @@ full_tests() {
       helpers.click('button', text: '☰');
 
       expect(
-        queryAll('div').map((e)=> e.text).toList(),
-        isNot(contains(matches('Saved Projects')))
+        queryAll('div'),
+        isNot(contains(matches('SavedX')))
       );
     });
     skip_test("contains a default project on first load", (){});
