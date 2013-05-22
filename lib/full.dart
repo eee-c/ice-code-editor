@@ -120,6 +120,11 @@ class Full {
         '''
         <div class=ice-menu>
         <h1>Saved Projects</h1>
+        <ul>
+        ''' + 
+        _store.projects.map((p)=>'<li>${p["title"]}</li>').join() +
+        '''
+        </ul>
         </div>
         '''
     );

@@ -92,25 +92,19 @@ full_tests() {
     });
 
     test("clicking the project menu item closes the main menu", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
 
-      queryAll('li').
-        firstWhere((e)=> e.text=='Projects').
-        click();
-
-      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+      expect(
+        queryAll('li').map((e)=> e.text).toList(), 
+        isNot(contains(matches('Help')))
+      );
     });
 
     test("the escape key closes the project dialog", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Projects').
-        click();
+      
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
 
       document.body.dispatchEvent(
         new KeyboardEvent(
@@ -135,6 +129,25 @@ full_tests() {
         isNot(contains(matches('SavedX')))
       );
     });
+    
+    test("lists project names", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My New Project';
+
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+
+      expect(
+        queryAll('div'),
+        helpers.elements_contain('My New Project')
+      );
+
+    });
+
     skip_test("contains a default project on first load", (){});
   });
 
