@@ -16,16 +16,6 @@ class Store implements HashMap<String, HashMap> {
 
   Store() { }
 
-  static String encode(String string) {
-    var gzip = js.context.RawDeflate.deflate(string);
-    return CryptoUtils.bytesToBase64(gzip.codeUnits);
-  }
-  static String decode(String string) {
-    var bytes = CryptoUtils.base64StringToBytes(string);
-    var gzip = new String.fromCharCodes(bytes);
-    return js.context.RawDeflate.inflate(gzip);
-  }
-
   int get length => projects.length;
 
   HashMap operator [](String key) {
@@ -57,7 +47,7 @@ class Store implements HashMap<String, HashMap> {
 
   bool get isEmpty => projects.isEmpty;
   Iterable<String> get keys => projects.map((p)=> p['title']);
-  Iterable<HashMap> get values => projects.map((p)=> p);
+  Iterable<HashMap> get values => projects;
   bool containsKey(key) => keys.contains(key);
   bool containsValue(value) => values.contains(value);
   void forEach(f) {
