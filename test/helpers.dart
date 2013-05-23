@@ -12,8 +12,14 @@ void click(String selector, {text}) {
     click();
 }
 
-elements_contain(Pattern content) =>
+get elementsAreEmpty =>
+  new ElementListMatcher(isEmpty);
+
+elementsContain(Pattern content) =>
   new ElementListMatcher(contains(matches(content)));
+
+elementsDoNotContain(Pattern content) =>
+  new ElementListMatcher(isNot(contains(matches(content))));
 
 class ElementListMatcher extends CustomMatcher {
   ElementListMatcher(matcher) :

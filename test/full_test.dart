@@ -29,10 +29,8 @@ full_tests() {
     });
 
     test("clicking the menu button brings up the menu", (){
-      var menu_button = queryAll('button').
-        firstWhere((e)=> e.text=='☰');
+      helpers.click('button', text: '☰');
 
-      menu_button.click();
       var menu = queryAll('li').
         firstWhere((e)=> e.text.contains('Help'));
 
@@ -40,16 +38,11 @@ full_tests() {
     });
 
     test("clicking the menu button a second time hides the menu", (){
-      var menu_button = queryAll('button').
-        firstWhere((e)=> e.text=='☰');
+      helpers.click('button', text: '☰');
+      expect(queryAll('li'), helpers.elementsContain('Help'));
 
-      menu_button.click();
-
-      expect(queryAll('li').map((e)=> e.text), contains('Help'));
-
-      menu_button.click();
-
-      expect(queryAll('li').map((e)=> e.text), isEmpty);
+      helpers.click('button', text: '☰');
+      expect(queryAll('li'), helpers.elementsAreEmpty);
     });
   });
 
@@ -58,17 +51,12 @@ full_tests() {
     tearDown(()=> document.query('#ice').remove());
 
     test("clicking the share link shows the share dialog", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Share').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text:  'Share');
 
       expect(
-        queryAll('div').map((e)=> e.text).toList(),
-        contains(matches('Copy this link'))
+        queryAll('div'),
+        helpers.elementsContain('Copy this link')
       );
     });
 
@@ -92,7 +80,7 @@ full_tests() {
 
       expect(
         queryAll('div'),
-        helpers.elements_contain('Saved Projects')
+        helpers.elementsContain('Saved Projects')
       );
     });
 
@@ -101,8 +89,8 @@ full_tests() {
       helpers.click('li', text: 'Projects');
 
       expect(
-        queryAll('li').map((e)=> e.text).toList(),
-        isNot(contains(matches('Help')))
+        queryAll('li'),
+        helpers.elementsDoNotContain('Help')
       );
     });
 
@@ -118,8 +106,8 @@ full_tests() {
       );
 
       expect(
-        queryAll('div').map((e)=> e.text).toList(),
-        isNot(contains(matches(new RegExp('Saved'))))
+        queryAll('div'),
+        helpers.elementsDoNotContain(new RegExp('Saved'))
       );
     });
 
@@ -130,7 +118,7 @@ full_tests() {
 
       expect(
         queryAll('div'),
-        isNot(contains(matches('Saved Projects')))
+        helpers.elementsDoNotContain('Saved Projects')
       );
     });
 
@@ -147,7 +135,7 @@ full_tests() {
 
       expect(
         queryAll('div'),
-        helpers.elements_contain('My New Project')
+        helpers.elementsContain('My New Project')
       );
     });
 
@@ -193,7 +181,7 @@ full_tests() {
       helpers.click('li', text: 'Projects');
       helpers.click('li', text: 'Project #1');
 
-      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+      expect(queryAll('li'), helpers.elementsAreEmpty);
     });
 
 
@@ -232,7 +220,7 @@ full_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text:  'New');
 
-      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+      expect(queryAll('li'), helpers.elementsAreEmpty);
     });
 
   });
@@ -249,13 +237,8 @@ full_tests() {
     test("a saved project is loaded when the editor starts", (){
       editor.content = 'asdf';
 
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='Save').
-        click();
+      helpers.click('button', text: '☰');
+      helpers.click('li', text:  'Save');
 
       document.query('#ice').remove();
       editor = new Full(enable_javascript_mode: false);
@@ -270,7 +253,7 @@ full_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text:  'Save');
 
-      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+      expect(queryAll('li'), helpers.elementsAreEmpty);
     });
 
     skip_test("", (){});

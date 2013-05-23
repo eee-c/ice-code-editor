@@ -127,9 +127,7 @@ class Full {
     );
 
     _store.forEach((title, data) {
-      var project = new Element.html(
-          '<li>${title}</li>'
-        )
+      var project = new Element.html('<li>${title}</li>')
         ..onClick.listen((e)=> _openProject(title))
         ..onClick.listen((e)=> _hideMenu());
 
