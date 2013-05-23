@@ -117,17 +117,23 @@ class Full {
 
   _openProjectsMenu() {
     var menu = new Element.html(
-        '''
-        <div class=ice-menu>
-        <h1>Saved Projects</h1>
-        <ul>
-        ''' + 
-        _store.projects.map((p)=>'<li>${p["title"]}</li>').join() +
-        '''
-        </ul>
-        </div>
-        '''
+      '''
+      <div class=ice-menu>
+      <h1>Saved Projects</h1>
+      <ul></ul>
+      </div>
+      '''
     );
+
+    _store.forEach((title, data) {
+      var project = new Element.html(
+          '<li>${title}</li>'
+        )
+        ..onClick.listen((e)=> _openProject(title))
+        ..onClick.listen((e)=> _hideMenu());
+
+      menu.query('ul').children.add(project);
+    });
 
     el.children.add(menu);
 
@@ -140,9 +146,18 @@ class Full {
       ..zIndex = '1000';
   }
 
+  _openProject(title) {
+    // TODO: Move this into Store (should be a way to make a project as
+    // current)
+    var project = _store.remove(title);
+    _store[title] = project;
+    _ice.content = project['code'];
+  }
+
   Element get _saveMenuItem {
     return new Element.html('<li>Save</li>')
-      ..onClick.listen((e)=> _save());
+      ..onClick.listen((e)=> _save())
+      ..onClick.listen((e)=> _hideMenu());
   }
 
   void _save() {

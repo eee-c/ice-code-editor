@@ -78,8 +78,13 @@ full_tests() {
   });
 
   group("project menu", (){
-    setUp(()=> new Full(enable_javascript_mode: false));
-    tearDown(()=> document.query('#ice').remove());
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      new Store().clear();
+    });
 
     test("clicking the project menu item opens the project dialog", (){
       helpers.click('button', text: '☰');
@@ -96,13 +101,12 @@ full_tests() {
       helpers.click('li', text: 'Projects');
 
       expect(
-        queryAll('li').map((e)=> e.text).toList(), 
+        queryAll('li').map((e)=> e.text).toList(),
         isNot(contains(matches('Help')))
       );
     });
 
     test("the escape key closes the project dialog", (){
-      
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Projects');
 
@@ -126,10 +130,10 @@ full_tests() {
 
       expect(
         queryAll('div'),
-        isNot(contains(matches('SavedX')))
+        isNot(contains(matches('Saved Projects')))
       );
     });
-    
+
     test("lists project names", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
@@ -145,8 +149,53 @@ full_tests() {
         queryAll('div'),
         helpers.elements_contain('My New Project')
       );
-
     });
+
+    test("click names to switch between projects", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #1';
+      helpers.click('button', text: 'Save');
+
+      editor.content = 'Code #1';
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #2';
+      helpers.click('button', text: 'Save');
+
+      editor.content = 'Code #2';
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Project #1');
+
+      expect(
+        editor.content,
+        equals('Code #1')
+      );
+    });
+
+    test("closes when a project is selected", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #1';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Project #1');
+
+      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+    });
+
 
     skip_test("contains a default project on first load", (){});
   });
@@ -158,18 +207,6 @@ full_tests() {
     tearDown(() {
       document.query('#ice').remove();
       new Store().clear();
-    });
-
-    test("clicking the new menu item closes the main menu", (){
-      queryAll('button').
-        firstWhere((e)=> e.text=='☰').
-        click();
-
-      queryAll('li').
-        firstWhere((e)=> e.text=='New').
-        click();
-
-      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
     });
 
     test("can be named", (){
@@ -191,7 +228,12 @@ full_tests() {
       expect(store['My New Project']['code'], 'asdf');
     });
 
+    test("clicking the new menu item closes the main menu", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text:  'New');
 
+      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
+    });
 
   });
 
@@ -222,6 +264,13 @@ full_tests() {
         expect(editor.content, equals('asdf'));
       };
       editor.editorReady.then(expectAsync1(_test));
+    });
+
+    test("clicking save closes the main menu", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text:  'Save');
+
+      expect(queryAll('li').map((e)=> e.text).toList(), isEmpty);
     });
 
     skip_test("", (){});
