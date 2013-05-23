@@ -15,7 +15,8 @@ class Full {
     _store = new Store();
 
     editorReady.then((_)=> _applyStyles());
-    editorReady.then((_)=> content = _store.projects.first['code']);
+    editorReady.then((_)=> content = _store.isEmpty ?
+      '' : _store.projects.first['code']);
   }
 
   Future get editorReady => _ice.editorReady;
