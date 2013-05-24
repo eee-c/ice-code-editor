@@ -31,48 +31,56 @@ class Full {
       ..right = '20px'
       ..zIndex = '999';
 
-    _attachMenuButton(toolbar);
+    _attachMainMenuButton(toolbar);
+    _attachKeyboardHandlers();
 
     el.children.add(toolbar);
   }
 
-  _attachMenuButton(parent) {
+  _attachMainMenuButton(parent) {
     var el = new Element.html('<button>☰</button>');
     parent.children.add(el);
 
-    el.onClick.listen((e)=> this.toggleMenu());
+    el.onClick.listen((e)=> this.toggleMainMenu());
   }
 
-  toggleMenu() {
-    if (queryAll('.ice-menu').isEmpty) _showMenu();
+  _attachKeyboardHandlers() {
+    document.onKeyUp.listen((e) {
+      if (!_isEscapeKey(e)) return;
+      _hideMenu();
+      _hideDialog();
+    });
+  }
+
+  _isEscapeKey(e) =>
+    e.keyCode == 27 || e.$dom_keyIdentifier.codeUnits.first == 27;
+
+  toggleMainMenu() {
+    if (queryAll('.ice-menu').isEmpty) _showMainMenu();
     else _hideMenu();
   }
 
-  _showMenu() {
+  _showMainMenu() {
     var menu = new Element.html('<ul class=ice-menu>');
     el.children.add(menu);
 
-    menu.style
-      ..position = 'absolute'
-      ..right = '17px'
-      ..top = '55px'
-      ..zIndex = '999';
-
     menu.children
-      ..add(_newProjectMenuItem)
       ..add(_projectsMenuItem())
-      ..add(_saveMenuItem)
+      ..add(_newProjectMenuItem)
+      ..add(new Element.html('<li>Rename</li>'))
       ..add(new Element.html('<li>Make a Copy</li>'))
+      ..add(_saveMenuItem)
       ..add(_shareMenuItem())
       ..add(new Element.html('<li>Download</li>'))
       ..add(new Element.html('<li>Help</li>'));
   }
 
   _hideMenu() {
-    // TODO: This is necessary in tests because the project menu listener is
-    // not being removed between tests
-    if (query('.ice-menu') == null) return;
-    query('.ice-menu').remove();
+    queryAll('.ice-menu').forEach((e)=> e.remove());
+  }
+
+  _hideDialog() {
+    queryAll('.ice-dialog').forEach((e)=> e.remove());
   }
 
   get _newProjectMenuItem {
@@ -104,16 +112,10 @@ class Full {
     query('.ice-dialog').remove();
   }
 
-
   _projectsMenuItem() {
-    document.onKeyUp.listen((e) {
-      if (e.keyCode == 27) _hideMenu();
-      if (e.$dom_keyIdentifier.codeUnits.first == 27) _hideMenu();
-    });
-
     return new Element.html('<li>Projects</li>')
-      ..onClick.listen((e)=> _openProjectsMenu())
-      ..onClick.listen((e)=> _hideMenu());
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _openProjectsMenu());
   }
 
   _openProjectsMenu() {
@@ -140,7 +142,7 @@ class Full {
       ..maxHeight = '560px'
       ..overflowY = 'auto'
       ..position = 'absolute'
-      ..right = '17px'
+      ..right = '25px'
       ..top = '60px'
       ..zIndex = '1000';
   }

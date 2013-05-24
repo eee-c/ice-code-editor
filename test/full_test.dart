@@ -223,6 +223,22 @@ full_tests() {
       expect(queryAll('li'), helpers.elementsAreEmpty);
     });
 
+    test("the escape key closes the new project dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      document.body.dispatchEvent(
+        new KeyboardEvent(
+          'keyup',
+          keyIdentifier: new String.fromCharCode(27)
+        )
+      );
+
+      expect(
+        queryAll('button'),
+        helpers.elementsDoNotContain('Save')
+      );
+    });
   });
 
   group("saving projects", (){

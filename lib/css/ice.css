@@ -45,8 +45,8 @@ button {
 }
 
 
-.ice-menu {
-  margin: 0px;
+.ice-menu, .ice-dialog {
+  margin: 2px;
   padding: 5px;
   border: 1px solid rgba(0,0,0,0.25);
   border-radius: 2px;
@@ -56,21 +56,18 @@ button {
   text-decoration: none;
   color: rgba(0,0,0,0.5);
   background-color: rgba(255,255,255,0.5);
+
+  position: absolute;
+  margin: 2px;
+  right: 20px;
+  top: 45px;
+  z-index: 999;
 }
 
 ul.ice-menu li {
   display: block;
   padding: 4px;
   cursor: pointer;
-}
-
-.ice-dialog {
-  position: absolute;
-  color: rgb(235,235,235);
-  padding: 40px 20px 20px 20px;
-  background-color: rgba(24, 24, 24, 0.95);
-  border-radius: 2px;
-  z-index: 1001;
 }
 
 .ice-dialog h1 {
