@@ -47,12 +47,14 @@ full_tests() {
   });
 
   group("sharing", (){
-    setUp(()=> new Full(enable_javascript_mode: false));
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
     tearDown(()=> document.query('#ice').remove());
 
     test("clicking the share link shows the share dialog", (){
       helpers.click('button', text: '☰');
-      helpers.click('li', text:  'Share');
+      helpers.click('li', text: 'Share');
 
       expect(
         queryAll('div'),
@@ -60,9 +62,51 @@ full_tests() {
       );
     });
 
-    skip_test("there is a modal overlay behind the dialog", (){});
+    test("clicking the share link closes the main menu", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+
+      expect(queryAll('li'), helpers.elementsAreEmpty);
+    });
+
+    test("the menu button closes the share dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      helpers.click('button', text: '☰');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsDoNotContain('Copy this link')
+      );
+    });
+
+    test("share field has focus", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+
+      expect(
+        queryAll('.ice-dialog input:focus'),
+        helpers.elementsArePresent
+      );
+    });
+
     skip_test("share link is encoded", (){});
-    skip_test("menu should close when share dialog activates", (){});
+
+    test("clicking in the editor closes the share dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+
+      _test(_) {
+        helpers.click('.ice-code-editor-editor');
+
+        expect(
+          queryAll('div'),
+          helpers.elementsDoNotContain('Copy this link')
+        );
+      };
+      editor.editorReady.then(expectAsync1(_test));
+
+    });
   });
 
   group("project menu", (){

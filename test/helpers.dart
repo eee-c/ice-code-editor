@@ -15,6 +15,9 @@ void click(String selector, {text}) {
 get elementsAreEmpty =>
   new ElementListMatcher(isEmpty);
 
+get elementsArePresent =>
+  new ElementListMatcher(isNot(isEmpty));
+
 elementsContain(Pattern content) =>
   new ElementListMatcher(contains(matches(content)));
 

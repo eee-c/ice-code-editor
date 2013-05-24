@@ -9,10 +9,14 @@ class Full {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
-    _attachToolbar();
-    _fullScreenStyles();
     _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
     _store = new Store();
+
+    _attachToolbar();
+    _attachKeyboardHandlers();
+    _attachMouseHandlers();
+
+    _fullScreenStyles();
 
     editorReady.then((_)=> _applyStyles());
     editorReady.then((_)=> content = _store.isEmpty ?
@@ -32,7 +36,6 @@ class Full {
       ..zIndex = '999';
 
     _attachMainMenuButton(toolbar);
-    _attachKeyboardHandlers();
 
     el.children.add(toolbar);
   }
@@ -52,12 +55,23 @@ class Full {
     });
   }
 
+  _attachMouseHandlers() {
+    editorReady.then((_){
+      el.query('.ice-code-editor-editor').
+        onClick.
+        listen((e){
+          _hideMenu();
+          _hideDialog();
+        });
+    });
+  }
+
   _isEscapeKey(e) =>
     e.keyCode == 27 || e.$dom_keyIdentifier.codeUnits.first == 27;
 
   toggleMainMenu() {
-    if (queryAll('.ice-menu').isEmpty) _showMainMenu();
-    else _hideMenu();
+    if (queryAll('.ice-menu,.ice-dialog').isEmpty) _showMainMenu();
+    else {_hideMenu(); _hideDialog();}
   }
 
   _showMainMenu() {
@@ -65,12 +79,12 @@ class Full {
     el.children.add(menu);
 
     menu.children
-      ..add(_projectsMenuItem())
+      ..add(_projectsMenuItem)
       ..add(_newProjectMenuItem)
       ..add(new Element.html('<li>Rename</li>'))
       ..add(new Element.html('<li>Make a Copy</li>'))
       ..add(_saveMenuItem)
-      ..add(_shareMenuItem())
+      ..add(_shareMenuItem)
       ..add(new Element.html('<li>Download</li>'))
       ..add(new Element.html('<li>Help</li>'));
   }
@@ -112,7 +126,7 @@ class Full {
     query('.ice-dialog').remove();
   }
 
-  _projectsMenuItem() {
+  Element get _projectsMenuItem {
     return new Element.html('<li>Projects</li>')
       ..onClick.listen((e)=> _hideMenu())
       ..onClick.listen((e)=> _openProjectsMenu());
@@ -157,8 +171,8 @@ class Full {
 
   Element get _saveMenuItem {
     return new Element.html('<li>Save</li>')
-      ..onClick.listen((e)=> _save())
-      ..onClick.listen((e)=> _hideMenu());
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _save());
   }
 
   void _save() {
@@ -167,9 +181,10 @@ class Full {
     _store[title] = {'code': content};
   }
 
-  _shareMenuItem() {
+  Element get _shareMenuItem {
     return new Element.html('<li>Share</li>')
-      ..onClick.listen((e) => _openShareDialog());
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _openShareDialog());
   }
 
   _openShareDialog() {
@@ -186,9 +201,10 @@ class Full {
 
     el.children.add(dialog);
 
-    dialog.style
-      ..left = "${(window.innerWidth - dialog.offsetWidth)/2}px"
-      ..top = "${(window.innerHeight - dialog.offsetHeight)/2}px";
+    dialog.query('input')
+      ..select()
+      ..disabled = true
+      ..style.width = '100%';
   }
 
   String get encodedContent => Gzip.encode(_ice.content);
