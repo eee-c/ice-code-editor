@@ -82,7 +82,7 @@ class Full {
       ..add(_projectsMenuItem)
       ..add(_newProjectMenuItem)
       ..add(new Element.html('<li>Rename</li>'))
-      ..add(new Element.html('<li>Make a Copy</li>'))
+      ..add(_makeCopyItem)
       ..add(_saveMenuItem)
       ..add(_shareMenuItem)
       ..add(new Element.html('<li>Download</li>'))
@@ -167,6 +167,35 @@ class Full {
     var project = _store.remove(title);
     _store[title] = project;
     _ice.content = project['code'];
+  }
+
+  Element get _makeCopyItem {
+    return new Element.html('<li>Make a Copy</li>')
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _openCopyDialog());
+  }
+
+  _openCopyDialog() {
+    var dialog = new Element.html(
+        '''
+        <div class=ice-dialog>
+        <label>Name:<input type="text" size="30"></label>
+        <button>Save</button>
+        </div>
+        '''
+    );
+
+    dialog.query('button').onClick.listen((_)=> _copyProject());
+
+    el.children.add(dialog);
+  }
+
+  _copyProject() {
+    var title = query('.ice-dialog').query('input').value;
+
+    _store[title] = {'code': content};
+
+    query('.ice-dialog').remove();
   }
 
   Element get _saveMenuItem {

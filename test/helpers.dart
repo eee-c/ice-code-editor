@@ -3,13 +3,21 @@ library ice_test_helpers;
 import 'dart:html';
 import 'package:unittest/matcher.dart';
 
+class FakeCompleter {
+  then(cb) => cb();
+}
 
-void click(String selector, {text}) {
-  if (text == null) return query(selector).click();
+click(String selector, {text}) {
+  if (text == null) {
+    query(selector).click();
+  }
+  else {
+    queryAll(selector).
+      firstWhere((e)=> e.text==text).
+      click();
+  }
 
-  queryAll(selector).
-    firstWhere((e)=> e.text==text).
-    click();
+  return new FakeCompleter();
 }
 
 get elementsAreEmpty =>

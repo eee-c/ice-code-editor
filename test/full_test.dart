@@ -285,6 +285,70 @@ full_tests() {
     });
   });
 
+  group("make a copy", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      new Store().clear();
+    });
+
+    test("can open copy dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        queryAll('button'),
+        helpers.elementsContain('Save')
+      );
+    });
+
+    test("works with existing projects", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #1';
+      helpers.click('button', text: 'Save');
+
+      editor.content = 'Code #1';
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      query('input').value = 'Copy of Project #1';
+      helpers.click('button', text: 'Save');
+
+      editor.content = 'Code #2';
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Project #1');
+
+      expect(
+        editor.content,
+        equals('Code #1')
+      );
+
+      helpers.click('button', text: '☰').then((){
+        helpers.click('li', text: 'Projects').then((){
+          helpers.click('li', text: 'Copy of Project #1');
+        });
+      });
+
+      expect(
+        editor.content,
+        equals('Code #2')
+      );
+    });
+
+  });
+
+
   group("saving projects", (){
     var editor;
 
