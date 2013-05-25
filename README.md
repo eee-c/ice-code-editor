@@ -19,7 +19,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 ## Contributors
 
  * [Kate Bladow](https://github.com/kbladow)
- * [Stephen Cagle(https://github.com/samedhi)
+ * [Stephen Cagle](https://github.com/samedhi)
  * [Damon Douglas](https://github.com/damondouglas)
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Morgan Nelson](https://github.com/korishev)
