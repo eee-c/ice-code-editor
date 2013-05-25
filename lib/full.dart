@@ -2,15 +2,15 @@ part of ice;
 
 class Full {
   Element el;
-  Editor _ice;
-  Store _store;
+  Editor ice;
+  Store store;
 
   Full({enable_javascript_mode: true}) {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
-    _ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
-    _store = new Store();
+    ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
+    store = new Store();
 
     _attachToolbar();
     _attachKeyboardHandlers();
@@ -19,13 +19,13 @@ class Full {
     _fullScreenStyles();
 
     editorReady.then((_)=> _applyStyles());
-    editorReady.then((_)=> content = _store.isEmpty ?
-      '' : _store.projects.first['code']);
+    editorReady.then((_)=> content = store.isEmpty ?
+      '' : store.projects.first['code']);
   }
 
-  Future get editorReady => _ice.editorReady;
-  String get content => _ice.content;
-  void set content(data) => _ice.content = data;
+  Future get editorReady => ice.editorReady;
+  String get content => ice.content;
+  void set content(data) => ice.content = data;
 
   _attachToolbar() {
     var toolbar = new Element.html('<div class=ice-toolbar>');
@@ -79,7 +79,7 @@ class Full {
     el.children.add(menu);
 
     menu.children
-      ..add(_projectsMenuItem)
+      ..add(new ProjectsDialog(this).el)
       ..add(_newProjectMenuItem)
       ..add(_renameMenuItem)
       ..add(_makeCopyItem)
@@ -87,14 +87,6 @@ class Full {
       ..add(_shareMenuItem)
       ..add(new Element.html('<li>Download</li>'))
       ..add(new Element.html('<li>Help</li>'));
-  }
-
-  _hideMenu() {
-    queryAll('.ice-menu').forEach((e)=> e.remove());
-  }
-
-  _hideDialog() {
-    queryAll('.ice-dialog').forEach((e)=> e.remove());
   }
 
   get _newProjectMenuItem {
@@ -135,49 +127,6 @@ class Full {
     }
   }
 
-  Element get _projectsMenuItem {
-    return new Element.html('<li>Projects</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openProjectsMenu());
-  }
-
-  _openProjectsMenu() {
-    var menu = new Element.html(
-      '''
-      <div class=ice-menu>
-      <h1>Saved Projects</h1>
-      <ul></ul>
-      </div>
-      '''
-    );
-
-    _store.forEach((title, data) {
-      var project = new Element.html('<li>${title}</li>')
-        ..onClick.listen((e)=> _openProject(title))
-        ..onClick.listen((e)=> _hideMenu());
-
-      menu.query('ul').children.add(project);
-    });
-
-    el.children.add(menu);
-
-    menu.style
-      ..maxHeight = '560px'
-      ..overflowY = 'auto'
-      ..position = 'absolute'
-      ..right = '25px'
-      ..top = '60px'
-      ..zIndex = '1000';
-  }
-
-  _openProject(title) {
-    // TODO: Move this into Store (should be a way to make a project as
-    // current)
-    var project = _store.remove(title);
-    _store[title] = project;
-    _ice.content = project['code'];
-  }
-
   Element get _renameMenuItem {
     return new Element.html('<li>Rename</li>')
       ..onClick.listen((e)=> _hideMenu())
@@ -201,7 +150,6 @@ class Full {
     el.children.add(dialog);
 
     dialog.query('input').focus();
-    
   }
 
   _renameProjectAs(String projectName){
@@ -211,9 +159,9 @@ class Full {
 
   String get _currentProjectName{
     if (_store.isEmpty) return "Untitled";
-    return _store.projects.first['title'];    
+    return _store.projects.first['title'];
   }
-  
+
 
   Element get _makeCopyItem {
     return new Element.html('<li>Make a Copy</li>')
@@ -262,7 +210,7 @@ class Full {
   _copyProject() {
     var title = query('.ice-dialog').query('input').value;
 
-    _store[title] = {'code': content};
+    store[title] = {'code': content};
 
     query('.ice-dialog').remove();
   }
@@ -274,9 +222,9 @@ class Full {
   }
 
   void _save() {
-    var title = _store.isEmpty ? 'Untitled' : _store.projects.first['title'];
+    var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
 
-    _store[title] = {'code': content};
+    store[title] = {'code': content};
   }
 
   Element get _shareMenuItem {
@@ -306,7 +254,7 @@ class Full {
       ..style.width = '100%';
   }
 
-  String get encodedContent => Gzip.encode(_ice.content);
+  String get encodedContent => Gzip.encode(ice.content);
 
   _fullScreenStyles() {
     document.body.style
@@ -328,4 +276,61 @@ class Full {
        ..height = '100%'
        ..width = '100%';
   }
+}
+
+class ProjectsDialog {
+  var parent, ice, store;
+
+  ProjectsDialog(full) {
+    parent = full.el;
+    ice = full.ice;
+    store = full.store;
+  }
+
+  Element get el {
+    return new Element.html('<li>Projects</li>')
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _openProjectsMenu());
+  }
+
+  _openProjectsMenu() {
+    var menu = new Element.html(
+      '''
+      <div class=ice-menu>
+      <h1>Saved Projects</h1>
+      <ul></ul>
+      </div>
+      '''
+    );
+
+    store.forEach((title, data) {
+      var project = new Element.html('<li>${title}</li>')
+        ..onClick.listen((e)=> _openProject(title))
+        ..onClick.listen((e)=> _hideMenu());
+
+      menu.query('ul').children.add(project);
+    });
+
+    parent.children.add(menu);
+
+    menu.style
+      ..maxHeight = '560px'
+      ..overflowY = 'auto';
+  }
+
+  _openProject(title) {
+    // TODO: Move this into Store (should be a way to make a project as
+    // current)
+    var project = store.remove(title);
+    store[title] = project;
+    ice.content = project['code'];
+  }
+}
+
+_hideMenu() {
+  queryAll('.ice-menu').forEach((e)=> e.remove());
+}
+
+_hideDialog() {
+  queryAll('.ice-dialog').forEach((e)=> e.remove());
 }
