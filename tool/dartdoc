@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+dartdoc \
+  --package-root=packages \
+  --exclude-lib=js,js.wrapping,meta,metadata \
+  lib/ice.dart
+
+mv docs/ice.html docs/dev.html
+
+cat docs/dev.html | \
+    grep -v Dialog.html | \
+    grep -v ice/Ace \
+  > docs/ice.html
