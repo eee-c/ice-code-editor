@@ -187,7 +187,7 @@ class Full {
   }
 
   get _copiedProjectName {
-    if (_store.isEmpty) return "Untitled";
+    if (store.isEmpty) return "Untitled";
 
     RegExp exp = new RegExp(r"\s+\((\d+)\)$");
     var title = _store.projects.first['title'].replaceFirst(exp, "");
