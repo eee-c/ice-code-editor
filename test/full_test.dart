@@ -85,8 +85,8 @@ full_tests() {
       helpers.click('li', text: 'Share');
 
       expect(
-        queryAll('.ice-dialog input:focus'),
-        helpers.elementsArePresent
+        query('.ice-dialog input'),
+        equals(document.activeElement)
       );
     });
 
@@ -304,6 +304,16 @@ full_tests() {
       );
     });
 
+    test("project name field has focus", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input'),
+        equals(document.activeElement)
+      );
+    });
+
     test("works with existing projects", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
@@ -343,6 +353,42 @@ full_tests() {
       expect(
         editor.content,
         equals('Code #2')
+      );
+    });
+
+    test("project name field is pre-populated", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #1';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input').value,
+        equals("Project #1 (1)")
+      );
+    });
+
+    test("project name field is incremented", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Project #1';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input').value,
+        equals("Project #1 (2)")
       );
     });
 
