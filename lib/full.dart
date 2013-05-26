@@ -231,6 +231,7 @@ class Full {
     el.children.add(dialog);
 
     dialog.query('input')
+      ..focus()
       ..select()
       ..disabled = true
       ..style.width = '100%';

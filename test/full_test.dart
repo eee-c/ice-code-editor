@@ -85,8 +85,8 @@ full_tests() {
       helpers.click('li', text: 'Share');
 
       expect(
-        queryAll('.ice-dialog input:focus'),
-        helpers.elementsArePresent
+        query('.ice-dialog input'),
+        equals(document.activeElement)
       );
     });
 
