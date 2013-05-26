@@ -80,51 +80,13 @@ class Full {
 
     menu.children
       ..add(new ProjectsDialog(this).el)
-      ..add(_newProjectMenuItem)
+      ..add(new NewProjectDialog(this).el)
       ..add(_renameMenuItem)
-      ..add(_makeCopyItem)
-      ..add(_saveMenuItem)
-      ..add(_shareMenuItem)
+      ..add(new CopyDialog(this).el)
+      ..add(new SaveMenu(this).el)
+      ..add(new ShareDialog(this).el)
       ..add(new Element.html('<li>Download</li>'))
       ..add(new Element.html('<li>Help</li>'));
-  }
-
-  get _newProjectMenuItem {
-    return new Element.html('<li>New</li>')
-      ..onClick.listen((e)=> _openNewProjectDialog());
-  }
-
-  _openNewProjectDialog() {
-    _hideMenu();
-
-    var dialog = new Element.html(
-        '''
-        <div class=ice-dialog>
-        <label>Name:<input type="text" size="30"></label>
-        <button>Save</button>
-        </div>
-        '''
-    );
-
-    dialog.query('button').onClick.listen((e)=> _saveNewProject());
-
-    el.children.add(dialog);
-    dialog.query('input').focus();
-  }
-
-  _saveNewProject() {
-    var title = query('.ice-dialog').query('input').value;
-    if(_store.containsKey(title)) {
-      var message = "There is already a project with that name";
-      var alert = new Element.html('<div id="alert">$message</div>');
-
-      el.children.add(alert..style.visibility="hidden");
-      if(_ice.enable_javascript_mode) window.alert(message);
-    }
-    else {
-      _store[title] = {};
-      query('.ice-dialog').remove();
-    }
   }
 
   Element get _renameMenuItem {
@@ -213,45 +175,6 @@ class Full {
     store[title] = {'code': content};
 
     query('.ice-dialog').remove();
-  }
-
-  Element get _saveMenuItem {
-    return new Element.html('<li>Save</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _save());
-  }
-
-  void _save() {
-    var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
-
-    store[title] = {'code': content};
-  }
-
-  Element get _shareMenuItem {
-    return new Element.html('<li>Share</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openShareDialog());
-  }
-
-  _openShareDialog() {
-    var dialog = new Element.html(
-        '''
-        <div class=ice-dialog>
-        <h1>Copy this link to share your creation:</h1>
-        <input
-          value="http://gamingjs.com/ice/#B/${encodedContent}"
-          style="width=400px; padding=5px; border=0px">
-        </div>
-        '''
-    );
-
-    el.children.add(dialog);
-
-    dialog.query('input')
-      ..focus()
-      ..select()
-      ..disabled = true
-      ..style.width = '100%';
   }
 
   String get encodedContent => Gzip.encode(ice.content);

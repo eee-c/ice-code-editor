@@ -3,7 +3,7 @@ part of ice;
 class ProjectsDialog {
   var parent, ice, store;
 
-  ProjectsDialog(full) {
+  ProjectsDialog(Full full) {
     parent = full.el;
     ice = full.ice;
     store = full.store;
