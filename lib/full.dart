@@ -179,7 +179,7 @@ class Full {
     var dialog = new Element.html(
         '''
         <div class=ice-dialog>
-        <label>Name:<input type="text" size="30"></label>
+        <label>Name:<input type="text" size="30" value="$_copiedProjectName"></label>
         <button>Save</button>
         </div>
         '''
@@ -188,6 +188,21 @@ class Full {
     dialog.query('button').onClick.listen((_)=> _copyProject());
 
     el.children.add(dialog);
+
+    dialog.query('input')
+      ..focus();
+  }
+
+  get _copiedProjectName {
+    if (_store.isEmpty) return "Untitled";
+
+    RegExp exp = new RegExp(r"\s\((\d+)\)$");
+    var stringCount = exp.firstMatch(_store.projects.first['title']);
+    var count = stringCount == null ? 1 : int.parse(stringCount[1]) + 1;
+
+    var title = _store.projects.first['title'].replaceFirst(exp, "");
+
+    return "$title ($count)";
   }
 
   _copyProject() {
