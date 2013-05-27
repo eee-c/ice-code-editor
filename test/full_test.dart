@@ -120,7 +120,7 @@ full_tests() {
 
     test("clicking the project menu item opens the project dialog", (){
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
 
       expect(
         queryAll('div'),
@@ -130,7 +130,7 @@ full_tests() {
 
     test("clicking the project menu item closes the main menu", (){
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
 
       expect(
         queryAll('li'),
@@ -140,7 +140,7 @@ full_tests() {
 
     test("the escape key closes the project dialog", (){
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
 
       document.body.dispatchEvent(
         new KeyboardEvent(
@@ -157,7 +157,7 @@ full_tests() {
 
     test("the menu button closes the projects dialog", (){
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
       helpers.click('button', text: '☰');
 
       expect(
@@ -175,7 +175,7 @@ full_tests() {
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
 
       expect(
         queryAll('div'),
@@ -205,7 +205,7 @@ full_tests() {
       helpers.click('li', text: 'Save');
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
       helpers.click('li', text: 'Project #1');
 
       expect(
@@ -222,7 +222,7 @@ full_tests() {
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
       helpers.click('li', text: 'Project #1');
 
       expect(queryAll('li'), helpers.elementsAreEmpty);
@@ -437,7 +437,7 @@ full_tests() {
       helpers.click('li', text: 'Save');
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
       helpers.click('li', text: 'Project #1');
 
       expect(
@@ -446,7 +446,7 @@ full_tests() {
       );
 
       helpers.click('button', text: '☰').then((){
-        helpers.click('li', text: 'Projects').then((){
+        helpers.click('li', text: 'Open').then((){
           helpers.click('li', text: 'Copy of Project #1');
         });
       });

@@ -1,16 +1,16 @@
 part of ice;
 
-class ProjectsDialog {
+class OpenDialog {
   var parent, ice, store;
 
-  ProjectsDialog(Full full) {
+  OpenDialog(Full full) {
     parent = full.el;
     ice = full.ice;
     store = full.store;
   }
 
   Element get el {
-    return new Element.html('<li>Projects</li>')
+    return new Element.html('<li>Open</li>')
       ..onClick.listen((e)=> _hideMenu())
       ..onClick.listen((e)=> _openProjectsMenu());
   }

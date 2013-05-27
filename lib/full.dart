@@ -79,7 +79,7 @@ class Full {
     el.children.add(menu);
 
     menu.children
-      ..add(new ProjectsDialog(this).el)
+      ..add(new OpenDialog(this).el)
       ..add(new NewProjectDialog(this).el)
       ..add(_renameMenuItem)
       ..add(new CopyDialog(this).el)
