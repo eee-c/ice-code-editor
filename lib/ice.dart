@@ -13,7 +13,7 @@ part 'store.dart';
 part 'gzip.dart';
 
 part 'full.dart';
-part 'full/projects_dialog.dart';
+part 'full/open_dialog.dart';
 part 'full/new_project_dialog.dart';
 part 'full/save_menu.dart';
 part 'full/share_dialog.dart';
