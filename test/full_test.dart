@@ -370,9 +370,33 @@ full_tests() {
         query('.ice-dialog input').value,
         equals("Project #1 (1)")
       );
+     });
+
+    test("project name field is pre-populated", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'Foo';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Foo');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input').value,
+        equals("Foo (2)")
+      );
     });
 
-    test("project name field is incremented", (){
+    test("project name field is incremented with multiple tests", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 

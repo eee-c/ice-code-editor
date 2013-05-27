@@ -196,13 +196,22 @@ class Full {
   get _copiedProjectName {
     if (_store.isEmpty) return "Untitled";
 
-    RegExp exp = new RegExp(r"\s\((\d+)\)$");
-    var stringCount = exp.firstMatch(_store.projects.first['title']);
-    var count = stringCount == null ? 1 : int.parse(stringCount[1]) + 1;
-
+    RegExp exp = new RegExp(r"\s+\((\d+)\)$");
     var title = _store.projects.first['title'].replaceFirst(exp, "");
 
-    return "$title ($count)";
+    var same_base = _store.values.where((p) {
+      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['title']);
+    });
+    var copy_numbers = same_base.map((p) {
+        var stringCount = exp.firstMatch(p['title']);
+        return stringCount == null ? 0 : int.parse(stringCount[1]);
+      })
+      .toList()
+      ..sort();
+
+    var count = copy_numbers.last;
+
+    return "$title (${count+1})";
   }
 
   _copyProject() {
