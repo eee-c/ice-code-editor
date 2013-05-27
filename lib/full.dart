@@ -79,15 +79,27 @@ class Full {
     el.children.add(menu);
 
     menu.children
-      ..add(new OpenDialog(this).el)
-      ..add(new NewProjectDialog(this).el)
+      ..add(_openDialog)
       ..add(_renameMenuItem)
-      ..add(new CopyDialog(this).el)
-      ..add(new SaveMenu(this).el)
-      ..add(new ShareDialog(this).el)
-      ..add(new Element.html('<li>Download</li>'))
-      ..add(new Element.html('<li>Help</li>'));
+      ..add(_newProjectDialog)
+      ..add(_renameDialog)
+      ..add(_copyDialog)
+      ..add(_saveMenu)
+      ..add(_shareDialog)
+      ..add(_removeDialog)
+      ..add(_downloadDialog)
+      ..add(_helpDialog);
   }
+
+  get _openDialog=> OpenDialog(this).el;
+  get _newProjectDialog=> new NewProjectDialog(this).el;
+  get _renameDialog=> new RenameDialog(this).el;
+  get _copyDialog=> new CopyDialog(this).el;
+  get _saveMenu=> new SaveMenu(this).el;
+  get _shareDialog=> new ShareDialog(this).el;
+  get _removeDialog=> new RemoveDialog(this).el;
+  get _downloadDialog=> new DownloadDialog(this).el;
+  get _helpDialog=> new HelpDialog(this).el;
 
   Element get _renameMenuItem {
     return new Element.html('<li>Rename</li>')
@@ -207,4 +219,29 @@ _hideMenu() {
 
 _hideDialog() {
   queryAll('.ice-dialog').forEach((e)=> e.remove());
+}
+
+class RenameDialog {
+  RenameDialog(Full full);
+  Element get el {
+    return new Element.html('<li>Rename</li>');
+  }
+}
+class RemoveDialog {
+  RemoveDialog(Full full);
+  Element get el {
+    return new Element.html('<li>Remove</li>');
+  }
+}
+class DownloadDialog {
+  DownloadDialog(Full full);
+  Element get el {
+    return new Element.html('<li>Download</li>');
+  }
+}
+class HelpDialog {
+  HelpDialog(Full full);
+  Element get el {
+    return new Element.html('<li>Help</li>');
+  }
 }
