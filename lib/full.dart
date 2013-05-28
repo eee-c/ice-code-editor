@@ -91,7 +91,7 @@ class Full {
       ..add(_helpDialog);
   }
 
-  get _openDialog=> OpenDialog(this).el;
+  get _openDialog=> new MenuItem(new OpenDialog(this)).el;
   get _newProjectDialog=> new NewProjectDialog(this).el;
   get _renameDialog=> new RenameDialog(this).el;
   get _copyDialog=> new CopyDialog(this).el;

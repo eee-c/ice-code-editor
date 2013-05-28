@@ -1,21 +1,23 @@
 part of ice;
 
+class MenuItem {
+  var dialog;
+  MenuItem(this.dialog);
+  Element get el {
+    return new Element.html('<li>${dialog.name}</li>')
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> dialog.open());
+  }
+}
+
 class OpenDialog {
+  String name = "Open";
   var parent, ice, store;
 
-  OpenDialog(Full full) {
-    parent = full.el;
-    ice = full.ice;
-    store = full.store;
-  }
+  OpenDialog(Full full): this.fromParts(full.el, full.ice, full.store);
+  OpenDialog.fromParts(this.parent, this.ice, this.store);
 
-  Element get el {
-    return new Element.html('<li>Open</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openProjectsMenu());
-  }
-
-  _openProjectsMenu() {
+  open() {
     var menu = new Element.html(
       '''
       <div class=ice-menu>
