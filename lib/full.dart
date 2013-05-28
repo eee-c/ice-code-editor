@@ -81,7 +81,7 @@ class Full {
     menu.children
       ..add(_projectsMenuItem)
       ..add(_newProjectMenuItem)
-      ..add(new Element.html('<li>Rename</li>'))
+      ..add(_renameMenuItem)
       ..add(_makeCopyItem)
       ..add(_saveMenuItem)
       ..add(_shareMenuItem)
@@ -168,6 +168,41 @@ class Full {
     _store[title] = project;
     _ice.content = project['code'];
   }
+
+  Element get _renameMenuItem {
+    return new Element.html('<li>Rename</li>')
+      ..onClick.listen((e)=> _hideMenu())
+      ..onClick.listen((e)=> _openRenameDialog());
+  }
+
+  _openRenameDialog(){
+    var dialog = new Element.html(
+        '''
+        <div class=ice-dialog>
+        <label>Name:<input type="text" size="30" value="$_currentProjectName"></label>
+        <button>Rename</button>
+        </div>
+        '''
+    );
+
+    dialog.query('button').onClick
+      ..listen((_)=> _renameProjectAs(dialog.query('input').value))
+      ..listen((_)=> _hideDialog());
+
+    el.children.add(dialog);
+    
+  }
+
+  _renameProjectAs(String projectName){
+    var project = _store.remove(_currentProjectName);
+    _store[projectName] = project;
+  }
+
+  String get _currentProjectName{
+    if (_store.isEmpty) return "Untitled";
+    return _store.projects.first['title'];    
+  }
+  
 
   Element get _makeCopyItem {
     return new Element.html('<li>Make a Copy</li>')
