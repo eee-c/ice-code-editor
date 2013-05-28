@@ -343,6 +343,16 @@ full_tests() {
     });
 
     // the rename input field has focus
+    test("rename input field has focus", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+
+      expect(
+        query('.ice-dialog input'),
+        equals(document.activeElement)
+      );
+    });
+
     // alerts the user if renaming duplicates an existing project
   });
 

@@ -190,6 +190,9 @@ class Full {
       ..listen((_)=> _hideDialog());
 
     el.children.add(dialog);
+
+    dialog.query('input')
+      ..focus();
     
   }
 
