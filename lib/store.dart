@@ -16,6 +16,11 @@ class Store implements HashMap<String, HashMap> {
 
   Store() { }
 
+  String get currentProjectTitle{
+    if (this.isEmpty) return "Untitled";
+    return projects.first['title'];
+  }
+
   int get length => projects.length;
 
   HashMap operator [](String key) {

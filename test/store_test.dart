@@ -53,6 +53,26 @@ store_tests() {
     });
   });
 
+  group("current project title", (){
+    test("is \"Untitled\" when there are no projects", (){
+      var it = new Store()..clear();
+      expect(
+        it.currentProjectTitle,
+        equals('Untitled')
+      );
+    });
+    test("is this title of the first project when there are projects", (){
+      var it = new Store()..clear();
+      it['one'] = {'id': 1};
+      it['two'] = {'id': 2};
+      expect(
+        it.currentProjectTitle,
+        equals('two')
+      );
+    });
+  });
+
+
   group("destructive operations", (){
     var it;
     setUp((){

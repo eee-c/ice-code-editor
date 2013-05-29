@@ -85,8 +85,8 @@ class Full {
       ..add(_saveMenu)
       ..add(_renameDialog)
       ..add(_shareDialog)
-      ..add(_removeDialog)
       ..add(_downloadDialog)
+      ..add(_removeDialog)
       ..add(_helpDialog);
   }
 
@@ -96,7 +96,7 @@ class Full {
   get _copyDialog=>       new MenuItem(new CopyDialog(this)).el;
   get _saveMenu=>         new MenuItem(new SaveMenu(this)).el;
   get _shareDialog=>      new MenuItem(new ShareDialog(this)).el;
-  get _removeDialog=>   new RemoveDialog(this).el;
+  get _removeDialog=>     new MenuItem(new RemoveDialog(this)).el;
   get _downloadDialog=> new DownloadDialog(this).el;
   get _helpDialog=>     new HelpDialog(this).el;
 
@@ -132,12 +132,6 @@ _hideDialog() {
   queryAll('.ice-dialog').forEach((e)=> e.remove());
 }
 
-class RemoveDialog {
-  RemoveDialog(Full full);
-  Element get el {
-    return new Element.html('<li>Remove</li>');
-  }
-}
 class DownloadDialog {
   DownloadDialog(Full full);
   Element get el {

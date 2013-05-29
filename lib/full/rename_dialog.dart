@@ -9,12 +9,12 @@ class RenameDialog {
 
   open(){
     var dialog = new Element.html(
-        '''
-        <div class=ice-dialog>
-        <label>Name:<input type="text" size="30" value="$_currentProjectName"></label>
-        <button>Rename</button>
-        </div>
-        '''
+      '''
+      <div class=ice-dialog>
+      <label>Name:<input type="text" size="30" value="$_currentProjectTitle"></label>
+      <button>Rename</button>
+      </div>
+      '''
     );
 
     dialog.query('button').onClick
@@ -28,13 +28,10 @@ class RenameDialog {
 
   }
 
-  _renameProjectAs(String projectName){
-    var project = store.remove(_currentProjectName);
-    store[projectName] = project;
+  _renameProjectAs(String projectTitle){
+    var project = store.remove(_currentProjectTitle);
+    store[projectTitle] = project;
   }
 
-  String get _currentProjectName{
-    if (store.isEmpty) return "Untitled";
-    return store.projects.first['title'];
-  }
+  String get _currentProjectTitle => store.currentProjectTitle;
 }

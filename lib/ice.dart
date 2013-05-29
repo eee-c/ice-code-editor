@@ -20,3 +20,4 @@ part 'full/rename_dialog.dart';
 part 'full/save_menu.dart';
 part 'full/share_dialog.dart';
 part 'full/copy_dialog.dart';
+part 'full/remove_dialog.dart';
