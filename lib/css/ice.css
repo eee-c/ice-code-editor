@@ -70,6 +70,11 @@ ul.ice-menu li {
   cursor: pointer;
 }
 
+ul.ice-menu li:hover {
+  color: white;
+  background-color: rgba(0,0,0,0.25);
+}
+
 .ice-dialog h1 {
   margin: 0px 0px 5px;
   font-size: 100%;
