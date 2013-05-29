@@ -127,13 +127,13 @@ class Full {
   }
 
   _renameProjectAs(String projectName){
-    var project = _store.remove(_currentProjectName);
-    _store[projectName] = project;
+    var project = store.remove(_currentProjectName);
+    store[projectName] = project;
   }
 
   String get _currentProjectName{
-    if (_store.isEmpty) return "Untitled";
-    return _store.projects.first['title'];
+    if (store.isEmpty) return "Untitled";
+    return store.projects.first['title'];
   }
 
 
@@ -141,52 +141,6 @@ class Full {
     return new Element.html('<li>Make a Copy</li>')
       ..onClick.listen((e)=> _hideMenu())
       ..onClick.listen((e)=> _openCopyDialog());
-  }
-
-  _openCopyDialog() {
-    var dialog = new Element.html(
-        '''
-        <div class=ice-dialog>
-        <label>Name:<input type="text" size="30" value="$_copiedProjectName"></label>
-        <button>Save</button>
-        </div>
-        '''
-    );
-
-    dialog.query('button').onClick.listen((_)=> _copyProject());
-
-    el.children.add(dialog);
-
-    dialog.query('input').focus();
-  }
-
-  get _copiedProjectName {
-    if (store.isEmpty) return "Untitled";
-
-    RegExp exp = new RegExp(r"\s+\((\d+)\)$");
-    var title = _store.projects.first['title'].replaceFirst(exp, "");
-
-    var same_base = _store.values.where((p) {
-      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['title']);
-    });
-    var copy_numbers = same_base.map((p) {
-        var stringCount = exp.firstMatch(p['title']);
-        return stringCount == null ? 0 : int.parse(stringCount[1]);
-      })
-      .toList()
-      ..sort();
-
-    var count = copy_numbers.last;
-
-    return "$title (${count+1})";
-  }
-
-  _copyProject() {
-    var title = query('.ice-dialog').query('input').value;
-
-    store[title] = {'code': content};
-
-    query('.ice-dialog').remove();
   }
 
   String get encodedContent => Gzip.encode(ice.content);

@@ -314,10 +314,10 @@ full_tests() {
       );
     });
   });
-  
+
   group("rename", (){
     var editor;
-    
+
     setUp(()=> editor = new Full(enable_javascript_mode: false));
     tearDown(() {
       document.query('#ice').remove();
@@ -349,23 +349,23 @@ full_tests() {
         equals("Untitled")
       );
     });
-    
+
     test("can rename a project", (){
       helpers.click('button', text: '☰');
 
       helpers.click('li', text: 'New');
       query('input').value = 'My New Project';
       helpers.click('button', text: 'Save');
-      
+
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
-      
+
       query('input').value = 'Project #1';
       helpers.click('button', text: 'Rename');
-      
+
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
-      
+      helpers.click('li', text: 'Open');
+
       expect(
         queryAll('li'),
         helpers.elementsContain('Project #1')
@@ -485,7 +485,7 @@ full_tests() {
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Projects');
+      helpers.click('li', text: 'Open');
       helpers.click('li', text: 'Foo');
 
       helpers.click('button', text: '☰');
