@@ -1,21 +1,13 @@
 part of ice;
 
 class SaveMenu {
-  Store store;
-  Editor ice;
+  String name = 'Save';
+  var parent, ice, store;
 
-  SaveMenu(Full full) {
-    store = full.store;
-    ice = full.ice;
-  }
+  SaveMenu(Full full): this.fromParts(full.el, full.ice, full.store);
+  SaveMenu.fromParts(this.parent, this.ice, this.store);
 
-  Element get el {
-    return new Element.html('<li>Save</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _save());
-  }
-
-  void _save() {
+  void open() {
     var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
 
     store[title] = {'code': ice.content};

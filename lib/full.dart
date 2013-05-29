@@ -80,26 +80,25 @@ class Full {
 
     menu.children
       ..add(_openDialog)
-      ..add(_renameMenuItem)
       ..add(_newProjectDialog)
-      ..add(_renameDialog)
       ..add(_copyDialog)
       ..add(_saveMenu)
+      ..add(_renameMenuItem)
       ..add(_shareDialog)
       ..add(_removeDialog)
       ..add(_downloadDialog)
       ..add(_helpDialog);
   }
 
-  get _openDialog=> new MenuItem(new OpenDialog(this)).el;
+  get _openDialog=>       new MenuItem(new OpenDialog(this)).el;
   get _newProjectDialog=> new MenuItem(new NewProjectDialog(this)).el;
   get _renameDialog=> new RenameDialog(this).el;
-  get _copyDialog=> new MenuItem(new CopyDialog(this)).el;
-  get _saveMenu=> new SaveMenu(this).el;
-  get _shareDialog=> new MenuItem(new ShareDialog(this)).el;
-  get _removeDialog=> new RemoveDialog(this).el;
+  get _copyDialog=>       new MenuItem(new CopyDialog(this)).el;
+  get _saveMenu=>         new MenuItem(new SaveMenu(this)).el;
+  get _shareDialog=>      new MenuItem(new ShareDialog(this)).el;
+  get _removeDialog=>   new RemoveDialog(this).el;
   get _downloadDialog=> new DownloadDialog(this).el;
-  get _helpDialog=> new HelpDialog(this).el;
+  get _helpDialog=>     new HelpDialog(this).el;
 
   Element get _renameMenuItem {
     return new Element.html('<li>Rename</li>')
