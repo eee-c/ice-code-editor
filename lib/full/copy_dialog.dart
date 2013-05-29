@@ -1,24 +1,13 @@
 part of ice;
 
 class CopyDialog {
-  Full full;
-  Store store;
-  Editor ice;
-  Element parent;
+  String name = 'Make a Copy';
+  var parent, ice, store;
 
-  CopyDialog(Full this.full) {
-    store = full.store;
-    ice = full.ice;
-    parent = full.el;
-  }
+  CopyDialog(Full full): this.fromParts(full.el, full.ice, full.store);
+  CopyDialog.fromParts(this.parent, this.ice, this.store);
 
-  Element get el {
-    return new Element.html('<li>Make a Copy</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openDialog());
-  }
-
-  _openDialog() {
+  open() {
     var dialog = new Element.html(
       '''
       <div class=ice-dialog>

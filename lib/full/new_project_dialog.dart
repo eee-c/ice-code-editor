@@ -1,21 +1,13 @@
 part of ice;
 
 class NewProjectDialog {
-  Element parent;
-  Store store;
+  String name = 'New';
+  var parent, ice, store;
 
-  NewProjectDialog(Full full) {
-    parent = full.el;
-    store = full.store;
-  }
+  NewProjectDialog(Full full): this.fromParts(full.el, full.ice, full.store);
+  NewProjectDialog.fromParts(this.parent, this.ice, this.store);
 
-  Element get el  {
-    return new Element.html('<li>New</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openDialog());
-  }
-
-  _openDialog() {
+  open() {
     var dialog = new Element.html(
       '''
       <div class=ice-dialog>

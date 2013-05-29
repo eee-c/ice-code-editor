@@ -1,24 +1,13 @@
 part of ice;
 
 class ShareDialog {
-  Full full;
-  Store store;
-  Editor ice;
-  Element parent;
+  String name = 'Share';
+  var parent, ice, store, full;
 
-  ShareDialog(Full this.full) {
-    store = full.store;
-    ice = full.ice;
-    parent = full.el;
-  }
+  ShareDialog(Full full): this.fromParts(full.el, full.ice, full.store, full);
+  ShareDialog.fromParts(this.parent, this.ice, this.store, this.full);
 
-  Element get el {
-    return new Element.html('<li>Share</li>')
-      ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> _openDialog());
-  }
-
-  _openDialog() {
+  open() {
     var dialog = new Element.html(
       '''
       <div class=ice-dialog>

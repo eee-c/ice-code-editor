@@ -92,11 +92,11 @@ class Full {
   }
 
   get _openDialog=> new MenuItem(new OpenDialog(this)).el;
-  get _newProjectDialog=> new NewProjectDialog(this).el;
+  get _newProjectDialog=> new MenuItem(new NewProjectDialog(this)).el;
   get _renameDialog=> new RenameDialog(this).el;
-  get _copyDialog=> new CopyDialog(this).el;
+  get _copyDialog=> new MenuItem(new CopyDialog(this)).el;
   get _saveMenu=> new SaveMenu(this).el;
-  get _shareDialog=> new ShareDialog(this).el;
+  get _shareDialog=> new MenuItem(new ShareDialog(this)).el;
   get _removeDialog=> new RemoveDialog(this).el;
   get _downloadDialog=> new DownloadDialog(this).el;
   get _helpDialog=> new HelpDialog(this).el;
