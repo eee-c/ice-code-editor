@@ -241,6 +241,36 @@ full_tests() {
       new Store().clear();
     });
 
+    test("new project input field has focus", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      expect(
+        query('.ice-dialog input'),
+        equals(document.activeElement)
+      );
+    });
+
+    test("cannot have a duplicate name", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My New Project';
+
+      helpers.click('button', text: 'Save');
+      
+      //a duplicate
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My New Project';
+
+      helpers.click('button', text: 'Save');
+
+      expect(query('#alert').
+              text, equals("There is already a project with that name"));
+    });
+
     test("can be named", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
