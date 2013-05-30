@@ -117,13 +117,22 @@ class Full {
     dialog.query('button').onClick.listen((e)=> _saveNewProject());
 
     el.children.add(dialog);
+    dialog.query('input').focus();
   }
 
   _saveNewProject() {
     var title = query('.ice-dialog').query('input').value;
-    _store[title] = {};
+    if(_store.containsKey(title)) {
+      var message = "There is already a project with that name";
+      var alert = new Element.html('<div id="alert">$message</div>');
 
-    query('.ice-dialog').remove();
+      el.children.add(alert..style.visibility="hidden");
+      if(_ice.enable_javascript_mode) window.alert(message);
+    }
+    else {
+      _store[title] = {};
+      query('.ice-dialog').remove();
+    }
   }
 
   Element get _projectsMenuItem {
@@ -191,8 +200,7 @@ class Full {
 
     el.children.add(dialog);
 
-    dialog.query('input')
-      ..focus();
+    dialog.query('input').focus();
     
   }
 
@@ -227,8 +235,7 @@ class Full {
 
     el.children.add(dialog);
 
-    dialog.query('input')
-      ..focus();
+    dialog.query('input').focus();
   }
 
   get _copiedProjectName {
