@@ -15,6 +15,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 ## Core Collaborators
 
  * [Santiago Arias](https://github.com/santiaago)
+ * [Srdjan Pejic](http://batasrki.github.io/)
 
 ## Contributors
 
@@ -24,7 +25,6 @@ The example app contained in `example` is a simple Dart web server. From the `ex
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Anita Kuno](https://github.com/anteaya)
  * [Morgan Nelson](https://github.com/korishev)
- * [Srdjan Pejic](http://batasrki.github.io/)
  * [Michael Risse](https://github.com/rissem)
 
 ## Want to Help?
