@@ -58,7 +58,6 @@ rename_dialog_tests() {
       );
     });
 
-    // the rename input field has focus
     test("rename input field has focus", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
@@ -69,6 +68,78 @@ rename_dialog_tests() {
       );
     });
 
-    // alerts the user if renaming duplicates an existing project
+    test("cannot have a duplicate name", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My Project #1';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My Project #2';
+      helpers.click('button', text: 'Save');
+
+      //a duplicate
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+
+      query('input').value = 'My Project #1';
+      helpers.click('button', text: 'Rename');
+
+      expect(
+        query('#alert').text,
+        equals("There is already a project with that name")
+      );
+    });
+
+    test("hitting the enter key renames", (){
+      helpers.click('button', text: '☰');
+
+      helpers.click('li', text: 'New');
+      query('input').value = 'My New Project';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+
+      query('input').value = 'Project #1';
+      helpers.hitEnter();
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('li'),
+        helpers.elementsContain('Project #1')
+      );
+    });
+
+    test("stays active after alert", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My Project #1';
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My Project #2';
+      helpers.click('button', text: 'Save');
+
+      //a duplicate
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+
+      query('input').value = 'My Project #1';
+      helpers.click('button', text: 'Rename');
+
+      expect(
+        queryAll('button'),
+        helpers.elementsContain('Rename')
+      );
+    });
   });
 }

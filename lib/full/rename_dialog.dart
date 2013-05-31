@@ -18,19 +18,29 @@ class RenameDialog {
     );
 
     dialog.query('button').onClick
-      ..listen((_)=> _renameProjectAs(dialog.query('input').value))
-      ..listen((_)=> _hideDialog());
+      .listen((_)=> _renameProject());
+
+    dialog.query('input').onKeyUp
+      .listen((e){if (_isEnterKey(e)) _renameProject();});
 
     parent.children.add(dialog);
 
-    dialog.query('input')
-      ..focus();
-
+    dialog.query('input').focus();
   }
 
-  _renameProjectAs(String projectTitle){
+  _renameProject() {
+    var title = query('.ice-dialog').query('input').value;
+
+    if(store.containsKey(title)) {
+      var message = "There is already a project with that name";
+
+      Notify.alert(message, parent: parent, test_mode: !ice.enable_javascript_mode);
+      return;
+    }
+
     var project = store.remove(_currentProjectTitle);
-    store[projectTitle] = project;
+    store[title] = project;
+    _hideDialog();
   }
 
   String get _currentProjectTitle => store.currentProjectTitle;

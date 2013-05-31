@@ -45,4 +45,5 @@ full_tests() {
       expect(queryAll('li'), helpers.elementsAreEmpty);
     });
   });
+  // TODO: put current project title in the browser title
 }

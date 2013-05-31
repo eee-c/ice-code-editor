@@ -13,6 +13,7 @@ part 'store.dart';
 part 'gzip.dart';
 
 part 'full.dart';
+part 'full/notify.dart';
 part 'full/menu_item.dart';
 part 'full/open_dialog.dart';
 part 'full/new_project_dialog.dart';

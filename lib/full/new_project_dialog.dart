@@ -29,18 +29,14 @@ class NewProjectDialog {
 
   _create() {
     var title = query('.ice-dialog').query('input').value;
-    if(store.containsKey(title)) {
+    if (store.containsKey(title)) {
       var message = "There is already a project with that name";
-      var alert = new Element.html('<div id="alert">$message</div>');
-
-      parent.children.add(alert..style.visibility="hidden");
-      if(ice.enable_javascript_mode) window.alert(message);
+      Notify.alert(message, parent: parent, test_mode: !ice.enable_javascript_mode);
+      return;
     }
-    else {
-      store[title] = {};
-      ice.content = '';
 
-      _hideDialog();
-    }
+    store[title] = {};
+    ice.content = '';
+    _hideDialog();
   }
 }
