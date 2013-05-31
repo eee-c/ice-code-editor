@@ -144,3 +144,9 @@ class HelpDialog {
     return new Element.html('<li>Help</li>');
   }
 }
+
+_isEscapeKey(e) =>
+  e.keyCode == 27 || e.$dom_keyIdentifier.codeUnits.first == 27;
+
+_isEnterKey(e) =>
+  e.keyCode == 13 || e.$dom_keyIdentifier.codeUnits.first == 13;

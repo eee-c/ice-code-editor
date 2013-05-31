@@ -20,6 +20,19 @@ click(String selector, {text}) {
   return new FakeCompleter();
 }
 
+hitEnter()=> type(13);
+hitEscape()=> type(27);
+
+type(int charCode) {
+  document.activeElement.dispatchEvent(
+    new KeyboardEvent(
+      'keyup',
+      keyIdentifier: new String.fromCharCode(charCode)
+    )
+  );
+}
+
+
 get elementsAreEmpty =>
   new ElementListMatcher(isEmpty);
 

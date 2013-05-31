@@ -82,5 +82,43 @@ new_project_dialog_tests(){
         helpers.elementsDoNotContain('Save')
       );
     });
+
+    test("hitting the enter key saves", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      query('input').value = 'My New Project';
+      helpers.hitEnter();
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsContain('My New Project')
+      );
+    });
+
+    test("creating a new project opens it immediately", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      query('input').value = 'My Project';
+      helpers.click('button', text: 'Save');
+      editor.content = 'asdf';
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      query('input').value = 'My New Project';
+      helpers.click('button', text: 'Save');
+
+      expect(
+        editor.content,
+        equals('')
+      );
+    });
   });
+  // TODO: templates
+  // TODO: blank name behavior
 }

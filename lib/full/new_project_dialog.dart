@@ -20,6 +20,9 @@ class NewProjectDialog {
     dialog.query('button')
       ..onClick.listen((e)=> _create());
 
+    dialog.query('input')
+      ..onKeyUp.listen((e){if (_isEnterKey(e)) _create();});
+
     parent.children.add(dialog);
     dialog.query('input').focus();
   }
@@ -35,6 +38,8 @@ class NewProjectDialog {
     }
     else {
       store[title] = {};
+      ice.content = '';
+
       _hideDialog();
     }
   }
