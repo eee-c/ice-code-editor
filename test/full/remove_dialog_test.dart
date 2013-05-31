@@ -34,4 +34,6 @@ remove_dialog_tests() {
     });
   });
   // TODO: alert are you sure?
+  // TODO: open previous project on remove
+  // TODO: open default project when no more projects exist
 }
