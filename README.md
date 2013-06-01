@@ -12,6 +12,21 @@ This is an attempt to convert the JavaScript version ([repository](https://githu
 
 The example app contained in `example` is a simple Dart web server. From the `example` directory, run the web server with `dart app.dart`, then open `http://localhost:8000` in Dartium. You should see a simple ACE Editor embedded in the page.
 
+## Features
+
+ * Update button — updates preview / toggles auto-update (0% done)
+ * Hide Code button — hides code (0% done)
+ * Main Menu button
+   * Open (90% done, needs CSS work)
+   * New (50% done, needs template)
+   * Make a Copy (100% done)
+   * Save (100% done)
+   * Rename (100% done)
+   * Share (50% done, needs shortener)
+   * Download (0% done)
+   * Remove (50% done, needs to open other project, alert)
+   * Help (0% done, needs link to wiki)
+
 ## Core Collaborators
 
  * [Santiago Arias](https://github.com/santiaago)
