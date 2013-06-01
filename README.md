@@ -24,7 +24,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
    * Rename (100% done)
    * Share (50% done, needs shortener)
    * Download (0% done)
-   * Remove (50% done, needs to open other project, alert)
+   * Remove (100% done)
    * Help (0% done, needs link to wiki)
 
 ## Core Collaborators
@@ -37,6 +37,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
  * [Kate Bladow](https://github.com/kbladow)
  * [Stephen Cagle](https://github.com/samedhi)
  * [Damon Douglas](https://github.com/damondouglas)
+ * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Anita Kuno](https://github.com/anteaya)
  * [Morgan Nelson](https://github.com/korishev)

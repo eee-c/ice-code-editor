@@ -32,8 +32,56 @@ remove_dialog_tests() {
         helpers.elementsDoNotContain('My New Project')
       );
     });
+
+    test("confirms that it's ok to remove", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      helpers.typeIn('My Project');
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Remove');
+
+      expect(
+        query('#confirmation').text,
+        matches('Are you sure you want to remove this project?')
+      );
+    });
+
+    test("open previous project on remove", (){
+      helpers.createProject(
+        'My Old Project',
+        content: "Old content",
+        editor: editor
+      );
+
+      helpers.createProject(
+        'My New Project',
+        content: "New content",
+        editor: editor
+      );
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Remove');
+
+      expect(
+        editor.content,
+        equals("Old content")
+      );
+
+    });
+
+    test("open default project when no more projects exist", (){
+      helpers.createProject('My New Project');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Remove');
+
+      expect(
+        editor.content,
+        matches("THREE.IcosahedronGeometry")
+      );
+    });
   });
-  // TODO: alert are you sure?
-  // TODO: open previous project on remove
-  // TODO: open default project when no more projects exist
+  // TODO: verify preview element is updated
 }

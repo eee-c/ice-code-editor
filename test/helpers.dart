@@ -3,6 +3,21 @@ library ice_test_helpers;
 import 'dart:html';
 import 'package:unittest/matcher.dart';
 
+createProject(String title, {content, editor}) {
+  click('button', text: '☰');
+  click('li', text: 'New');
+  typeIn(title);
+  click('button', text: 'Save');
+
+  if (content != null) {
+    if (editor == null) throw new Exception("Need an editor instance");
+    editor.content = content;
+    click('button', text: '☰');
+    click('li', text: 'Save');
+  }
+}
+
+
 class FakeCompleter {
   then(cb) => cb();
 }

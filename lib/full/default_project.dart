@@ -1,5 +1,7 @@
-/*
+part of ice;
 
+class DefaultProject {
+  static String get content => '''
 <body></body>
 <script src="http://gamingJS.com/Three.js"></script>
 <script src="http://gamingJS.com/ChromeFixes.js"></script>
@@ -16,7 +18,7 @@
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(75, aspect, 1, 1000);
     camera.position.z = 500;
-	scene.add(camera);
+    scene.add(camera);
 
     geometry = new THREE.IcosahedronGeometry(200, 1);
     material = new THREE.MeshBasicMaterial({
@@ -45,6 +47,5 @@
 
     renderer.render(scene, camera);
   }
-</script>
-
-*/
+</script>''';
+}
