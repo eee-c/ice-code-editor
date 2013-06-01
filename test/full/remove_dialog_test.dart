@@ -83,5 +83,4 @@ remove_dialog_tests() {
       );
     });
   });
-  // TODO: verify preview element is updated
 }
