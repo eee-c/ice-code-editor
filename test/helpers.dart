@@ -20,6 +20,8 @@ click(String selector, {text}) {
   return new FakeCompleter();
 }
 
+typeIn(String text)=>  document.activeElement.value = text;
+
 hitEnter()=> type(13);
 hitEscape()=> type(27);
 

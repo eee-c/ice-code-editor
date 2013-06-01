@@ -14,7 +14,7 @@ rename_dialog_tests() {
       helpers.click('button', text: '☰');
 
       helpers.click('li', text: 'New');
-      query('input[type=text]').value = 'My New Project';
+      helpers.typeIn('My New Project');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
@@ -40,13 +40,13 @@ rename_dialog_tests() {
       helpers.click('button', text: '☰');
 
       helpers.click('li', text: 'New');
-      query('input[type=text]').value = 'My New Project';
+      helpers.typeIn('My New Project');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Rename');
 
       helpers.click('button', text: '☰');
@@ -72,20 +72,20 @@ rename_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'My Project #1';
+      helpers.typeIn('My Project #1');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'My Project #2';
+      helpers.typeIn('My Project #2');
       helpers.click('button', text: 'Save');
 
       //a duplicate
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
 
-      query('input[type=text]').value = 'My Project #1';
+      helpers.typeIn('My Project #1');
       helpers.click('button', text: 'Rename');
 
       expect(
@@ -98,13 +98,13 @@ rename_dialog_tests() {
       helpers.click('button', text: '☰');
 
       helpers.click('li', text: 'New');
-      query('input[type=text]').value = 'My New Project';
+      helpers.typeIn('My New Project');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.hitEnter();
 
       helpers.click('button', text: '☰');
@@ -120,20 +120,20 @@ rename_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'My Project #1';
+      helpers.typeIn('My Project #1');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'My Project #2';
+      helpers.typeIn('My Project #2');
       helpers.click('button', text: 'Save');
 
       //a duplicate
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Rename');
 
-      query('input[type=text]').value = 'My Project #1';
+      helpers.typeIn('My Project #1');
       helpers.click('button', text: 'Rename');
 
       expect(

@@ -34,7 +34,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #1';
@@ -44,7 +44,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Make a Copy');
 
-      query('input[type=text]').value = 'Copy of Project #1';
+      helpers.typeIn('Copy of Project #1');
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #2';
@@ -76,7 +76,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
@@ -92,7 +92,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Foo';
+      helpers.typeIn('Foo');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
@@ -116,7 +116,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');

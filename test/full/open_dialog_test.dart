@@ -62,7 +62,7 @@ open_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'My New Project';
+      helpers.typeIn('My New Project');
 
       helpers.click('button', text: 'Save');
 
@@ -79,7 +79,7 @@ open_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #1';
@@ -89,7 +89,7 @@ open_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #2';
+      helpers.typeIn('Project #2');
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #2';
@@ -110,7 +110,7 @@ open_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input[type=text]').value = 'Project #1';
+      helpers.typeIn('Project #1');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');

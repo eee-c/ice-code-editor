@@ -13,12 +13,12 @@ remove_dialog_tests() {
     test("can open the remove dialog", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
-      query('input').value = 'My Old Project';
+      helpers.typeIn('My Old Project');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
-      query('input[type=text]').value = 'My New Project';
+      helpers.typeIn('My New Project');
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
