@@ -15,7 +15,7 @@ new_project_dialog_tests(){
       helpers.click('li', text: 'New');
 
       expect(
-        query('.ice-dialog input'),
+        query('.ice-dialog input[type=text]'),
         equals(document.activeElement)
       );
     });
@@ -24,7 +24,7 @@ new_project_dialog_tests(){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'My New Project';
+      query('input[type=text]').value = 'My New Project';
 
       helpers.click('button', text: 'Save');
 
@@ -32,7 +32,7 @@ new_project_dialog_tests(){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'My New Project';
+      query('input[type=text]').value = 'My New Project';
 
       helpers.click('button', text: 'Save');
 
@@ -44,7 +44,7 @@ new_project_dialog_tests(){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'My New Project';
+      query('input[type=text]').value = 'My New Project';
 
       helpers.click('button', text: 'Save');
 
@@ -87,7 +87,7 @@ new_project_dialog_tests(){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'My New Project';
+      query('input[type=text]').value = 'My New Project';
       helpers.hitEnter();
 
       helpers.click('button', text: '☰');
@@ -102,7 +102,7 @@ new_project_dialog_tests(){
     test("creating a new project opens it immediately", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
-      query('input').value = 'My Project';
+      query('input[type=text]').value = 'My Project';
       helpers.click('button', text: 'Save');
       editor.content = 'asdf';
       helpers.click('button', text: '☰');
@@ -110,7 +110,7 @@ new_project_dialog_tests(){
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
-      query('input').value = 'My New Project';
+      query('input[type=text]').value = 'My New Project';
       helpers.click('button', text: 'Save');
 
       expect(

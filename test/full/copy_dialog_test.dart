@@ -25,7 +25,7 @@ copy_dialog_tests() {
       helpers.click('li', text: 'Make a Copy');
 
       expect(
-        query('.ice-dialog input'),
+        query('.ice-dialog input[type=text]'),
         equals(document.activeElement)
       );
     });
@@ -34,7 +34,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'Project #1';
+      query('input[type=text]').value = 'Project #1';
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #1';
@@ -44,7 +44,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Make a Copy');
 
-      query('input').value = 'Copy of Project #1';
+      query('input[type=text]').value = 'Copy of Project #1';
       helpers.click('button', text: 'Save');
 
       editor.content = 'Code #2';
@@ -76,14 +76,14 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'Project #1';
+      query('input[type=text]').value = 'Project #1';
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Make a Copy');
 
       expect(
-        query('.ice-dialog input').value,
+        query('.ice-dialog input[type=text]').value,
         equals("Project #1 (1)")
       );
      });
@@ -92,7 +92,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'Foo';
+      query('input[type=text]').value = 'Foo';
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
@@ -107,7 +107,7 @@ copy_dialog_tests() {
       helpers.click('li', text: 'Make a Copy');
 
       expect(
-        query('.ice-dialog input').value,
+        query('.ice-dialog input[type=text]').value,
         equals("Foo (2)")
       );
     });
@@ -116,7 +116,7 @@ copy_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
-      query('input').value = 'Project #1';
+      query('input[type=text]').value = 'Project #1';
       helpers.click('button', text: 'Save');
 
       helpers.click('button', text: '☰');
@@ -127,7 +127,7 @@ copy_dialog_tests() {
       helpers.click('li', text: 'Make a Copy');
 
       expect(
-        query('.ice-dialog input').value,
+        query('.ice-dialog input[type=text]').value,
         equals("Project #1 (2)")
       );
     });

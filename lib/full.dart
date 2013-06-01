@@ -35,16 +35,29 @@ class Full {
       ..right = '20px'
       ..zIndex = '999';
 
-    _attachMainMenuButton(toolbar);
+    toolbar.children
+      ..add(_updateButton)
+      ..add(_hideCodeButton)
+      ..add(_mainMenuButton);
 
     el.children.add(toolbar);
   }
 
-  _attachMainMenuButton(parent) {
-    var el = new Element.html('<button>☰</button>');
-    parent.children.add(el);
+  get _updateButton {
+    return new Element.html('''
+        <button>
+           <input type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
+         </button>'''
+      );
+  }
 
-    el.onClick.listen((e)=> this.toggleMainMenu());
+  get _hideCodeButton {
+    return new Element.html('<button>Hide Code</button>');
+  }
+
+  get _mainMenuButton {
+    return new Element.html('<button>☰</button>')
+      ..onClick.listen((e)=> this.toggleMainMenu());
   }
 
   toggleMainMenu() {

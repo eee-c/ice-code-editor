@@ -44,6 +44,10 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: rgba(0,0,0,0.66);
+  color: white;
+}
 
 .ice-menu, .ice-dialog {
   margin: 2px;
