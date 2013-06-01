@@ -47,28 +47,6 @@ class Full {
     el.onClick.listen((e)=> this.toggleMainMenu());
   }
 
-  _attachKeyboardHandlers() {
-    document.onKeyUp.listen((e) {
-      if (!_isEscapeKey(e)) return;
-      _hideMenu();
-      _hideDialog();
-    });
-  }
-
-  _attachMouseHandlers() {
-    editorReady.then((_){
-      el.query('.ice-code-editor-editor').
-        onClick.
-        listen((e){
-          _hideMenu();
-          _hideDialog();
-        });
-    });
-  }
-
-  _isEscapeKey(e) =>
-    e.keyCode == 27 || e.$dom_keyIdentifier.codeUnits.first == 27;
-
   toggleMainMenu() {
     if (queryAll('.ice-menu,.ice-dialog').isEmpty) _showMainMenu();
     else {_hideMenu(); _hideDialog();}
@@ -101,6 +79,25 @@ class Full {
   get _helpDialog=>     new HelpDialog(this).el;
 
   String get encodedContent => Gzip.encode(ice.content);
+
+  _attachKeyboardHandlers() {
+    document.onKeyUp.listen((e) {
+      if (!_isEscapeKey(e)) return;
+      _hideMenu();
+      _hideDialog();
+    });
+  }
+
+  _attachMouseHandlers() {
+    editorReady.then((_){
+      el.query('.ice-code-editor-editor').
+        onClick.
+        listen((e){
+          _hideMenu();
+          _hideDialog();
+        });
+    });
+  }
 
   _fullScreenStyles() {
     document.body.style
