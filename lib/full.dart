@@ -151,7 +151,13 @@ class DownloadDialog {
 class HelpDialog {
   HelpDialog(Full full);
   Element get el {
-    return new Element.html('<li>Help</li>');
+    return new Element.html('''
+      <a
+         target="_blank"
+         href="https://github.com/eee-c/ice-code-editor/wiki"
+         >
+      <li>Help</li>
+      </a>''');
   }
 }
 
