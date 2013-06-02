@@ -303,4 +303,14 @@ class AceSession extends jsw.TypedProxy {
     }));
     return _onChange.stream;
   }
+
+  // Unsure setting options is a good idea. Need to wait for web workers to be
+  // in place as in the following sample code:
+  // var wait = new Duration(seconds: 2);
+  // new Timer(wait, (){
+  //   _ace.session.workerOptions = {'expr': false, 'undef': true};
+  // });
+  // set workerOptions(o) {
+  //   $unsafe.$worker.send("setOptions", js.array([o]));
+  // }
 }
