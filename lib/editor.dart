@@ -62,7 +62,12 @@ class Editor {
     var wait = new Duration(milliseconds: 900);
     new Timer(wait, (){
       if (iframe.contentWindow == null) return;
-      iframe.contentWindow.postMessage(_ace.value, window.location.href);
+
+      var url = new RegExp(r'^file://').hasMatch(window.location.href)
+        ? '*': window.location.href;
+      iframe.contentWindow.postMessage(_ace.value, url);
+
+      _previewChangeController.add(true);
     });
   }
 
@@ -85,6 +90,13 @@ class Editor {
     return iframe;
   }
 
+  Stream get onPreviewChange => _previewChangeController.stream;
+
+  StreamController __previewChangeController;
+  StreamController get _previewChangeController {
+    if (__previewChangeController != null) return  __previewChangeController;
+    return __previewChangeController = new StreamController();
+  }
 
   /// Show the code layer, calling the ACE resize methods to ensure that
   /// the display is correct.

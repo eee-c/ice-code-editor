@@ -14,7 +14,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 
 ## Features
 
- * Update button — updates preview / toggles auto-update (0% done)
+ * Update button — (33% done, needs auto-update feature)
  * Hide Code button — hides code (0% done)
  * Main Menu button
    * Open (90% done, needs CSS work)
@@ -25,7 +25,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
    * Share (50% done, needs shortener)
    * Download (0% done)
    * Remove (100% done)
-   * Help (0% done, needs link to wiki)
+   * Help (100% done)
 
 ## Core Collaborators
 

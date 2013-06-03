@@ -12,6 +12,7 @@ part 'store_test.dart';
 part 'gzip_test.dart';
 
 part 'full_test.dart';
+part 'full/update_button_test.dart';
 part 'full/notification_test.dart';
 part 'full/copy_dialog_test.dart';
 part 'full/share_dialog_test.dart';
@@ -27,6 +28,7 @@ main(){
   gzip_tests();
 
   full_tests();
+  update_button_tests();
   notification_tests();
   copy_dialog_tests();
   share_dialog_tests();

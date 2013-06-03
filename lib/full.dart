@@ -23,6 +23,7 @@ class Full {
       '' : store.projects.first['code']);
   }
 
+  Stream get onPreviewChange => ice.onPreviewChange;
   Future get editorReady => ice.editorReady;
   String get content => ice.content;
   void set content(data) => ice.content = data;
@@ -48,7 +49,8 @@ class Full {
         <button>
            <input type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
          </button>'''
-      );
+      )
+      ..onClick.listen((e)=> ice.updatePreview());
   }
 
   get _hideCodeButton {
