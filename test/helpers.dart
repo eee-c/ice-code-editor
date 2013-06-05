@@ -17,7 +17,6 @@ createProject(String title, {content, editor}) {
   }
 }
 
-
 class FakeCompleter {
   then(cb) => cb();
 }

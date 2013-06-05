@@ -96,5 +96,15 @@ class Store implements HashMap<String, HashMap> {
 
   void _sync() {
     window.localStorage[codeEditor] = JSON.stringify(projects);
+    _syncController.add(true);
+  }
+
+  /// Stream that will see events whenever data is synchronized with
+  /// localStorage (create, update, delete).
+  Stream<bool> get onSync => _syncController.stream.asBroadcastStream();
+  StreamController __syncController;
+  StreamController get _syncController {
+    if (__syncController != null) return  __syncController;
+    return __syncController = new StreamController();
   }
 }

@@ -18,9 +18,11 @@ class Full {
 
     _fullScreenStyles();
 
-    editorReady.then((_)=> _applyStyles());
-    editorReady.then((_)=> content = store.isEmpty ?
-      '' : store.projects.first['code']);
+    editorReady
+      ..then((_)=> _startAutoSave())
+      ..then((_)=> _applyStyles())
+      ..then((_)=> content = store.isEmpty ?
+          '' : store.projects.first['code']);
   }
 
   Stream get onPreviewChange => ice.onPreviewChange;
@@ -118,6 +120,14 @@ class Full {
     document.body.style
       ..margin = '0px'
       ..overflow = 'hidden';
+  }
+
+  _startAutoSave() {
+    ice.onChange.listen((_){
+      var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
+
+      store[title] = {'code': ice.content};
+    });
   }
 
   _applyStyles() {

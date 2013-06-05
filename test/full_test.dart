@@ -45,5 +45,42 @@ full_tests() {
       expect(queryAll('li'), helpers.elementsAreEmpty);
     });
   });
+
+  group("Auto Save", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store.clear();
+    });
+
+    test("is on by default", (){
+      _test(_) {
+        helpers.createProject('Test Project');
+        editor.content = '<h1>test</h1>';
+
+        expect(
+          editor.store['Test Project']['code'],
+          equals('<h1>test</h1>')
+        );
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    skip_test("is on by default (original)", (){
+      editor.store.storageKey = "codeeditor-${currentTestCase.id}";
+      helpers.createProject('Test Project');
+      editor.content = '&lt;h1>test&lt;/h1>';
+
+      expect(
+        editor.store['Test Project']['code'],
+        equals('&lt;h1>test&lt;/h1>')
+      );
+    });
+
+  });
+
   // TODO: put current project title in the browser title
 }

@@ -137,6 +137,20 @@ store_tests() {
       });
     });
   });
+
+  group("onSync", (){
+    test("it generates a stream action when a sync operation occurs", (){
+      var store = new Store()..clear();
+
+      _test(_)=> expect(store, isNot(isEmpty));
+
+      // Once for clear, once for new Test Project
+      store.onSync.listen(expectAsync1(_test, count: 2));
+
+      store['Test Project'] = {'code': 'Test Code'};
+    });
+  });
+
   // open & move to front
   // next project named
   // template

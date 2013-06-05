@@ -90,6 +90,7 @@ class Editor {
     return iframe;
   }
 
+  Stream get onChange => _ace.session.onChange;
   Stream get onPreviewChange => _previewChangeController.stream;
 
   StreamController __previewChangeController;
