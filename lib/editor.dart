@@ -268,6 +268,8 @@ class Ace extends jsw.TypedProxy {
   String get value => $unsafe.getValue();
   void focus() => $unsafe.focus();
 
+  get renderer => $unsafe.renderer;
+
   AceSession get session => AceSession.cast($unsafe.getSession());
 
   void toggleEmacs() {

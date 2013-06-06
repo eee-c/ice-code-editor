@@ -41,13 +41,15 @@ class Full {
     toolbar.children
       ..add(_updateButton)
       ..add(_hideCodeButton)
+      ..add(_showCodeButton)
       ..add(_mainMenuButton);
 
     el.children.add(toolbar);
   }
 
+  Element _update_button;
   get _updateButton {
-    return new Element.html('''
+    return _update_button = new Element.html('''
         <button>
            <input type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
          </button>'''
@@ -55,12 +57,30 @@ class Full {
       ..onClick.listen((e)=> ice.updatePreview());
   }
 
+  Element _hide_code_button;
   get _hideCodeButton {
-    return new Element.html('<button>Hide Code</button>');
+    return _hide_code_button = new Element.html('<button>Hide Code</button>')
+      ..onClick.listen((e)=> ice.hideCode())
+      ..onClick.listen((e)=> e.target.style.display = 'none')
+      ..onClick.listen((e)=> _main_menu_button.style.display = 'none')
+      ..onClick.listen((e)=> _update_button.style.display = 'none')
+      ..onClick.listen((e)=> _show_code_button.style.display = '');
   }
 
+  Element _show_code_button;
+  get _showCodeButton {
+    return _show_code_button = new Element.html('<button>Show Code</button>')
+      ..style.display = 'none'
+      ..onClick.listen((e)=> ice.showCode())
+      ..onClick.listen((e)=> e.target.style.display = 'none')
+      ..onClick.listen((e)=> _main_menu_button.style.display = '')
+      ..onClick.listen((e)=> _update_button.style.display = '')
+      ..onClick.listen((e)=> _hide_code_button.style.display = '');
+  }
+
+  Element _main_menu_button;
   get _mainMenuButton {
-    return new Element.html('<button>☰</button>')
+    return _main_menu_button = new Element.html('<button>☰</button>')
       ..onClick.listen((e)=> this.toggleMainMenu());
   }
 

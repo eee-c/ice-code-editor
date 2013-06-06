@@ -13,13 +13,15 @@ part 'gzip_test.dart';
 
 part 'full_test.dart';
 part 'full/update_button_test.dart';
+part 'full/hide_button_test.dart';
+part 'full/show_button_test.dart';
 part 'full/notification_test.dart';
-part 'full/copy_dialog_test.dart';
-part 'full/share_dialog_test.dart';
-part 'full/open_dialog_test.dart';
 part 'full/new_project_dialog_test.dart';
+part 'full/open_dialog_test.dart';
+part 'full/copy_dialog_test.dart';
 part 'full/rename_dialog_test.dart';
 part 'full/save_dialog_test.dart';
+part 'full/share_dialog_test.dart';
 part 'full/remove_dialog_test.dart';
 
 main(){
@@ -29,13 +31,15 @@ main(){
 
   full_tests();
   update_button_tests();
+  hide_button_tests();
+  show_button_tests();
   notification_tests();
-  copy_dialog_tests();
-  share_dialog_tests();
-  open_dialog_tests();
   new_project_dialog_tests();
+  open_dialog_tests();
+  copy_dialog_tests();
   rename_dialog_tests();
   save_dialog_tests();
+  share_dialog_tests();
   remove_dialog_tests();
 
   pollForDone(testCases);

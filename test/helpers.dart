@@ -26,14 +26,17 @@ click(String selector, {text}) {
     query(selector).click();
   }
   else {
-    var re = new RegExp(r"^\s*" + text + r"\s*$");
-
-    queryAll(selector).
-      firstWhere((e)=> re.hasMatch(e.text)).
-      click();
+    queryWithContent(selector, text).click();
   }
 
   return new FakeCompleter();
+}
+
+queryWithContent(selector, text) {
+  var re = new RegExp(r"^\s*" + text + r"\s*$");
+
+  return queryAll(selector).
+    firstWhere((e)=> re.hasMatch(e.text));
 }
 
 typeIn(String text)=>  document.activeElement.value = text;
