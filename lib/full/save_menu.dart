@@ -8,7 +8,7 @@ class SaveMenu {
   SaveMenu.fromParts(this.parent, this.ice, this.store);
 
   void open() {
-    var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
+    var title = store.isEmpty ? 'Untitled' : store.currentProjectTitle;
 
     store[title] = {'code': ice.content};
   }

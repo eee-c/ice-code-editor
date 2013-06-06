@@ -74,11 +74,11 @@ class Full {
     el.children.add(menu);
 
     menu.children
-      ..add(_openDialog)
       ..add(_newProjectDialog)
+      ..add(_openDialog)
       ..add(_copyDialog)
-      ..add(_saveMenu)
       ..add(_renameDialog)
+      ..add(_saveMenu)
       ..add(_shareDialog)
       ..add(_downloadDialog)
       ..add(_removeDialog)
@@ -124,7 +124,7 @@ class Full {
 
   _startAutoSave() {
     ice.onChange.listen((_){
-      var title = store.isEmpty ? 'Untitled' : store.projects.first['title'];
+      var title = store.isEmpty ? 'Untitled' : store.currentProjectTitle;
 
       store[title] = {'code': ice.content};
     });

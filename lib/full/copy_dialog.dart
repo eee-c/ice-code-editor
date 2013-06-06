@@ -30,13 +30,13 @@ class CopyDialog {
     if (store.isEmpty) return "Untitled";
 
     RegExp exp = new RegExp(r"\s+\((\d+)\)$");
-    var title = store.projects.first['title'].replaceFirst(exp, "");
+    var title = store.currentProjectTitle.replaceFirst(exp, "");
 
     var same_base = store.values.where((p) {
-      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['title']);
+      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['filename']);
     });
     var copy_numbers = same_base.map((p) {
-        var stringCount = exp.firstMatch(p['title']);
+        var stringCount = exp.firstMatch(p['filename']);
         return stringCount == null ? 0 : int.parse(stringCount[1]);
       })
       .toList()
