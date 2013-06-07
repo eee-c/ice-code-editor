@@ -22,7 +22,7 @@ class Full {
       ..then((_)=> _startAutoSave())
       ..then((_)=> _applyStyles())
       ..then((_)=> content = store.isEmpty ?
-          '' : store.projects.first['code']);
+          DefaultProject.content : store.projects.first['code']);
   }
 
   Stream get onPreviewChange => ice.onPreviewChange;
