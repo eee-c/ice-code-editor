@@ -18,7 +18,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
  * Hide Code button (100% done)
  * Main Menu button
    * Open (90% done, needs CSS work)
-   * New (50% done, needs template)
+   * New (100% done)
    * Make a Copy (100% done)
    * Save (100% done)
    * Rename (100% done)

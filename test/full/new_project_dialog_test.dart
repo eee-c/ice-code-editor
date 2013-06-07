@@ -115,10 +115,56 @@ new_project_dialog_tests(){
 
       expect(
         editor.content,
-        equals('')
+        equals(Templates.threeD)
       );
     });
+
+    test("has a select list of templates", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      expect(
+        query('.ice-dialog').queryAll('option'),
+        helpers.elementsArePresent
+      );
+    });
+    test("defaults to 3D starter project", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      expect(
+        query('.ice-dialog').queryAll('option[selected]'),
+        helpers.elementsAreEmpty
+      );
+      expect(
+        query('.ice-dialog').query('option').text,
+        '3D starter project'
+      );
+    });
+    test("can create from default template", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      helpers.typeIn('My Project');
+      helpers.click('button', text: 'Save');
+
+      expect(
+        editor.content,
+        equals(Templates.threeD)
+      );
+    });
+    test("can create from any template", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      helpers.typeIn('My Project');
+
+      query('.ice-dialog').query('select').value = 'Empty project';
+
+      helpers.click('button', text: 'Save');
+
+      expect(
+        editor.content,
+        equals(Templates.empty)
+      );
+    });
+
   });
-  // TODO: templates
   // TODO: blank name behavior
 }

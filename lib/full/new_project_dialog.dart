@@ -13,6 +13,14 @@ class NewProjectDialog {
       <div class=ice-dialog>
       <label>Name:<input type="text" size="30"></label>
       <button>Save</button>
+      <div>
+        <label>
+          Template:
+          <select>
+            ${Templates.list.map((t)=> '<option>$t</option>').join()}
+          </select>
+        </label>
+      </div>
       </div>
       '''
     );
@@ -35,8 +43,11 @@ class NewProjectDialog {
       return;
     }
 
-    store[title] = {};
-    ice.content = '';
+    var template = query('.ice-dialog').query('select').value,
+        code = Templates.byTitle(template);
+
+    store[title] = {'code': code};
+    ice.content = code;
     _hideDialog();
   }
 }

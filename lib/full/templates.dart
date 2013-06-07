@@ -1,7 +1,20 @@
-/*
+part of ice;
 
-3D starter project
+class Templates {
+  static get list => [
+    '3D starter project',
+    '3D starter project (with Physics)',
+    'Empty project'
+  ];
 
+  static String byTitle(title) {
+    if (title == '3D starter project') return threeD;
+    if (title == 'Empty project') return empty;
+    if (title == '3D starter project (with Physics)') return physics;
+    return '';
+  }
+
+  static String get threeD => '''
 <body></body>
 <script src="http://gamingJS.com/Three.js"></script>
 <script src="http://gamingJS.com/ChromeFixes.js"></script>
@@ -27,27 +40,17 @@
 
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
-</script>
+</script>''';
 
-*/
-
-/*
-
-Empty project
-
+  static String get empty => '''
 <body></body>
 <script src="http://gamingJS.com/Three.js"></script>
 <script src="http://gamingJS.com/ChromeFixes.js"></script>
 <script>
   // Your code goes here...
-</script>
+</script>''';
 
-*/
-
-/*
-
-3D starter project (with Physics)
-
+  static String get physics => '''
 <body></body>
 <script src="http://gamingJS.com/Three.js"></script>
 <script src="http://gamingJS.com/physi.js"></script>
@@ -98,7 +101,5 @@ Empty project
     setTimeout(gameStep, 1000/60);
   }
   gameStep();
-</script>
-
-
-*/
+</script>''';
+}
