@@ -2,6 +2,8 @@
 
 [![Build Status](https://drone.io/github.com/eee-c/ice-code-editor/status.png)](https://drone.io/github.com/eee-c/ice-code-editor/latest)
 
+__*** Try the [beta version!](http://gamingjs.com/ice-beta/) ***__
+
 The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).”
 
 ![ICE Code Editor Screenshoot](ice_code_editor.png)
