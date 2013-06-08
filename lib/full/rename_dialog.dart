@@ -29,7 +29,7 @@ class RenameDialog {
   }
 
   _renameProject() {
-    var title = query('.ice-dialog').query('input').value;
+    var title = _field.value;
 
     if(store.containsKey(title)) {
       var message = "There is already a project with that name";
@@ -43,5 +43,6 @@ class RenameDialog {
     _hideDialog();
   }
 
+  InputElement get _field => query('.ice-dialog').query('input');
   String get _currentProjectTitle => store.currentProjectTitle;
 }

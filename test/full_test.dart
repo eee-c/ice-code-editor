@@ -55,7 +55,7 @@ full_tests() {
       editor.store.clear();
     });
 
-    test("is on by default", (){
+    skip_test("is on by default", (){
       _test(_) {
         helpers.createProject('Test Project');
         editor.content = '<h1>test</h1>';

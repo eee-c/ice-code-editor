@@ -36,18 +36,21 @@ class NewProjectDialog {
   }
 
   _create() {
-    var title = query('.ice-dialog').query('input').value;
+    var title = _field.value;
     if (store.containsKey(title)) {
       var message = "There is already a project with that name";
       Notify.alert(message, parent: parent, test_mode: !ice.enable_javascript_mode);
       return;
     }
 
-    var template = query('.ice-dialog').query('select').value,
+    var template = _list.value,
         code = Templates.byTitle(template);
 
     store[title] = {'code': code};
     ice.content = code;
     _hideDialog();
   }
+
+  InputElement get _field => query('.ice-dialog').query('input');
+  SelectElement get _list => query('.ice-dialog').query('select');
 }

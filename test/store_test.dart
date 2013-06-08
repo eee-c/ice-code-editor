@@ -139,6 +139,8 @@ store_tests() {
   });
 
   group("onSync", (){
+    tearDown(()=> new Store()..clear());
+
     test("it generates a stream action when a sync operation occurs", (){
       var store = new Store()..clear();
 
@@ -151,8 +153,37 @@ store_tests() {
     });
   });
 
-  // open & move to front
+  group("Next Project Named", (){
+    var it;
+    setUp((){
+      it = new Store()..clear();
+      it['one'] = {'code': 1};
+      it['two'] = {'code': 2};
+    });
+
+    tearDown(()=> new Store()..clear());
+
+    test("does not have trailing parens if name unique", (){
+      expect(
+        it.nextProjectNamed('Untitled'),
+        equals('Untitled')
+      );
+    });
+
+    test("does have trailing parens if name is not unique", (){
+      expect(
+        it.nextProjectNamed('one'),
+        equals('one (1)')
+      );
+    });
+
+    test("defaults to current project with parens", (){
+      expect(
+        it.nextProjectNamed(),
+        equals('two (1)')
+      );
+    });
+  });
+
   // next project named
-  // template
-  // create from template
 }

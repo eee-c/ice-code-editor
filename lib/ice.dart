@@ -2,11 +2,11 @@ library ice;
 
 import 'dart:async';
 import 'dart:collection';
-import 'dart:crypto';
 import 'dart:html';
 import 'dart:json' as JSON;
 import 'package:js/js.dart' as js;
 import 'package:js/js_wrapping.dart' as jsw;
+import 'package:crypto/crypto.dart';
 
 part 'editor.dart';
 part 'store.dart';

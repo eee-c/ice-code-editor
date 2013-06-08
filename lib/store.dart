@@ -31,6 +31,10 @@ class Store implements HashMap<String, HashMap> {
 
   String get currentProjectTitle => currentProject[title];
 
+  var _storageKey;
+  set storageKey(v) => _storageKey = v;
+  String get storageKey => (_storageKey == null) ? codeEditor : _storageKey;
+
   int get length => projects.length;
 
   HashMap operator [](String key) {
@@ -61,6 +65,7 @@ class Store implements HashMap<String, HashMap> {
   }
 
   bool get isEmpty => projects.isEmpty;
+  bool get isNotEmpty => projects.isNotEmpty;
   Iterable<String> get keys => projects.map((p)=> p[title]);
   Iterable<HashMap> get values => projects;
   bool containsKey(key) => keys.contains(key);
@@ -91,12 +96,37 @@ class Store implements HashMap<String, HashMap> {
     recs.forEach((key, rec)=> this[key] = rec);
   }
 
+  String nextProjectNamed([original_title]) {
+    if (this.isEmpty) return "Untitled";
+
+    if (original_title == null) original_title = currentProjectTitle;
+    if (!containsKey(original_title)) return original_title;
+
+    RegExp exp = new RegExp(r"\s+\((\d+)\)$");
+    var title = original_title.replaceFirst(exp, "");
+
+    var same_base = values.where((p) {
+      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['filename']);
+    });
+
+    var copy_numbers = same_base.map((p) {
+        var stringCount = exp.firstMatch(p['filename']);
+        return stringCount == null ? 0 : int.parse(stringCount[1]);
+      })
+      .toList()
+      ..sort();
+
+    var count = copy_numbers.last;
+
+    return "$title (${count+1})";
+  }
+
 
   /// The list of all projects in the store.
   List get projects {
     if (_projects != null) return _projects;
 
-    var json = window.localStorage[codeEditor];
+    var json = window.localStorage[storageKey];
     return _projects = (json == null) ? [] : JSON.parse(json);
   }
 
@@ -105,7 +135,7 @@ class Store implements HashMap<String, HashMap> {
   void refresh() => _projects = null;
 
   void _sync() {
-    window.localStorage[codeEditor] = JSON.stringify(projects);
+    window.localStorage[storageKey] = JSON.stringify(projects);
     _syncController.add(true);
   }
 

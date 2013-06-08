@@ -26,32 +26,15 @@ class CopyDialog {
       ..focus();
   }
 
-  get _copiedProjectName {
-    if (store.isEmpty) return "Untitled";
-
-    RegExp exp = new RegExp(r"\s+\((\d+)\)$");
-    var title = store.currentProjectTitle.replaceFirst(exp, "");
-
-    var same_base = store.values.where((p) {
-      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['filename']);
-    });
-    var copy_numbers = same_base.map((p) {
-        var stringCount = exp.firstMatch(p['filename']);
-        return stringCount == null ? 0 : int.parse(stringCount[1]);
-      })
-      .toList()
-      ..sort();
-
-    var count = copy_numbers.last;
-
-    return "$title (${count+1})";
-  }
+  get _copiedProjectName => store.nextProjectNamed();
 
   _copyProject() {
-    var title = query('.ice-dialog').query('input').value;
+    var title = _field.value;
 
     store[title] = {'code': ice.content};
 
     query('.ice-dialog').remove();
   }
+
+  InputElement get _field => query('.ice-dialog').query('input');
 }

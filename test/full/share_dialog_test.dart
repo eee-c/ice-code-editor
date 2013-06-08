@@ -1,6 +1,60 @@
 part of ice_test;
 
 share_dialog_tests() {
+  group("Opening Shared Link", (){
+    var editor, store;
+    setUp((){
+      window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
+      editor = new Full(enable_javascript_mode: false);
+      store = editor.store;
+    });
+    tearDown((){
+      window.location.hash = '';
+      document.query('#ice').remove();
+      store.clear();
+    });
+
+    test("shared content is opened in the editor", (){
+      _test(_)=> expect(editor.content, 'Howdy, Bob!');
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    test("shared project is named \"Untitled\" by default", (){
+      _test(_){
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'Save');
+
+        expect(
+          store['Untitled']['code'],
+          'Howdy, Bob!'
+        );
+      }
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    test("shared project name does not clobber existing projects", (){
+      store['Untitled'] = {'code': 'Hi, Fred!'};
+
+      _test(_){
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'Save');
+
+        expect(store['Untitled']['code'], 'Hi, Fred!');
+        expect(store['Untitled (1)']['code'], 'Howdy, Bob!');
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    test("removes share hash", (){
+      _test(_){
+        expect(window.location.hash, '');
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+  });
+
   group("Share Dialog", (){
     var editor;
 
@@ -44,8 +98,6 @@ share_dialog_tests() {
         equals(document.activeElement)
       );
     });
-
-    skip_test("share link is encoded", (){});
 
     test("clicking in the editor closes the share dialog", (){
       helpers.click('button', text: '☰');

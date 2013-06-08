@@ -21,10 +21,12 @@ class ShareDialog {
 
     parent.children.add(dialog);
 
-    dialog.query('input')
+    _field
       ..focus()
       ..select()
       ..disabled = true
       ..style.width = '100%';
   }
+
+  InputElement get _field => query('.ice-dialog').query('input');
 }

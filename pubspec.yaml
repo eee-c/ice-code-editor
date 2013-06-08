@@ -6,3 +6,4 @@ homepage: https://github.com/eee-c/ice-code-editor
 dependencies:
   unittest: any
   js: any
+  crypto: any

@@ -19,10 +19,9 @@ class Full {
     _fullScreenStyles();
 
     editorReady
+      ..then((_)=> _openProject())
       ..then((_)=> _startAutoSave())
-      ..then((_)=> _applyStyles())
-      ..then((_)=> content = store.isEmpty ?
-          DefaultProject.content : store.projects.first['code']);
+      ..then((_)=> _applyStyles());
   }
 
   Stream get onPreviewChange => ice.onPreviewChange;
@@ -140,6 +139,19 @@ class Full {
     document.body.style
       ..margin = '0px'
       ..overflow = 'hidden';
+  }
+
+  _openProject() {
+    if (window.location.hash.startsWith('#B/')) {
+      var title = store.nextProjectNamed('Untitled');
+      content = Gzip.decode(window.location.hash.substring(3));
+      store[title] = {'code': content};
+      window.location.hash = '';
+      return;
+    }
+
+    content = store.isEmpty ?
+          DefaultProject.content : store.projects.first['code'];
   }
 
   _startAutoSave() {
