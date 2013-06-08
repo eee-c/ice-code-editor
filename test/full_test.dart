@@ -55,31 +55,20 @@ full_tests() {
       editor.store.clear();
     });
 
-    skip_test("is on by default", (){
-      _test(_) {
-        helpers.createProject('Test Project');
-        editor.content = '<h1>test</h1>';
-
-        expect(
-          editor.store['Test Project']['code'],
-          equals('<h1>test</h1>')
-        );
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
-    });
-
-    skip_test("is on by default (original)", (){
-      editor.store.storageKey = "codeeditor-${currentTestCase.id}";
-      helpers.createProject('Test Project');
-      editor.content = '&lt;h1>test&lt;/h1>';
-
-      expect(
-        editor.store['Test Project']['code'],
-        equals('&lt;h1>test&lt;/h1>')
+    test("is on by default", (){
+      var _test = expectAsync0(
+        ()=> expect(editor.content, equals('<h1>test</h1>')),
+        count: 3
       );
-    });
 
+      editor.editorReady.then((_){
+        helpers.createProject('Project #1');
+
+        editor.ice.onChange.listen((_)=> _test());
+
+        editor.content = '<h1>test</h1>';
+      });
+    });
   });
 
   // TODO: put current project title in the browser title

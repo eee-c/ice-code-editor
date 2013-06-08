@@ -12,6 +12,4 @@ class SaveMenu {
 
     store[title] = {'code': ice.content};
   }
-
-
 }

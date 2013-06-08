@@ -31,10 +31,6 @@ class Store implements HashMap<String, HashMap> {
 
   String get currentProjectTitle => currentProject[title];
 
-  var _storageKey;
-  set storageKey(v) => _storageKey = v;
-  String get storageKey => (_storageKey == null) ? codeEditor : _storageKey;
-
   int get length => projects.length;
 
   HashMap operator [](String key) {
@@ -126,7 +122,7 @@ class Store implements HashMap<String, HashMap> {
   List get projects {
     if (_projects != null) return _projects;
 
-    var json = window.localStorage[storageKey];
+    var json = window.localStorage[codeEditor];
     return _projects = (json == null) ? [] : JSON.parse(json);
   }
 
@@ -135,7 +131,7 @@ class Store implements HashMap<String, HashMap> {
   void refresh() => _projects = null;
 
   void _sync() {
-    window.localStorage[storageKey] = JSON.stringify(projects);
+    window.localStorage[codeEditor] = JSON.stringify(projects);
     _syncController.add(true);
   }
 

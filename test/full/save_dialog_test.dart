@@ -10,20 +10,12 @@ save_dialog_tests(){
       new Store().clear();
     });
 
-    skip_test("a saved project is loaded when the editor starts", (){
-      helpers.createProject('Test Project');
-      editor.content = 'asdf';
+    test("a saved project is loaded when the editor starts", (){
+      editor.store['Saved Project'] = {'code': 'asdf'};
 
-      helpers.click('button', text: '☰');
-      helpers.click('li', text:  'Save');
-
-      document.query('#ice').remove();
-      editor = new Full(enable_javascript_mode: false);
-
-      _test(_) {
-        expect(editor.content, equals('asdf'));
-      };
-      editor.editorReady.then(expectAsync1(_test));
+      editor.editorReady.then(
+        expectAsync1((_)=> expect(editor.content, 'asdf'))
+      );
     });
 
     test("clicking save closes the main menu", (){
