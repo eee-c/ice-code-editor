@@ -50,9 +50,11 @@ class Full {
   get _updateButton {
     return _update_button = new Element.html('''
         <button>
-           <input type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
+           <input checked type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
          </button>'''
       )
+      ..query("input").onChange.listen((e)=> _toggleAutoupdate(e.target))
+      ..query("input").onClick.listen((e)=> e.stopPropagation())
       ..onClick.listen((e)=> ice.updatePreview());
   }
 
@@ -81,6 +83,9 @@ class Full {
   get _mainMenuButton {
     return _main_menu_button = new Element.html('<button>☰</button>')
       ..onClick.listen((e)=> this.toggleMainMenu());
+  }
+  _toggleAutoupdate(Element e){
+    ice.autoupdate = e.checked;
   }
 
   toggleMainMenu() {
