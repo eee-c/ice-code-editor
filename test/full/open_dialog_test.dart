@@ -33,13 +33,7 @@ open_dialog_tests() {
     test("the escape key closes the project dialog", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Open');
-
-      document.body.dispatchEvent(
-        new KeyboardEvent(
-          'keyup',
-          keyIdentifier: new String.fromCharCode(27)
-        )
-      );
+      helpers.hitEscape();
 
       expect(
         queryAll('div'),

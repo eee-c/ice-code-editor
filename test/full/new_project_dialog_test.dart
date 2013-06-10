@@ -69,13 +69,7 @@ new_project_dialog_tests(){
     test("the escape key closes the new project dialog", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
-
-      document.body.dispatchEvent(
-        new KeyboardEvent(
-          'keyup',
-          keyIdentifier: new String.fromCharCode(27)
-        )
-      );
+      helpers.hitEscape();
 
       expect(
         queryAll('button'),
