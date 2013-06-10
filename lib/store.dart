@@ -11,10 +11,10 @@ part of ice;
  */
 class Store implements HashMap<String, HashMap> {
   /// The key used to identify the data in localStorage.
-  const String codeEditor = 'codeeditor';
+  static const String codeEditor = 'codeeditor';
 
   /// The record ID attribute
-  const String title = 'filename';
+  static const String title = 'filename';
   List _projects;
 
   Store() {

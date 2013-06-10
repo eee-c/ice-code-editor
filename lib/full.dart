@@ -84,7 +84,7 @@ class Full {
     return _main_menu_button = new Element.html('<button>☰</button>')
       ..onClick.listen((e)=> this.toggleMainMenu());
   }
-  _toggleAutoupdate(Element e){
+  _toggleAutoupdate(CheckboxInputElement e){
     ice.autoupdate = e.checked;
   }
 
