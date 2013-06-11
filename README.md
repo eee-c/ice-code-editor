@@ -16,7 +16,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 
 ## Features
 
- * Update button — (60% done, needs toggle auto-update feature)
+ * Update button — (100% Done)
  * Hide Code button (100% done)
  * Main Menu button
    * Open (90% done, needs CSS work)
