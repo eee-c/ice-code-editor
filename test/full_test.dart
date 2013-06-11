@@ -71,5 +71,29 @@ full_tests() {
     });
   });
 
+  group("Edit Only Mode", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store.clear();
+      window.location.hash = '';
+    });
+
+    test("is enabled when the ?e query param is present", (){
+      window.location.hash = '#e';
+
+      _test(_) {
+        expect(
+          editor.ice.edit_only,
+          isTrue
+        );
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+  });
+
   // TODO: put current project title in the browser title
 }

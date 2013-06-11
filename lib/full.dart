@@ -21,6 +21,7 @@ class Full {
     editorReady
       ..then((_)=> _openProject())
       ..then((_)=> _startAutoSave())
+      ..then((_)=> _applyEditorModes())
       ..then((_)=> _applyStyles());
   }
 
@@ -165,6 +166,11 @@ class Full {
 
       store[title] = {'code': ice.content};
     });
+  }
+
+  _applyEditorModes() {
+    if (window.location.search.contains('?e')) ice.edit_only = true;
+    if (window.location.hash.startsWith('#e')) ice.edit_only = true;
   }
 
   _applyStyles() {
