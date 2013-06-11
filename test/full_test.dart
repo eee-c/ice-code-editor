@@ -95,5 +95,29 @@ full_tests() {
     });
   });
 
+  group("Gaming Mode", (){
+    var editor;
+
+    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store.clear();
+      window.location.hash = '';
+    });
+
+    test("is enabled when the ?g query param is present", (){
+      window.location.hash = '#g';
+
+      _test(_) {
+        expect(
+          query('.ice-code-editor-editor').style.display,
+          equals('none')
+        );
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+  });
+
   // TODO: put current project title in the browser title
 }

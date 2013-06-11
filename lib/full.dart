@@ -169,8 +169,13 @@ class Full {
   }
 
   _applyEditorModes() {
+    // Users should use query params. Checking hash because it plays better
+    // with tests. Query params cause a browser reload (bad in unit tests).
     if (window.location.search.contains('?e')) ice.edit_only = true;
     if (window.location.hash.startsWith('#e')) ice.edit_only = true;
+
+    if (window.location.search.contains('?g')) ice.hideCode();
+    if (window.location.hash.startsWith('#g')) ice.hideCode();
   }
 
   _applyStyles() {
