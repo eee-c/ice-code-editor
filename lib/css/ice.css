@@ -68,18 +68,29 @@ button:hover {
   z-index: 999;
 }
 
-ul.ice-menu li {
+div.ice-menu h1 {
+ display: none;
+}
+
+div.ice-menu ul {
+  margin: 2px;
+  padding: 5px;
+  text-transform: none;
+  font-size: 13px;
+}
+
+.ice-menu li {
   display: block;
   padding: 4px;
   cursor: pointer;
 }
 
-ul.ice-menu li:hover {
+.ice-menu li:hover {
   color: white;
   background-color: rgba(0,0,0,0.66);
 }
 
-ul.ice-menu a {
+.ice-menu a {
   text-decoration: none;
   color: rgba(0,0,0,0.5);
 }
