@@ -18,7 +18,7 @@ update_button_tests() {
 
       helpers.click('button', text: " Update");
     });
-    
+
     test("Checkbox is on by default", (){
       editor.editorReady.then(expectAsync1((_){
         var button = helpers.queryWithContent("button","Update");
@@ -29,16 +29,18 @@ update_button_tests() {
 
     test("Autoupdate is set in the editor by default", (){
       editor.editorReady.then(expectAsync1((_){
-        expect(editor.ice.autoupdate, isTrue);
+        editor.onPreviewChange.listen(expectAsync1((_){
+          expect(editor.ice.autoupdate, isTrue);
+        }));
       }));
     });
 
     test("When you uncheck the checkbox autoupdate is disabled", (){
-      
+
       editor.editorReady.then(expectAsync1((_){
         var button = helpers.queryWithContent("button","Update");
         var checkbox = button.query("input[type=checkbox]");
-        
+
         checkbox.click();
         expect(editor.ice.autoupdate, isFalse);
       }));

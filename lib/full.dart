@@ -19,8 +19,8 @@ class Full {
     _fullScreenStyles();
 
     editorReady
-      ..then((_)=> _openProject())
       ..then((_)=> _startAutoSave())
+      ..then((_)=> _openProject())
       ..then((_)=> _applyEditorModes())
       ..then((_)=> _applyStyles());
   }

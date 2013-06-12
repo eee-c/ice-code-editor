@@ -26,7 +26,12 @@ class Editor {
     _ace.value = data;
     _ace.focus();
     updatePreview();
-    autoupdate = original_autoupdate;
+
+    var subscribe;
+    subscribe = onPreviewChange.listen((_) {
+      this.autoupdate = original_autoupdate;
+      subscribe.cancel();
+    });
   }
 
   Timer _update_timer;
@@ -59,9 +64,12 @@ class Editor {
     this.removePreview();
     var iframe = this.createPreviewIframe();
 
-    var wait = new Duration(milliseconds: 900);
+    var wait = new Duration(milliseconds: 100);
     new Timer(wait, (){
       if (iframe.contentWindow == null) return;
+
+      iframe
+        ..height = "${this._preview_el.clientHeight}";
 
       var url = new RegExp(r'^file://').hasMatch(window.location.href)
         ? '*': window.location.href;
@@ -91,12 +99,13 @@ class Editor {
   }
 
   Stream get onChange => _ace.session.onChange;
-  Stream get onPreviewChange => _previewChangeController.stream;
+  Stream get onPreviewChange =>
+    _previewChangeController.stream.asBroadcastStream();
 
   StreamController __previewChangeController;
   StreamController get _previewChangeController {
     if (__previewChangeController != null) return  __previewChangeController;
-    return __previewChangeController = new StreamController();
+    return __previewChangeController = new StreamController.broadcast();
   }
 
   /// Show the code layer, calling the ACE resize methods to ensure that
