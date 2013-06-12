@@ -181,6 +181,11 @@ class Full {
   _applyStyles() {
      var editor_el = el.query('.ice-code-editor-editor');
 
+     // Both of these height settings are required for ICE to play nicely
+     // with HTML5 documents
+     document.documentElement.style.height = '100%';
+     document.body.style.height = '100%';
+
      editor_el.style
        ..top = '0'
        ..bottom = '0'
