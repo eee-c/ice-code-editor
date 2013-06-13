@@ -22,5 +22,6 @@ part 'full/new_project_dialog.dart';
 part 'full/rename_dialog.dart';
 part 'full/save_menu.dart';
 part 'full/share_dialog.dart';
+part 'full/download.dart';
 part 'full/copy_dialog.dart';
 part 'full/remove_dialog.dart';
