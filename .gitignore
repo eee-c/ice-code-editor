@@ -5,3 +5,4 @@ out
 *.js.map
 *.dart.js
 docs
+.DS_Store

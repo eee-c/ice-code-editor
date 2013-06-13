@@ -207,12 +207,6 @@ _hideDialog() {
   queryAll('.ice-dialog').forEach((e)=> e.remove());
 }
 
-class DownloadDialog {
-  DownloadDialog(Full full);
-  Element get el {
-    return new Element.html('<li>Download</li>');
-  }
-}
 class HelpDialog {
   HelpDialog(Full full);
   Element get el {
