@@ -7,12 +7,17 @@ class DownloadDialog {
   DownloadDialog.fromParts(this.parent, this.ice, this.store);
 
   Element get el {
+    return new LIElement()
+    ..children.add(_downloadLink);
+  }
+
+  AnchorElement get _downloadLink {
   	var blob = new Blob([ice.content], "text/plain");
     var object_url = Url.createObjectUrl(blob);
 
-    return new Element.html('<li><a>Download</a></li>')
-    	..query('a').download = store.currentProjectTitle
-    	..query('a').href = object_url
-    	..query('a').onClick.listen((e)=> _hideMenu());
+    return new AnchorElement(href: object_url)
+      ..download = store.currentProjectTitle
+      ..onClick.listen((e)=> _hideMenu())
+      ..text = 'Download';
   }
 }
