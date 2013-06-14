@@ -14,8 +14,8 @@ hide_button_tests() {
       _test(_) {
         helpers.click('button', text: 'Hide Code');
         expect(
-          query('.ice-code-editor-editor').style.display,
-          equals('none')
+          query('.ice-code-editor-editor').style.visibility,
+          equals('hidden')
         );
       }
       editor.editorReady.then(expectAsync1(_test));

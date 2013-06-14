@@ -110,8 +110,21 @@ full_tests() {
 
       _test(_) {
         expect(
-          query('.ice-code-editor-editor').style.display,
-          equals('none')
+          query('.ice-code-editor-editor').style.visibility,
+          equals('hidden')
+        );
+      }
+
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
+    test("is enabled when the ?g query param is present", (){
+      window.location.hash = '#g';
+
+      _test(_) {
+        expect(
+          helpers.queryWithContent('button', 'Show Code').style.display,
+          equals('')
         );
       }
 

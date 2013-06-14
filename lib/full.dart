@@ -62,22 +62,30 @@ class Full {
   Element _hide_code_button;
   get _hideCodeButton {
     return _hide_code_button = new Element.html('<button>Hide Code</button>')
-      ..onClick.listen((e)=> ice.hideCode())
-      ..onClick.listen((e)=> e.target.style.display = 'none')
-      ..onClick.listen((e)=> _main_menu_button.style.display = 'none')
-      ..onClick.listen((e)=> _update_button.style.display = 'none')
-      ..onClick.listen((e)=> _show_code_button.style.display = '');
+      ..onClick.listen((e)=> hideCode());
+  }
+
+  void hideCode() {
+    ice.hideCode();
+    _hide_code_button.style.display = 'none';
+    _main_menu_button.style.display = 'none';
+    _update_button.style.display = 'none';
+    _show_code_button.style.display = '';
   }
 
   Element _show_code_button;
   get _showCodeButton {
     return _show_code_button = new Element.html('<button>Show Code</button>')
       ..style.display = 'none'
-      ..onClick.listen((e)=> ice.showCode())
-      ..onClick.listen((e)=> e.target.style.display = 'none')
-      ..onClick.listen((e)=> _main_menu_button.style.display = '')
-      ..onClick.listen((e)=> _update_button.style.display = '')
-      ..onClick.listen((e)=> _hide_code_button.style.display = '');
+      ..onClick.listen((e)=> showCode());
+  }
+
+  void showCode() {
+    ice.showCode();
+    _show_code_button.style.display = 'none';
+    _main_menu_button.style.display = '';
+    _update_button.style.display = '';
+    _hide_code_button.style.display = '';
   }
 
   Element _main_menu_button;
@@ -174,8 +182,8 @@ class Full {
     if (window.location.search.contains('?e')) ice.edit_only = true;
     if (window.location.hash.startsWith('#e')) ice.edit_only = true;
 
-    if (window.location.search.contains('?g')) ice.hideCode();
-    if (window.location.hash.startsWith('#g')) ice.hideCode();
+    if (window.location.search.contains('?g')) hideCode();
+    if (window.location.hash.startsWith('#g')) hideCode();
   }
 
   _applyStyles() {

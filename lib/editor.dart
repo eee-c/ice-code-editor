@@ -112,14 +112,18 @@ class Editor {
   /// the display is correct.
   // worry about waitForAce?
   showCode() {
-    _editor_el.style.display = '';
+    _editor_el.style.visibility = 'visible';
+    query('.ace_print-margin').style.visibility = 'visible';
+
     _ace.renderer.onResize();
     _ace.focus();
   }
 
   /// Hide the code layer
   hideCode() {
-    _editor_el.style.display = 'none';
+    _editor_el.style.visibility = 'hidden';
+    query('.ace_print-margin').style.visibility = 'hidden';
+
     if (this.edit_only) return;
 
     _preview_el.children[0].focus();

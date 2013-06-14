@@ -10,6 +10,16 @@ show_button_tests() {
       new Store().clear();
     });
 
+    test("is hidden by default", (){
+      _test(_) {
+        expect(
+          helpers.queryWithContent('button', 'Show Code').style.display,
+          equals('none')
+        );
+      }
+      editor.editorReady.then(expectAsync1(_test));
+    });
+
     test("shows code", () {
       _test(_) {
         helpers.click('button', text: 'Hide Code');
