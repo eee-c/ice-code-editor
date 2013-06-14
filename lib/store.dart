@@ -11,16 +11,19 @@ part of ice;
  */
 class Store implements HashMap<String, HashMap> {
   /// The key used to identify the data in localStorage.
+  String storage_key;
+
+  /// The default key used to identify the data in localStorage.
   static const String codeEditor = 'codeeditor';
 
   /// The record ID attribute
   static const String title = 'filename';
   List _projects;
 
-  Store() {
-    // Uncomment this (and method below) to migrate development data
-    // _migrateFromTitleIdToFilename();
-  }
+  Store({this.storage_key: codeEditor});
+  //   // Uncomment this (and method below) to migrate development data
+  //   // _migrateFromTitleIdToFilename();
+  // }
 
   HashMap get currentProject {
     if (this.isEmpty)
@@ -80,6 +83,7 @@ class Store implements HashMap<String, HashMap> {
   void clear() {
     _projects = [];
     _sync();
+    window.localStorage.remove(storage_key);
   }
   HashMap putIfAbsent(key, f) {
     var i = _indexOfKey(key);
@@ -122,7 +126,7 @@ class Store implements HashMap<String, HashMap> {
   List get projects {
     if (_projects != null) return _projects;
 
-    var json = window.localStorage[codeEditor];
+    var json = window.localStorage[storage_key];
     return _projects = (json == null) ? [] : JSON.parse(json);
   }
 
@@ -130,8 +134,13 @@ class Store implements HashMap<String, HashMap> {
   /// localStorage.
   void refresh() => _projects = null;
 
+  bool _frozen;
+  /// Prevent further syncs to localStorage
+  void freeze()=> _frozen = true;
+
   void _sync() {
-    window.localStorage[codeEditor] = JSON.stringify(projects);
+    if (_frozen) return;
+    window.localStorage[storage_key] = JSON.stringify(projects);
     _syncController.add(true);
   }
 

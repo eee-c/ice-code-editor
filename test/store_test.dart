@@ -51,6 +51,34 @@ store_tests() {
 
       expect(it['foo']['bar'], equals(42));
     });
+
+    test("records cease to persist if the store is frozen", (){
+      it['foo'] = {'bar': 42};
+      it.freeze();
+
+      it['foo'] = {'bar': 43};
+      it.refresh();
+
+      expect(it['foo']['bar'], equals(42));
+    });
+  });
+
+  group("Multiple Stores", (){
+    test("can be created with optional named construtor params", (){
+      var store1 = new Store(storage_key: 'test1')
+            ..['one'] = {'id': 'foo'}
+            ..refresh();
+
+      var store2 = new Store(storage_key: 'test2')
+            ..['one'] = {'id': 'bar'}
+            ..refresh();
+
+      expect(store1['one']['id'], 'foo');
+      expect(store2['one']['id'], 'bar');
+
+      store1.clear();
+      store2.clear();
+    });
   });
 
   group("current project title", (){
@@ -71,7 +99,6 @@ store_tests() {
       );
     });
   });
-
 
   group("destructive operations", (){
     var it;
@@ -112,11 +139,17 @@ store_tests() {
       expect(it.length, isZero);
     });
 
+    test("clearing deletes the storage_key from localStorage", (){
+      it.clear();
+      expect(window.localStorage[Store.codeEditor], isNull);
+    });
+
     test("it can add a new element if absent", (){
       it.putIfAbsent('four', ()=> {'id': 4});
       expect(it['four'], isNotNull);
       expect(it.length, equals(4));
     });
+
     test("it gets back existing elements from putIfAbsent", (){
       var existing = it.putIfAbsent('three', ()=> {'id': 42});
       expect(existing['id'], equals(3));
