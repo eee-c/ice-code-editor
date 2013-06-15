@@ -30,6 +30,22 @@ copy_dialog_tests() {
       );
     });
 
+    test("hitting the enter key saves", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      helpers.typeIn('My Copied Project');
+      helpers.hitEnter();
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsContain('My Copied Project')
+      );
+    });
+
     test("works with existing projects", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
@@ -133,6 +149,4 @@ copy_dialog_tests() {
     });
 
   });
-
-  // TODO: save on enter
 }
