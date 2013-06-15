@@ -1,11 +1,9 @@
 part of ice;
 
-class CopyDialog {
-  String name = 'Make a Copy';
-  var parent, ice, store;
+class CopyDialog extends Dialog implements MenuAction {
+  CopyDialog(Full f): super(f);
 
-  CopyDialog(Full full): this.fromParts(full.el, full.ice, full.store);
-  CopyDialog.fromParts(this.parent, this.ice, this.store);
+  get name => 'Make a Copy';
 
   open() {
     var dialog = new Element.html(

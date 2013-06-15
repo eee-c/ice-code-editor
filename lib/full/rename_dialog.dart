@@ -1,11 +1,9 @@
 part of ice;
 
-class RenameDialog {
-  String name = 'Rename';
-  var parent, ice, store;
+class RenameDialog extends Dialog implements MenuAction {
+  RenameDialog(Full f): super(f);
 
-  RenameDialog(Full full): this.fromParts(full.el, full.ice, full.store);
-  RenameDialog.fromParts(this.parent, this.ice, this.store);
+  get name => 'Rename';
 
   open(){
     var dialog = new Element.html(

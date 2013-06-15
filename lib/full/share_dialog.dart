@@ -1,11 +1,12 @@
 part of ice;
 
-class ShareDialog {
-  String name = 'Share';
-  var parent, ice, store, full;
+class ShareDialog extends Dialog implements MenuAction {
+  Full full;
+  ShareDialog(Full f): super(f) {
+    full = f;
+  }
 
-  ShareDialog(Full full): this.fromParts(full.el, full.ice, full.store, full);
-  ShareDialog.fromParts(this.parent, this.ice, this.store, this.full);
+  get name => 'Share';
 
   open() {
     var dialog = new Element.html(

@@ -1,11 +1,9 @@
 part of ice;
 
-class NewProjectDialog {
-  String name = 'New';
-  var parent, ice, store;
+class NewProjectDialog extends Dialog implements MenuAction {
+  NewProjectDialog(Full f): super(f);
 
-  NewProjectDialog(Full full): this.fromParts(full.el, full.ice, full.store);
-  NewProjectDialog.fromParts(this.parent, this.ice, this.store);
+  get name => 'New';
 
   open() {
     var dialog = new Element.html(

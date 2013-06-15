@@ -22,10 +22,7 @@ download_tests() {
 	        editor: editor
         );
 
-        helpers.click('button', text: '☰');
-        var el = helpers.queryWithContent("a", "Download");
-
-        expect(el, isNotNull);
+        var el = new DownloadDialog(editor).el;
         expect(el.download, equals("Downloadable one"));
         expect(el.href, startsWith("blob:"));
       }
@@ -36,7 +33,7 @@ download_tests() {
       _test(_) {
         helpers.createProject("My Downloadable Project");
         helpers.click('button', text: '☰');
-        helpers.click('a', text: 'Download');
+        helpers.click('li', text: 'Download');
 
         expect(queryAll('li'), helpers.elementsAreEmpty);
       }

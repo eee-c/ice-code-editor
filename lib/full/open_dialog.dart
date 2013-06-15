@@ -1,11 +1,9 @@
 part of ice;
 
-class OpenDialog {
-  String name = "Open";
-  var parent, ice, store;
+class OpenDialog extends Dialog implements MenuAction {
+  OpenDialog(Full f): super(f);
 
-  OpenDialog(Full full): this.fromParts(full.el, full.ice, full.store);
-  OpenDialog.fromParts(this.parent, this.ice, this.store);
+  get name => "Open";
 
   open() {
     var menu = new Element.html(

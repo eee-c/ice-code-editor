@@ -111,7 +111,7 @@ class Full {
       ..add(_openDialog)
       ..add(_copyDialog)
       ..add(_renameDialog)
-      ..add(_saveMenu)
+      ..add(_saveDialog)
       ..add(_shareDialog)
       ..add(_downloadDialog)
       ..add(_removeDialog)
@@ -122,11 +122,11 @@ class Full {
   get _newProjectDialog=> new MenuItem(new NewProjectDialog(this)).el;
   get _renameDialog=>     new MenuItem(new RenameDialog(this)).el;
   get _copyDialog=>       new MenuItem(new CopyDialog(this)).el;
-  get _saveMenu=>         new MenuItem(new SaveMenu(this)).el;
+  get _saveDialog=>       new MenuItem(new SaveAction(this)).el;
   get _shareDialog=>      new MenuItem(new ShareDialog(this)).el;
   get _removeDialog=>     new MenuItem(new RemoveDialog(this)).el;
-  get _downloadDialog=> new DownloadDialog(this).el;
-  get _helpDialog=>     new HelpDialog(this).el;
+  get _downloadDialog=>   new MenuItem(new DownloadDialog(this)).el;
+  get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
 
   String get encodedContent => Gzip.encode(ice.content);
 
@@ -207,25 +207,11 @@ class Full {
   }
 }
 
-_hideMenu() {
-  queryAll('.ice-menu').forEach((e)=> e.remove());
-}
+_hideMenu() => _hideDialog();
 
 _hideDialog() {
+  queryAll('.ice-menu').forEach((e)=> e.remove());
   queryAll('.ice-dialog').forEach((e)=> e.remove());
-}
-
-class HelpDialog {
-  HelpDialog(Full full);
-  Element get el {
-    return new Element.html('''
-      <a
-         target="_blank"
-         href="https://github.com/eee-c/ice-code-editor/wiki"
-         >
-      <li>Help</li>
-      </a>''');
-  }
 }
 
 _isEscapeKey(e) =>

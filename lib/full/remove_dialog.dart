@@ -1,11 +1,9 @@
 part of ice;
 
-class RemoveDialog {
-  String name = "Remove";
-  var parent, ice, store;
+class RemoveDialog extends Dialog implements MenuAction {
+  RemoveDialog(Full f): super(f);
 
-  RemoveDialog(Full full): this.fromParts(full.el, full.ice, full.store);
-  RemoveDialog.fromParts(this.parent, this.ice, this.store);
+  get name => "Remove";
 
   open() {
     var message = '''

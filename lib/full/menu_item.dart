@@ -1,11 +1,11 @@
 part of ice;
 
 class MenuItem {
-  var dialog;
-  MenuItem(this.dialog);
+  MenuAction action;
+  MenuItem(this.action);
   Element get el {
-    return new Element.html('<li>${dialog.name}</li>')
+    return new Element.html('<li>${action.name}</li>')
       ..onClick.listen((e)=> _hideMenu())
-      ..onClick.listen((e)=> dialog.open());
+      ..onClick.listen((e)=> action.open());
   }
 }
