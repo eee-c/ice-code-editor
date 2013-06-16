@@ -3,65 +3,89 @@ part of ice_test;
 share_dialog_tests() {
   group("Opening Shared Link", (){
     var editor, store;
+
     setUp((){
       window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
-      editor = new Full(enable_javascript_mode: false);
+
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
       store = editor.store;
+
+      return editor.editorReady;
     });
+
     tearDown((){
       window.location.hash = '';
       document.query('#ice').remove();
-      store.clear();
+      editor.store..clear()..freeze();
     });
 
     test("shared content is opened in the editor", (){
-      _test(_)=> expect(editor.content, 'Howdy, Bob!');
-      editor.editorReady.then(expectAsync1(_test));
+      expect(editor.content, 'Howdy, Bob!');
     });
 
     test("shared project is named \"Untitled\" by default", (){
-      _test(_){
-        helpers.click('button', text: '☰');
-        helpers.click('li', text: 'Save');
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
 
-        expect(
-          store['Untitled']['code'],
-          'Howdy, Bob!'
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
-    });
-
-    test("shared project name does not clobber existing projects", (){
-      store['Untitled'] = {'code': 'Hi, Fred!'};
-
-      _test(_){
-        helpers.click('button', text: '☰');
-        helpers.click('li', text: 'Save');
-
-        expect(store['Untitled']['code'], 'Hi, Fred!');
-        expect(store['Untitled (1)']['code'], 'Howdy, Bob!');
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
+      expect(
+        store['Untitled']['code'],
+        'Howdy, Bob!'
+      );
     });
 
     test("removes share hash", (){
-      _test(_){
-        expect(window.location.hash, '');
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
+      expect(window.location.hash, '');
     });
 
     // shared link with ?g starts in game mode
   });
 
+  group("Opening Shared Link with an existing untitled project", (){
+    var editor, store;
+
+    setUp((){
+      window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
+
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}"
+        ..store['Untitled'] = {'code': 'Hi, Fred!'};
+
+      store = editor.store;
+
+      return editor.editorReady;
+    });
+
+
+    tearDown((){
+      window.location.hash = '';
+      document.query('#ice').remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("does not clobber the existing project", (){
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'Save');
+
+        expect(store['Untitled']['code'], 'Hi, Fred!');
+        expect(store['Untitled (1)']['code'], 'Howdy, Bob!');
+    });
+  });
+
   group("Share Dialog", (){
     var editor;
 
-    setUp(()=> editor = new Full(enable_javascript_mode: false));
-    tearDown(()=> document.query('#ice').remove());
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store..clear()..freeze();
+    });
 
     test("clicking the share link shows the share dialog", (){
       helpers.click('button', text: '☰');
@@ -74,52 +98,40 @@ share_dialog_tests() {
     });
 
     test("share dialog contains a game mode checkbox", (){
-      _test(_) {
-        helpers.click('button', text: '☰');
-        helpers.click('li', text: 'Share');
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
 
-        expect(
-          queryAll('.ice-dialog label'),
-          helpers.elementsContain('start in game mode')
-        );
-        expect(
-          queryAll('.ice-dialog label input[type=checkbox]'),
-          helpers.elementsArePresent
-        );
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
+      expect(
+        queryAll('.ice-dialog label'),
+        helpers.elementsContain('start in game mode')
+      );
+      expect(
+        queryAll('.ice-dialog label input[type=checkbox]'),
+        helpers.elementsArePresent
+      );
     });
 
     test("clicking the game mode checkbox adds game mode to link", (){
-      _test(_) {
-        helpers.click('button', text: '☰');
-        helpers.click('li', text: 'Share');
-        helpers.click('.ice-dialog label input[type=checkbox]');
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      helpers.click('.ice-dialog label input[type=checkbox]');
 
-        expect(
-          query('.ice-dialog input').value,
-          matches('\\?g')
-        );
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
+      expect(
+        query('.ice-dialog input').value,
+        matches('\\?g')
+      );
     });
 
     test("clicking the game mode twice removes game mode from link", (){
-      _test(_) {
-        helpers.click('button', text: '☰');
-        helpers.click('li', text: 'Share');
-        helpers.click('.ice-dialog label input[type=checkbox]');
-        helpers.click('.ice-dialog label input[type=checkbox]');
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      helpers.click('.ice-dialog label input[type=checkbox]');
+      helpers.click('.ice-dialog label input[type=checkbox]');
 
-        expect(
-          query('.ice-dialog input').value,
-          isNot(matches('\\?g'))
-        );
-      }
-
-      editor.editorReady.then(expectAsync1(_test));
+      expect(
+        query('.ice-dialog input').value,
+        isNot(matches('\\?g'))
+      );
     });
 
     // input has focus after game mode is clicked
@@ -156,16 +168,12 @@ share_dialog_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Share');
 
-      _test(_) {
-        helpers.click('.ice-code-editor-editor');
+      helpers.click('.ice-code-editor-editor');
 
-        expect(
-          queryAll('div'),
-          helpers.elementsDoNotContain('Copy this link')
-        );
-      };
-      editor.editorReady.then(expectAsync1(_test));
-
+      expect(
+        queryAll('div'),
+        helpers.elementsDoNotContain('Copy this link')
+      );
     });
   });
 }

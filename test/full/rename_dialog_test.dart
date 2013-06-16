@@ -4,10 +4,15 @@ rename_dialog_tests() {
   group("Rename Dialog", (){
     var editor;
 
-    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+      return editor.editorReady;
+    });
+
     tearDown(() {
       document.query('#ice').remove();
-      new Store().clear();
+      editor.store..clear()..freeze();
     });
 
     test("can open the rename dialog", (){

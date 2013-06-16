@@ -4,10 +4,15 @@ new_project_dialog_tests(){
   group("New Project Dialog", (){
     var editor;
 
-    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+      return editor.editorReady;
+    });
+
     tearDown(() {
       document.query('#ice').remove();
-      new Store().clear();
+      editor.store..clear()..freeze();
     });
 
     test("new project input field has focus", (){
@@ -54,9 +59,8 @@ new_project_dialog_tests(){
       helpers.click('li', text: 'Save');
 
       // TODO: check the projects menu (once implemented)
-      var store = new Store();
-      expect(store['My New Project'], isNotNull);
-      expect(store['My New Project']['code'], 'asdf');
+      expect(editor.store['My New Project'], isNotNull);
+      expect(editor.store['My New Project']['code'], 'asdf');
     });
 
     test("clicking the new menu item closes the main menu", (){

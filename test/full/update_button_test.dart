@@ -4,10 +4,15 @@ update_button_tests() {
   group("Update Button", (){
     var editor;
 
-    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+      return editor.editorReady;
+    });
+
     tearDown(() {
       document.query('#ice').remove();
-      new Store().clear();
+      editor.store..clear()..freeze();
     });
 
     test("updates the preview layer", (){
@@ -20,31 +25,23 @@ update_button_tests() {
     });
 
     test("Checkbox is on by default", (){
-      editor.editorReady.then(expectAsync1((_){
-        var button = helpers.queryWithContent("button","Update");
-        var checkbox = button.query("input[type=checkbox]");
-        expect(checkbox.checked, isTrue);
-      }));
+      var button = helpers.queryWithContent("button","Update");
+      var checkbox = button.query("input[type=checkbox]");
+      expect(checkbox.checked, isTrue);
     });
 
     test("Autoupdate is set in the editor by default", (){
-      editor.editorReady.then(expectAsync1((_){
-        editor.onPreviewChange.listen(expectAsync1((_){
-          expect(editor.ice.autoupdate, isTrue);
-        }));
+      editor.onPreviewChange.listen(expectAsync1((_){
+        expect(editor.ice.autoupdate, isTrue);
       }));
     });
 
     test("When you uncheck the checkbox autoupdate is disabled", (){
+      var button = helpers.queryWithContent("button","Update");
+      var checkbox = button.query("input[type=checkbox]");
 
-      editor.editorReady.then(expectAsync1((_){
-        var button = helpers.queryWithContent("button","Update");
-        var checkbox = button.query("input[type=checkbox]");
-
-        checkbox.click();
-        expect(editor.ice.autoupdate, isFalse);
-      }));
+      checkbox.click();
+      expect(editor.ice.autoupdate, isFalse);
     });
-
   });
 }

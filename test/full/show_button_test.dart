@@ -4,80 +4,67 @@ show_button_tests() {
   group("Show Button", (){
     var editor;
 
-    setUp(()=> editor = new Full(enable_javascript_mode: false));
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+      return editor.editorReady;
+    });
+
     tearDown(() {
       document.query('#ice').remove();
-      new Store().clear();
+      editor.store..clear()..freeze();
     });
 
     test("is hidden by default", (){
-      _test(_) {
-        expect(
-          helpers.queryWithContent('button', 'Show Code').style.display,
-          equals('none')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      expect(
+        helpers.queryWithContent('button', 'Show Code').style.display,
+        equals('none')
+      );
     });
 
     test("shows code", () {
-      _test(_) {
-        helpers.click('button', text: 'Hide Code');
-        helpers.click('button', text: 'Show Code');
-        expect(
-          query('.ice-code-editor-editor').style.display,
-          equals('')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      helpers.click('button', text: 'Hide Code');
+      helpers.click('button', text: 'Show Code');
+      expect(
+        query('.ice-code-editor-editor').style.display,
+        equals('')
+      );
     });
 
     test("hides itself", (){
-      _test(_) {
-        helpers.click('button', text: 'Hide Code');
-        helpers.click('button', text: 'Show Code');
-        expect(
-          helpers.queryWithContent('button', 'Show Code').style.display,
-          equals('none')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      helpers.click('button', text: 'Hide Code');
+      helpers.click('button', text: 'Show Code');
+      expect(
+        helpers.queryWithContent('button', 'Show Code').style.display,
+        equals('none')
+      );
     });
 
     test("shows main menu button", (){
-      _test(_) {
-        helpers.click('button', text: 'Hide Code');
-        helpers.click('button', text: 'Show Code');
-        expect(
-          helpers.queryWithContent('button', '☰').style.display,
-          equals('')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      helpers.click('button', text: 'Hide Code');
+      helpers.click('button', text: 'Show Code');
+      expect(
+        helpers.queryWithContent('button', '☰').style.display,
+        equals('')
+      );
     });
 
     test("shows update button", (){
-      _test(_) {
-        helpers.click('button', text: 'Hide Code');
-        helpers.click('button', text: 'Show Code');
-        expect(
-          helpers.queryWithContent('button', ' Update').style.display,
-          equals('')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      helpers.click('button', text: 'Hide Code');
+      helpers.click('button', text: 'Show Code');
+      expect(
+        helpers.queryWithContent('button', ' Update').style.display,
+        equals('')
+      );
     });
 
     test("shows the hide button", (){
-      _test(_) {
-        helpers.click('button', text: 'Hide Code');
-        helpers.click('button', text: 'Show Code');
-        expect(
-          helpers.queryWithContent('button', 'Hide Code').style.display,
-          equals('')
-        );
-      }
-      editor.editorReady.then(expectAsync1(_test));
+      helpers.click('button', text: 'Hide Code');
+      helpers.click('button', text: 'Show Code');
+      expect(
+        helpers.queryWithContent('button', 'Hide Code').style.display,
+        equals('')
+      );
     });
   });
 }
