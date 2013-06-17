@@ -39,8 +39,10 @@ share_dialog_tests() {
       expect(window.location.hash, '');
     });
 
-    // shared link with ?g starts in game mode
   });
+  // Note: Cannot test the combination of ?g and #B 
+  // because the search parameter reload the test page, 
+  // which restarts the test suite. For now we rely on the individual tests.
 
   group("Opening Shared Link with an existing untitled project", (){
     var editor, store;
