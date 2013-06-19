@@ -136,6 +136,10 @@ class Full {
       _hideMenu();
       _hideDialog();
     });
+
+    editorReady.then((_){
+      el.onFocus.listen((e)=> ice.focus());
+    });
   }
 
   _attachMouseHandlers() {
@@ -212,6 +216,7 @@ _hideMenu() => _hideDialog();
 _hideDialog() {
   queryAll('.ice-menu').forEach((e)=> e.remove());
   queryAll('.ice-dialog').forEach((e)=> e.remove());
+  query('#ice').dispatchEvent(new UIEvent('focus'));
 }
 
 _isEscapeKey(e) =>

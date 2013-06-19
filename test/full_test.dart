@@ -145,5 +145,58 @@ full_tests() {
     });
   });
 
+  solo_group("Focus", (){
+    var editor;
+
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      var preview_ready = new Completer();
+      editor.onPreviewChange.listen((e){
+        if (preview_ready.isCompleted) return;
+        preview_ready.complete();
+      });
+      return preview_ready.future;
+    });
+
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("editor has focus after closing a dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+      helpers.hitEscape();
+
+      var el = document.
+        query('.ice-code-editor-editor').
+        query('textarea.ace_text-input');
+
+      expect(document.activeElement, el);
+    });
+
+    group("hiding code after update", (){
+      setUp((){
+        editor.ice.focus();
+        editor.content = '<h1>Force Update</h1>';
+        helpers.click('button', text: 'Hide Code');
+
+        var preview_ready = new Completer();
+        editor.onPreviewChange.listen((e){
+          preview_ready.complete();
+        });
+        return preview_ready.future;
+      });
+
+      test("preview has focus", (){
+        var el = document.query('iframe');
+
+        expect(document.activeElement, el);
+      });
+    });
+  });
+
   // TODO: put current project title in the browser title
 }

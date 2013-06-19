@@ -75,6 +75,8 @@ class Editor {
         ? '*': window.location.href;
       iframe.contentWindow.postMessage(_ace.value, url);
 
+      focus();
+
       _previewChangeController.add(true);
     });
   }
@@ -116,7 +118,7 @@ class Editor {
     query('.ace_print-margin').style.visibility = 'visible';
 
     _ace.renderer.onResize();
-    _ace.focus();
+    focus();
   }
 
   /// Hide the code layer
@@ -125,9 +127,19 @@ class Editor {
     query('.ace_print-margin').style.visibility = 'hidden';
 
     if (this.edit_only) return;
-
-    _preview_el.children[0].focus();
+    focus();
   }
+
+  focus() {
+    if (_isCodeVisible) {
+      _ace.focus();
+    }
+    else {
+      _preview_el.children[0].focus();
+    }
+  }
+
+  bool get _isCodeVisible=> _editor_el.style.visibility != 'hidden';
 
   Element get el {
     if (__el != null) return __el;
