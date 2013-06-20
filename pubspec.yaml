@@ -7,6 +7,6 @@ authors:
 - Srdjan Pejic
 homepage: https://github.com/eee-c/ice-code-editor
 dependencies:
-  unittest: ">=0.5.13 <0.5.14"
+  unittest: ">=0.5.20 <0.5.21"
   js: ">=0.0.22 <0.0.23"
-  crypto: ">=0.5.13 <0.5.14"
+  crypto: ">=0.5.20 <0.5.21"
