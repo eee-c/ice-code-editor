@@ -145,7 +145,7 @@ full_tests() {
     });
   });
 
-  solo_group("Focus", (){
+  group("Focus", (){
     var editor;
 
     setUp((){

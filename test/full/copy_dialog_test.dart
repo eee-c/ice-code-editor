@@ -109,6 +109,30 @@ copy_dialog_tests() {
       );
      });
 
+    test("copied project includes copy number in parentheses", (){
+      helpers.createProject('Project #1');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input[type=text]').value,
+        equals("Project #1 (1)")
+      );
+     });
+
+    test("project name ending in parens", (){
+      helpers.createProject('projectNamedForFunction()');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+
+      expect(
+        query('.ice-dialog input[type=text]').value,
+        equals("projectNamedForFunction() (1)")
+      );
+     });
+
     test("project name field is pre-populated", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
@@ -150,6 +174,21 @@ copy_dialog_tests() {
       expect(
         query('.ice-dialog input[type=text]').value,
         equals("Project #1 (2)")
+      );
+    });
+
+    test("cannot have a duplicate name", () {
+      helpers.createProject('Project #1');
+
+      //a duplicate
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+      helpers.typeIn('Project #1');
+      helpers.click('button', text: 'Save');
+
+      expect(
+        query('#alert').text,
+        "There is already a project with that name"
       );
     });
 

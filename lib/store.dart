@@ -102,15 +102,15 @@ class Store implements HashMap<String, HashMap> {
     if (original_title == null) original_title = currentProjectTitle;
     if (!containsKey(original_title)) return original_title;
 
-    RegExp exp = new RegExp(r"\s+\((\d+)\)$");
-    var title = original_title.replaceFirst(exp, "");
+    RegExp copy_number_re = new RegExp(r"\s+\((\d+)\)$");
+    var title = original_title.replaceFirst(copy_number_re, "");
 
     var same_base = values.where((p) {
-      return new RegExp("^" + title + r"(?:\s+\(\d+\))?$").hasMatch(p['filename']);
+      return p['filename'].startsWith(title);
     });
 
     var copy_numbers = same_base.map((p) {
-        var stringCount = exp.firstMatch(p['filename']);
+        var stringCount = copy_number_re.firstMatch(p['filename']);
         return stringCount == null ? 0 : int.parse(stringCount[1]);
       })
       .toList()
@@ -136,7 +136,7 @@ class Store implements HashMap<String, HashMap> {
 
   bool _frozen;
   /// Prevent further syncs to localStorage
-  void freeze()=> _frozen = true;
+  void freeze() { _frozen = true; }
 
   void _sync() {
     if (_frozen) return;

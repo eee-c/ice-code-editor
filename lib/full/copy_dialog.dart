@@ -31,6 +31,11 @@ class CopyDialog extends Dialog implements MenuAction {
 
   _copyProject() {
     var title = _field.value;
+    if (store.containsKey(title)) {
+      var message = "There is already a project with that name";
+      Notify.alert(message, parent: parent, test_mode: !ice.enable_javascript_mode);
+      return;
+    }
 
     store[title] = {'code': ice.content};
 
