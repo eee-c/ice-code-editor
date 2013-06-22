@@ -112,6 +112,23 @@ share_dialog_tests() {
         helpers.elementsArePresent
       );
     });
+    test("share dialog has a link to a URL shortener", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      expect(query('.ice-dialog a'), isNotNull);
+    });
+
+    test("share dialog's URL shortener points to is.gd", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      expect(query('.ice-dialog a').href, contains('is.gd'));
+    });
+
+    test("share dialog's URL shortener href link is properly encoded", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      expect(query('.ice-dialog a').href, contains('url=http%3A%2F%2Fgamingjs.com%2Fice%2F%23B%2Fj'));
+    });
 
     test("clicking the game mode checkbox adds game mode to link", (){
       helpers.click('button', text: '☰');
@@ -137,25 +154,6 @@ share_dialog_tests() {
     });
 
     // input has focus after game mode is clicked
-
-    test("clicking the share link closes the main menu", (){
-      helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Share');
-
-      expect(queryAll('li'), helpers.elementsAreEmpty);
-    });
-
-    test("the menu button closes the share dialog", (){
-      helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Share');
-      helpers.click('button', text: '☰');
-
-      expect(
-        queryAll('div'),
-        helpers.elementsDoNotContain('Copy this link')
-      );
-    });
-
     test("share field has focus", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Share');
@@ -171,6 +169,24 @@ share_dialog_tests() {
       helpers.click('li', text: 'Share');
 
       helpers.click('.ice-code-editor-editor');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsDoNotContain('Copy this link')
+      );
+    });
+
+    test("clicking the share link closes the main menu", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+
+      expect(queryAll('li'), helpers.elementsAreEmpty);
+    });
+
+    test("the menu button closes the share dialog", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      helpers.click('button', text: '☰');
 
       expect(
         queryAll('div'),
