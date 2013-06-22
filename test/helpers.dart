@@ -53,7 +53,6 @@ type(int charCode) {
   );
 }
 
-
 get elementsAreEmpty =>
   new ElementListMatcher(isEmpty);
 
