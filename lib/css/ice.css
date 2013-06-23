@@ -99,3 +99,9 @@ div.ice-menu ul {
   margin: 0px 0px 5px;
   font-size: 100%;
 }
+
+.ice-dialog .instructions {
+  padding-top: 0.25em;
+  float: right;
+  text-transform: lowercase;
+}
