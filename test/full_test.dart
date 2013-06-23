@@ -180,7 +180,13 @@ full_tests() {
     group("hiding code after update", (){
       setUp((){
         editor.ice.focus();
-        editor.content = '<h1>Force Update</h1>';
+
+        document.
+          query('#ice').
+          dispatchEvent(
+            new TextEvent('textInput', data: '<h1>Force Update</h1>')
+          );
+
         helpers.click('button', text: 'Hide Code');
 
         var preview_ready = new Completer();
@@ -191,9 +197,7 @@ full_tests() {
       });
 
       test("preview has focus", (){
-        var el = document.query('iframe');
-
-        expect(document.activeElement, el);
+        expect(document.activeElement.tagName, 'IFRAME');
       });
     });
   });

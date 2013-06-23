@@ -71,6 +71,19 @@ class Full {
     _main_menu_button.style.display = 'none';
     _update_button.style.display = 'none';
     _show_code_button.style.display = '';
+    _focusAfterPreviewChange();
+  }
+
+  _focusAfterPreviewChange() {
+    var listener;
+
+    listener = ice.onPreviewChange.listen((e) {
+      ice.focus();
+      listener.cancel();
+    });
+    new Timer(new Duration(milliseconds: 2500), (){
+      listener.cancel();
+    });
   }
 
   Element _show_code_button;
@@ -211,11 +224,16 @@ class Full {
   }
 }
 
-_hideMenu() => _hideDialog();
+_hideMenu({focus:true}) => _hideDialog(focus:focus);
 
-_hideDialog() {
+_hideDialog({focus:true}) {
   queryAll('.ice-menu').forEach((e)=> e.remove());
   queryAll('.ice-dialog').forEach((e)=> e.remove());
+  if (focus) _maybeFocus();
+}
+
+_maybeFocus() {
+  if (document.activeElement.tagName == 'INPUT') return;
   query('#ice').dispatchEvent(new UIEvent('focus'));
 }
 

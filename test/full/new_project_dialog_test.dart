@@ -25,6 +25,28 @@ new_project_dialog_tests(){
       );
     });
 
+    group("after preview is rendered", (){
+      setUp((){
+        var preview_ready = new Completer();
+        editor.onPreviewChange.listen((e){
+          preview_ready.complete();
+        });
+        return preview_ready.future;
+      });
+
+      test("input field retains focus if nothing else happens", (){
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'New');
+
+        Timer.run(expectAsync0((){
+          expect(
+            document.activeElement,
+            equals(query('.ice-dialog input[type=text]'))
+          );
+        }));
+      });
+    });
+
     test("cannot have a duplicate name", () {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');

@@ -75,8 +75,6 @@ class Editor {
         ? '*': window.location.href;
       iframe.contentWindow.postMessage(_ace.value, url);
 
-      focus();
-
       _previewChangeController.add(true);
     });
   }
