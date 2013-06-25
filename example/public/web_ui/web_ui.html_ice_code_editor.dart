@@ -44,11 +44,24 @@ import 'package:web_ui/web_ui.dart';
 
   /** Original code from the component. */
 
-        Full ide_lite;
-        IceCodeEditor() {
-          ide_lite = new ICE.Full();
+        ICE.Editor ice;
+        String content;
+
+        created() {
+          id = 'ice';
+          style
+           ..width = '600px'
+           ..height = '400px';
+
+          content = innerHtml.
+            replaceFirst(new RegExp(r'^\s*<!--\s*', multiLine: true), '').
+            replaceFirst(new RegExp(r'\s*-->\s*$', multiLine: true), '');
         }
-        get el => ide_lite.el;
+
+        inserted() {
+          ice = new ICE.Editor('#ice');
+          ice.content= content;
+        }
       }
     
 //# sourceMappingURL=web_ui.html_ice_code_editor.dart.map
