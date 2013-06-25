@@ -5,18 +5,18 @@
     <script src="packages/browser/interop.js"></script>
   </head>
   <body>
-  <x-ice-code-editor></x-ice-code-editor>
-  <element name="x-ice-code-editor" extends="div">
+  <ice-code-editor></ice-code-editor>
+  <element name="ice-code-editor" extends="div">
     <template>
-      {{ el }}
+      <!-- Placeholder for template. Live elements added to BODY. -->
     </template>
     <script type="application/dart">
       import 'package:ice_code_editor/ice.dart' as ICE;
       import 'package:web_ui/web_ui.dart';
 
-      class XIceCodeEditor extends WebComponent {
+      class IceCodeEditor extends WebComponent {
         Full ide_lite;
-        XIceCodeEditor() {
+        IceCodeEditor() {
           ide_lite = new ICE.Full();
         }
         get el => ide_lite.el;
