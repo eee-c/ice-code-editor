@@ -12,13 +12,14 @@ class Full {
     ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
     store = new Store();
 
-    _attachToolbar();
     _attachKeyboardHandlers();
     _attachMouseHandlers();
 
     _fullScreenStyles();
 
     editorReady
+      ..then((_)=> _attachCodeToolbar())
+      ..then((_)=> _attachPreviewToolbar())
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
       ..then((_)=> _applyEditorModes())
@@ -30,7 +31,23 @@ class Full {
   String get content => ice.content;
   void set content(data) => ice.content = data;
 
-  _attachToolbar() {
+  _attachCodeToolbar() {
+    var toolbar = new Element.html('<div class=ice-toolbar>');
+    toolbar.style
+      ..position = 'absolute'
+      ..top = '10px'
+      ..right = '20px'
+      ..zIndex = '89'; // below ACE's searchbox
+
+    toolbar.children
+      ..add(_updateButton)
+      ..add(_hideCodeButton)
+      ..add(_mainMenuButton);
+
+    editor_el.children.add(toolbar);
+  }
+
+  _attachPreviewToolbar() {
     var toolbar = new Element.html('<div class=ice-toolbar>');
     toolbar.style
       ..position = 'absolute'
@@ -39,10 +56,7 @@ class Full {
       ..zIndex = '999';
 
     toolbar.children
-      ..add(_updateButton)
-      ..add(_hideCodeButton)
-      ..add(_showCodeButton)
-      ..add(_mainMenuButton);
+      ..add(_showCodeButton);
 
     el.children.add(toolbar);
   }
@@ -104,7 +118,10 @@ class Full {
   Element _main_menu_button;
   get _mainMenuButton {
     return _main_menu_button = new Element.html('<button>☰</button>')
-      ..onClick.listen((e)=> this.toggleMainMenu());
+      ..onClick.listen((e) {
+        this.toggleMainMenu();
+        e.stopPropagation();
+      });
   }
   _toggleAutoupdate(CheckboxInputElement e){
     ice.autoupdate = e.checked;
@@ -203,9 +220,10 @@ class Full {
     if (window.location.hash.startsWith('#g')) hideCode();
   }
 
-  _applyStyles() {
-     var editor_el = el.query('.ice-code-editor-editor');
+  Element get editor_el => ice.editor_el;
+  Element get preview_el => ice.preview_el;
 
+  _applyStyles() {
      // Both of these height settings are required for ICE to play nicely
      // with HTML5 documents
      document.documentElement.style.height = '100%';

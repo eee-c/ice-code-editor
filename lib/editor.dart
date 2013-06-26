@@ -5,7 +5,7 @@ class Editor {
   String title;
 
   var _el;
-  Element __el, __editor_el, __preview_el;
+  Element __el, _editor_el, _preview_el;
 
   var _ace;
   Completer _waitForAce, _waitForPreview;
@@ -69,7 +69,7 @@ class Editor {
       if (iframe.contentWindow == null) return;
 
       iframe
-        ..height = "${this._preview_el.clientHeight}";
+        ..height = "${this.preview_el.clientHeight}";
 
       var url = new RegExp(r'^file://').hasMatch(window.location.href)
         ? '*': window.location.href;
@@ -80,20 +80,20 @@ class Editor {
   }
 
   removePreview() {
-    while (this._preview_el.children.length > 0) {
-      	  this._preview_el.children.first.remove();
+    while (this.preview_el.children.length > 0) {
+      this.preview_el.children.first.remove();
     }
   }
 
   createPreviewIframe() {
     var iframe = new IFrameElement();
     iframe
-      ..width = "${this._preview_el.clientWidth}"
-      ..height = "${this._preview_el.clientHeight}"
+      ..width = "${this.preview_el.clientWidth}"
+      ..height = "${this.preview_el.clientHeight}"
       ..style.border = '0'
       ..src = 'packages/ice_code_editor/html/preview_frame.html';
 
-    this._preview_el.children.add( iframe );
+    this.preview_el.children.add( iframe );
 
     return iframe;
   }
@@ -112,7 +112,7 @@ class Editor {
   /// the display is correct.
   // worry about waitForAce?
   showCode() {
-    _editor_el.style.visibility = 'visible';
+    editor_el.style.visibility = 'visible';
     query('.ace_print-margin').style.visibility = 'visible';
 
     _ace.renderer.onResize();
@@ -121,7 +121,7 @@ class Editor {
 
   /// Hide the code layer
   hideCode() {
-    _editor_el.style.visibility = 'hidden';
+    editor_el.style.visibility = 'hidden';
     query('.ace_print-margin').style.visibility = 'hidden';
 
     if (this.edit_only) return;
@@ -133,11 +133,11 @@ class Editor {
       _ace.focus();
     }
     else {
-      _preview_el.children[0].focus();
+      preview_el.children[0].focus();
     }
   }
 
-  bool get _isCodeVisible=> _editor_el.style.visibility != 'hidden';
+  bool get _isCodeVisible=> editor_el.style.visibility != 'hidden';
 
   Element get el {
     if (__el != null) return __el;
@@ -151,26 +151,26 @@ class Editor {
     return __el;
   }
 
-  Element get _editor_el {
-    if (__editor_el != null) return __editor_el;
+  Element get editor_el {
+    if (_editor_el != null) return _editor_el;
 
-    __editor_el = new DivElement()
+    _editor_el = new DivElement()
       ..classes.add('ice-code-editor-editor');
-    this.el.children.add(__editor_el);
-    return __editor_el;
+    this.el.children.add(_editor_el);
+    return _editor_el;
   }
 
-  Element get _preview_el {
-    if (__preview_el != null) return __preview_el;
+  Element get preview_el {
+    if (_preview_el != null) return _preview_el;
 
-    __preview_el = new DivElement()
+    _preview_el = new DivElement()
       ..classes.add('ice-code-editor-preview');
 
     if (!this.edit_only) {
-      this.el.children.add(__preview_el);
+      this.el.children.add(_preview_el);
     }
 
-    return __preview_el;
+    return _preview_el;
   }
 
   static List _scripts;
@@ -215,7 +215,7 @@ class Editor {
   _startJsAce() {
     js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
-    _ace = Ace.edit(_editor_el);
+    _ace = Ace.edit(editor_el);
     js.retain(_ace);
 
     _ace
@@ -264,11 +264,11 @@ class Editor {
     this.el.style
       ..position = 'relative';
 
-    this._editor_el.style
+    this.editor_el.style
       ..position = 'absolute'
       ..zIndex = '20';
 
-    this._preview_el.style
+    this.preview_el.style
       ..position = 'absolute'
       ..zIndex = '10';
   }
