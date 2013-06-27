@@ -65,7 +65,7 @@ class Full {
   get _updateButton {
     return _update_button = new Element.html('''
         <button>
-           <input checked type="checkbox" style="margin: -4px 4px -4px 0px;"/> Update
+           <input checked type="checkbox" style="margin: -10px 4px -10px 0px;"/> Update
          </button>'''
       )
       ..query("input").onChange.listen((e)=> _toggleAutoupdate(e.target))

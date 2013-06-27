@@ -33,6 +33,7 @@
 button {
   font-family: sans-serif;
   font-size: 10px;
+  line-height: 12px;
   text-transform: uppercase;
   text-decoration: none;
   color: rgba(0,0,0,0.5);
