@@ -86,9 +86,20 @@ div.ice-menu ul {
   cursor: pointer;
 }
 
+.ice-menu li.empty {
+  display: block;
+  padding: 0px;
+  cursor: auto;
+}
+
 .ice-menu li:hover {
   color: white;
   background-color: rgba(0,0,0,0.66);
+}
+
+.ice-menu li.empty:hover {
+  color: rgba(0,0,0,0.5);
+  background-color: white;
 }
 
 .ice-menu a {

@@ -121,4 +121,137 @@ open_dialog_tests() {
 
     skip_test("contains a default project on first load", (){});
   });
+
+  group("Open Dialog Filter", (){
+    var editor;
+
+    setUp((){
+      editor = new Full(enable_javascript_mode: false)
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      new Iterable.generate(12, (i){
+        editor.store['Project ${i}'] = {'code': 'code ${i}'};
+      }).toList();
+
+      return editor.editorReady;
+    });
+    tearDown(() {
+      document.query('#ice').remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("is not visible when there are fewer than 10 projects", (){
+      editor.store.clear();
+      new Iterable.generate(9, (i){
+        editor.store['Project ${i}'] = {'code': 'code ${i}'};
+      }).toList();
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('.ice-menu input'),
+        helpers.elementsAreEmpty
+      );
+    });
+    test("is visible when there are 10 or more projects", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('.ice-menu input'),
+        helpers.elementsArePresent
+      );
+    });
+    test("has focus by default", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        query('.ice-menu input'),
+        document.activeElement
+      );
+    });
+    test("can filter projects", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      document.activeElement
+        ..dispatchEvent(
+            new TextEvent('textInput', data: '1')
+          )
+        ..dispatchEvent(
+            new KeyboardEvent('keyup')
+          );
+
+      expect(
+        queryAll('.ice-menu li').length,
+        3
+      );
+    });
+    test("is not case sensitive", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      document.activeElement
+        ..dispatchEvent(
+            new TextEvent('textInput', data: 'project 1')
+          )
+        ..dispatchEvent(
+            new KeyboardEvent('keyup')
+          );
+
+      expect(
+        queryAll('.ice-menu li').length,
+        3
+      );
+    });
+    test("updates on new text input", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      document.activeElement
+        ..dispatchEvent(
+            new TextEvent('textInput', data: 'project 1')
+          )
+        ..dispatchEvent(
+            new KeyboardEvent('keyup')
+          );
+
+      expect(
+        queryAll('.ice-menu li').length,
+        3
+      );
+
+      document.activeElement
+        ..dispatchEvent(
+            new TextEvent('textInput', data: '1')
+          )
+        ..dispatchEvent(
+            new KeyboardEvent('keyup')
+          );
+
+      expect(
+        queryAll('.ice-menu li').length,
+        1
+      );
+    });
+    test("shows message when no projects match", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      document.activeElement
+        ..dispatchEvent(
+            new TextEvent('textInput', data: 'asdf')
+          )
+        ..dispatchEvent(
+            new KeyboardEvent('keyup')
+          );
+
+      expect(
+        query('.ice-menu li').text,
+        contains('No matching projects')
+      );
+    });
+  });
 }
