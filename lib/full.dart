@@ -30,6 +30,10 @@ class Full {
   Future get editorReady => ice.editorReady;
   String get content => ice.content;
   void set content(data) => ice.content = data;
+  void remove() {
+    _keyUpSubscription.cancel();
+    el.remove();
+  }
 
   _attachCodeToolbar() {
     var toolbar = new Element.html('<div class=ice-toolbar>');
@@ -160,8 +164,9 @@ class Full {
 
   String get encodedContent => Gzip.encode(ice.content);
 
+  var _keyUpSubscription;
   _attachKeyboardHandlers() {
-    document.onKeyUp.listen((e) {
+    _keyUpSubscription = document.onKeyUp.listen((e) {
       if (!_isEscapeKey(e)) return;
       _hideMenu();
       _hideDialog();
@@ -255,8 +260,9 @@ _maybeFocus() {
   query('#ice').dispatchEvent(new UIEvent('focus'));
 }
 
-_isEscapeKey(e) =>
-  e.keyCode == 27 || e.$dom_keyIdentifier.codeUnits.first == 27;
+_isEscapeKey(e) => e.keyCode == 27 ||
+  e.$dom_keyIdentifier == KeyName.ESC ||
+  e.$dom_keyIdentifier == new String.fromCharCodes([85, 43, 48, 48, 49, 66]);
 
 _isEnterKey(e) =>
-  e.keyCode == 13 || e.$dom_keyIdentifier.codeUnits.first == 13;
+  e.keyCode == 13 || e.$dom_keyIdentifier == KeyName.ENTER;

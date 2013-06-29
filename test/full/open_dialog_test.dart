@@ -10,7 +10,7 @@ open_dialog_tests() {
       return editor.editorReady;
     });
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -136,7 +136,7 @@ open_dialog_tests() {
       return editor.editorReady;
     });
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 

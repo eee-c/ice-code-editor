@@ -17,7 +17,7 @@ share_dialog_tests() {
 
     tearDown((){
       window.location.hash = '';
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -40,8 +40,8 @@ share_dialog_tests() {
     });
 
   });
-  // Note: Cannot test the combination of ?g and #B 
-  // because the search parameter reload the test page, 
+  // Note: Cannot test the combination of ?g and #B
+  // because the search parameter reload the test page,
   // which restarts the test suite. For now we rely on the individual tests.
 
   group("Opening Shared Link with an existing untitled project", (){
@@ -62,7 +62,7 @@ share_dialog_tests() {
 
     tearDown((){
       window.location.hash = '';
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -85,7 +85,7 @@ share_dialog_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 

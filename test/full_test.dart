@@ -11,7 +11,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -35,7 +35,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -72,7 +72,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 
@@ -104,7 +104,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
       window.location.hash = '';
     });
@@ -125,7 +125,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
       window.location.hash = '';
     });
@@ -161,7 +161,7 @@ full_tests() {
     });
 
     tearDown(() {
-      document.query('#ice').remove();
+      editor.remove();
       editor.store..clear()..freeze();
     });
 

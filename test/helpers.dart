@@ -41,14 +41,14 @@ queryWithContent(selector, text) {
 
 typeIn(String text)=>  document.activeElement.value = text;
 
-hitEnter()=> type(13);
-hitEscape()=> type(27);
+hitEnter()=> type(KeyName.ENTER);
+hitEscape()=> type(KeyName.ESC);
 
-type(int charCode) {
+type(String key) {
   document.activeElement.dispatchEvent(
     new KeyboardEvent(
       'keyup',
-      keyIdentifier: new String.fromCharCode(charCode)
+      keyIdentifier: key
     )
   );
 }
