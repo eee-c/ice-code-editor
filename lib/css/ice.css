@@ -30,6 +30,11 @@
   background: rgba(255,255,255,0.75);
 }
 
+.ace-chrome .ace_content .ace_marker-layer .ace_selection {
+	background: rgba(0,0,255,0.1);
+}
+
+
 button {
   font-family: sans-serif;
   font-size: 10px;
