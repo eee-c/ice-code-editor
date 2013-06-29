@@ -16,18 +16,18 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 
 ## Features
 
- * Update button — (100% done)
- * Hide Code button (100% done)
+ * Update button
+ * Hide Code button
  * Main Menu button
-   * Open (100% done)
-   * New (100% done)
-   * Make a Copy (100% done)
-   * Save (100% done)
-   * Rename (100% done)
-   * Share (80% done, needs shortener, game mode)
-   * Download (100% done)
-   * Remove (100% done)
-   * Help (100% done)
+   * Open
+   * New
+   * Make a Copy
+   * Save
+   * Rename
+   * Share
+   * Download
+   * Remove
+   * Help
 
 ## Core Collaborators
 
