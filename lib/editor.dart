@@ -1,7 +1,7 @@
 part of ice;
 
 class Editor {
-  bool edit_only, autoupdate, enable_javascript_mode;
+  bool _edit_only, autoupdate, enable_javascript_mode;
   String title;
 
   var _el;
@@ -10,9 +10,11 @@ class Editor {
   var _ace;
   Completer _waitForAce, _waitForPreview;
 
-  Editor(this._el, {this.edit_only:false, this.autoupdate:true, this.title, this.enable_javascript_mode:true}) {
+  Editor(this._el, {this.enable_javascript_mode:true}) {
     this._startAce();
     this._applyStyles();
+    this._edit_only = false;
+    this.autoupdate = true;
   }
 
   set content(String data) {
@@ -49,6 +51,12 @@ class Editor {
   void _extendDelayedUpdatePreview() {
     if (_update_timer == null) return;
     delayedUpdatePreview();
+  }
+
+  bool get edit_only => _edit_only;
+  void set edit_only(v) {
+    _edit_only = v;
+    if (v) removePreview();
   }
 
   // worry about waitForAce?
