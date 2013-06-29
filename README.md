@@ -6,7 +6,7 @@ __*** Try the [beta version!](http://gamingjs.com/ice-beta/) ***__
 
 The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).”
 
-![ICE Code Editor Screenshoot](ice_code_editor.png)
+![ICE Code Editor Screenshoot](https://raw.github.com/eee-c/ice-code-editor/master/ice_code_editor.png)
 
 This is an attempt to convert the JavaScript version ([repository](https://github.com/eee-c/code-editor) / [live version](http://gamingjs.com/ice)) to Dart. The JavaScript version is a pain to maintain. I hope to leverage the benefits of Dart (cross-browser support, testing, documentation) by doing this.
 
