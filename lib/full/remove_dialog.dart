@@ -14,7 +14,7 @@ class RemoveDialog extends Dialog implements MenuAction {
 
       Are you sure you want to remove this project?''';
 
-    if (Notify.confirm(message, parent: parent, test_mode: !ice.enable_javascript_mode)) _removeCurrentProject();
+    if (Notify.confirm(message, parent: parent)) _removeCurrentProject();
   }
 
   _removeCurrentProject() {

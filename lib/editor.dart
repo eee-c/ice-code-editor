@@ -1,8 +1,8 @@
 part of ice;
 
 class Editor {
-  bool _edit_only, autoupdate, enable_javascript_mode;
-  String title;
+  bool autoupdate = true;
+  bool _edit_only = false;
 
   var _el;
   Element __el, _editor_el, _preview_el;
@@ -10,11 +10,11 @@ class Editor {
   var _ace;
   Completer _waitForAce, _waitForPreview;
 
-  Editor(this._el, {this.enable_javascript_mode:true}) {
+  static bool disableJavaScriptWorker = false;
+
+  Editor(this._el) {
     this._startAce();
     this._applyStyles();
-    this._edit_only = false;
-    this.autoupdate = true;
   }
 
   set content(String data) {
@@ -232,7 +232,7 @@ class Editor {
       ..printMarginColumn = false
       ..displayIndentGuides = false;
 
-    if (enable_javascript_mode) {
+    if (!disableJavaScriptWorker) {
       _ace.session
         ..mode = "ace/mode/javascript"
         ..useWrapMode = true

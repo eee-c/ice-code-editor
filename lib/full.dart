@@ -9,7 +9,7 @@ class Full {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
-    ice = new Editor('#ice', enable_javascript_mode: enable_javascript_mode);
+    ice = new Editor('#ice');
     store = new Store();
 
     _attachKeyboardHandlers();

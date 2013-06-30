@@ -32,7 +32,7 @@ class RenameDialog extends Dialog implements MenuAction {
     if(store.containsKey(title)) {
       var message = "There is already a project with that name";
 
-      Notify.alert(message, parent: parent, test_mode: !ice.enable_javascript_mode);
+      Notify.alert(message, parent: parent);
       return;
     }
 

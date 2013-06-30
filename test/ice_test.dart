@@ -26,6 +26,8 @@ part 'full/download_test.dart';
 part 'full/remove_dialog_test.dart';
 
 main(){
+  Editor.disableJavaScriptWorker = true;
+
   editor_tests();
   store_tests();
   gzip_tests();

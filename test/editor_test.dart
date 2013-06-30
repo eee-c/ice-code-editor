@@ -12,13 +12,13 @@ editor_tests() {
     });
 
     test("defaults to auto-update the preview", () {
-      var it = new Editor('#ice-${currentTestCase.id}', enable_javascript_mode: false);
+      var it = new Editor('#ice-${currentTestCase.id}');
       expect(it.autoupdate, equals(true));
       expect(it.editorReady, completes);
     });
 
     test("starts an ACE instance", (){
-      var it = new Editor('#ice-${currentTestCase.id}', enable_javascript_mode: false);
+      var it = new Editor('#ice-${currentTestCase.id}');
       it.editorReady.then(
         expectAsync1((_) {
           expect(document.query('.ace_content'), isNotNull);
@@ -27,7 +27,7 @@ editor_tests() {
     });
 
     test("defaults to disable edit-only mode", () {
-      var it = new Editor('#ice-${currentTestCase.id}', enable_javascript_mode: false);
+      var it = new Editor('#ice-${currentTestCase.id}');
       expect(it.edit_only, equals(false));
       expect(it.editorReady, completes);
     });
@@ -45,7 +45,7 @@ editor_tests() {
     });
 
     test("can set the content", () {
-      var it = new Editor('#ice-${currentTestCase.id}', enable_javascript_mode: false);
+      var it = new Editor('#ice-${currentTestCase.id}');
 
       it.content = 'asdf';
 
@@ -65,10 +65,7 @@ editor_tests() {
       document.body.nodes.
         add(new Element.html('<div id=ice-${currentTestCase.id}>'));
 
-      editor = new Editor(
-        '#ice-${currentTestCase.id}',
-        enable_javascript_mode: false
-      );
+      editor = new Editor('#ice-${currentTestCase.id}');
 
       editor.content = '<h1>preview</h1>';
 

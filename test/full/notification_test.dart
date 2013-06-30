@@ -5,7 +5,7 @@ notification_tests(){
     tearDown((){ queryAll('#alert').forEach((e)=> e.remove());});
 
     test("can create alerts", (){
-      Notify.alert('Something went wrong', test_mode:true);
+      Notify.alert('Something went wrong');
 
       expect(
         query('#alert').text,
