@@ -43,5 +43,11 @@ update_button_tests() {
       checkbox.click();
       expect(editor.ice.autoupdate, isFalse);
     });
+
+    test("focuses code", (){
+      helpers.click('button', text: " Update");
+
+      expect(document.activeElement.tagName, 'TEXTAREA');
+    });
   });
 }
