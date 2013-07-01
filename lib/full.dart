@@ -69,13 +69,28 @@ class Full {
   get _updateButton {
     return _update_button = new Element.html('''
         <button>
-           <input checked type="checkbox" style="margin: -10px 4px -10px 0px;"/> Update
+           <input
+              checked
+              type=checkbox
+              title="$_update_tooltip"
+              style="margin: -10px 4px;"/>
+           Update
          </button>'''
       )
-      ..query("input").onChange.listen((e)=> _toggleAutoupdate(e.target))
+      ..onClick.listen((e)=> ice.updatePreview())
       ..query("input").onClick.listen((e)=> e.stopPropagation())
-      ..onClick.listen((e)=> ice.updatePreview());
+      ..query("input").onChange.listen((e)=> _toggleAutoupdate(e.target))
+      ..query("input").onChange.
+          where((e) => e.target.checked).
+          listen((e)=> ice.updatePreview());
   }
+
+  get _update_tooltip => '''
+If not checked, then the preview is not auto-updated. The
+only way to see changes is to click the button.
+
+If checked, the preview is updated whenever the code is
+changed.''';
 
   Element _hide_code_button;
   get _hideCodeButton {

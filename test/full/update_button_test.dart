@@ -5,9 +5,19 @@ update_button_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
-      return editor.editorReady;
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
+      var preview_ready = new Completer();
+      editor.onPreviewChange.listen((e){
+        if (preview_ready.isCompleted) return;
+        preview_ready.complete();
+      });
+      return preview_ready.future;
     });
 
     tearDown(() {
@@ -17,7 +27,8 @@ update_button_tests() {
 
     test("updates the preview layer", (){
       helpers.createProject("My Project");
-      editor.content = "<h1>Hello</h1>";
+      document.activeElement.
+        dispatchEvent(new TextEvent('textInput', data: '<h1>Hello</h1>'));
 
       editor.onPreviewChange.listen(expectAsync1((_)=> true));
 
@@ -31,9 +42,7 @@ update_button_tests() {
     });
 
     test("Autoupdate is set in the editor by default", (){
-      editor.onPreviewChange.listen(expectAsync1((_){
-        expect(editor.ice.autoupdate, isTrue);
-      }));
+      expect(editor.ice.autoupdate, isTrue);
     });
 
     test("When you uncheck the checkbox autoupdate is disabled", (){
@@ -42,6 +51,23 @@ update_button_tests() {
 
       checkbox.click();
       expect(editor.ice.autoupdate, isFalse);
+    });
+
+    // If this test starts failing randomly, try bumping up the wait
+    test("checking the checkbox updates the preview layer", (){
+      var button = helpers.queryWithContent("button","Update");
+      var checkbox = button.query("input[type=checkbox]");
+      checkbox.click();
+
+      document.activeElement.
+        dispatchEvent(new TextEvent('textInput', data: '<h1>Hello</h1>'));
+
+      editor.onPreviewChange.listen(expectAsync1((_)=> true));
+
+      var wait = new Duration(milliseconds: 10);
+      new Timer(wait, (){
+        checkbox.click();
+      });
     });
 
     test("focuses code", (){
