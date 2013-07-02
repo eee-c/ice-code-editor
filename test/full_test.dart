@@ -5,7 +5,7 @@ full_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -34,7 +34,7 @@ full_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -76,7 +76,7 @@ full_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -113,7 +113,7 @@ full_tests() {
     setUp((){
       window.location.hash = '#e';
 
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -139,7 +139,7 @@ full_tests() {
 
     setUp((){
       window.location.hash = '#g';
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -174,7 +174,7 @@ full_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store

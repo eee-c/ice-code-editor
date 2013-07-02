@@ -13,7 +13,7 @@ main() {
       tearDown(()=> document.query('#ice').remove());
 
       test("the editor is full-screen", (){
-        var it = new Full(enable_javascript_mode: false);
+        var it = new Full();
 
         _test(_) {
           var el = document.query('#ice');

@@ -5,7 +5,7 @@ show_button_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store

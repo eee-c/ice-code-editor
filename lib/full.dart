@@ -5,7 +5,7 @@ class Full {
   Editor ice;
   Store store;
 
-  Full({enable_javascript_mode: true}) {
+  Full() {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 

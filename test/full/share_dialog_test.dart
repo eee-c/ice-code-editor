@@ -7,7 +7,7 @@ share_dialog_tests() {
     setUp((){
       window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
 
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       store = editor.store
@@ -52,7 +52,7 @@ share_dialog_tests() {
     setUp((){
       window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
 
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}"
         ..store['Untitled'] = {'code': 'Hi, Fred!'};
 
@@ -81,7 +81,7 @@ share_dialog_tests() {
     var editor;
 
     setUp((){
-      editor = new Full(enable_javascript_mode: false)
+      editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
