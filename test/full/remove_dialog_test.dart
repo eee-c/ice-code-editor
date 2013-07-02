@@ -7,6 +7,11 @@ remove_dialog_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Initial Test Code'};
+
       return editor.editorReady;
     });
 
@@ -84,7 +89,7 @@ remove_dialog_tests() {
 
       expect(
         editor.content,
-        matches("THREE.IcosahedronGeometry")
+        matches("Initial Test Code")
       );
     });
   });

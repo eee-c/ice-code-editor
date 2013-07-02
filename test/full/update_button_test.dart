@@ -26,7 +26,6 @@ update_button_tests() {
     });
 
     test("updates the preview layer", (){
-      helpers.createProject("My Project");
       document.activeElement.
         dispatchEvent(new TextEvent('textInput', data: '<h1>Hello</h1>'));
 

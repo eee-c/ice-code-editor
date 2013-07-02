@@ -8,7 +8,7 @@ save_dialog_tests(){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      editor.store['Saved Project'] = {'code': 'asdf'};
+      editor.store..clear()..['Saved Project'] = {'code': 'asdf'};
 
       return editor.editorReady;
     });

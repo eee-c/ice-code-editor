@@ -7,6 +7,11 @@ open_dialog_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
     tearDown(() {
@@ -129,6 +134,7 @@ open_dialog_tests() {
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
+      editor.store.clear();
       new Iterable.generate(12, (i){
         editor.store['Project ${i}'] = {'code': 'code ${i}'};
       }).toList();

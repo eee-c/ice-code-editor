@@ -7,6 +7,11 @@ full_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -31,6 +36,11 @@ full_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -68,6 +78,11 @@ full_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -100,6 +115,11 @@ full_tests() {
 
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -121,6 +141,11 @@ full_tests() {
       window.location.hash = '#g';
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -151,6 +176,10 @@ full_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
 
       var preview_ready = new Completer();
       editor.onPreviewChange.listen((e){

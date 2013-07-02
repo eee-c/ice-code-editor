@@ -10,7 +10,9 @@ share_dialog_tests() {
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      store = editor.store;
+      store = editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
 
       return editor.editorReady;
     });
@@ -81,6 +83,11 @@ share_dialog_tests() {
     setUp((){
       editor = new Full(enable_javascript_mode: false)
         ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
       return editor.editorReady;
     });
 
@@ -127,7 +134,10 @@ share_dialog_tests() {
     test("share dialog's URL shortener href link is properly encoded", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Share');
-      expect(query('.ice-dialog a').href, contains('url=http%3A%2F%2Fgamingjs.com%2Fice%2F%23B%2Fj'));
+      expect(
+        query('.ice-dialog a').href,
+        contains('url=http%3A%2F%2Fgamingjs.com%2Fice%2F%23B%2FC0ktLgEA')
+      );
     });
 
     test("clicking the game mode checkbox adds game mode to link", (){
