@@ -16,6 +16,7 @@ part 'full.dart';
 part 'full/default_project.dart';
 part 'full/templates.dart';
 part 'full/notify.dart';
+part 'full/validate.dart';
 
 part 'full/menu_item.dart';
 part 'full/menu_action.dart';

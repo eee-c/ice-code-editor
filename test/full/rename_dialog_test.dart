@@ -104,6 +104,18 @@ rename_dialog_tests() {
       );
     });
 
+    test("cannot have a blank name", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+      helpers.typeIn('  ');
+      helpers.click('button', text: 'Rename');
+
+      expect(
+        query('#alert').text,
+        equals("The project name cannot be blank")
+      );
+    });
+
     test("hitting the enter key renames", (){
       helpers.click('button', text: '☰');
 

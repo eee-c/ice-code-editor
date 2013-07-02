@@ -197,5 +197,17 @@ copy_dialog_tests() {
       );
     });
 
+    test("cannot have a blank name", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Make a Copy');
+      helpers.typeIn('  ');
+      helpers.click('button', text: 'Save');
+
+      expect(
+        query('#alert').text,
+        'The project name cannot be blank'
+      );
+    });
+
   });
 }

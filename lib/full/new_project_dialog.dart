@@ -35,11 +35,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
 
   _create() {
     var title = _field.value;
-    if (store.containsKey(title)) {
-      var message = "There is already a project with that name";
-      Notify.alert(message, parent: parent);
-      return;
-    }
+    if (!new Validate(title, store, parent).isValid) return;
 
     var template = _list.value,
         code = Templates.byTitle(template);

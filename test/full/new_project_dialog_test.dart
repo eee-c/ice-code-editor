@@ -72,6 +72,19 @@ new_project_dialog_tests(){
               text, equals("There is already a project with that name"));
     });
 
+    test("cannot have a blank name", () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      helpers.typeIn('  ');
+
+      helpers.click('button', text: 'Save');
+
+      expect(
+        query('#alert').text,
+        'The project name cannot be blank'
+      );
+    });
+
     test("can be named", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
