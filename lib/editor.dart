@@ -65,15 +65,13 @@ class Editor {
 
   /// Update the preview layer with the current contents of the editor
   /// layer.
-  // worry about waitForAce?
   updatePreview() {
     if (this.edit_only) return;
 
     this.removePreview();
-    var iframe = this.createPreviewIframe();
 
-    var wait = new Duration(milliseconds: 100);
-    new Timer(wait, (){
+    var iframe = this.createPreviewIframe();
+    iframe.onLoad.first.then((_) {
       if (iframe.contentWindow == null) return;
 
       iframe
