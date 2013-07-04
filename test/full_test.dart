@@ -220,7 +220,6 @@ full_tests() {
 
         var preview_ready = new Completer();
         editor.onPreviewChange.listen((e){
-          if (preview_ready.isCompleted) return;
           preview_ready.complete();
         });
         return preview_ready.future;
