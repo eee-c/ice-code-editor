@@ -24,6 +24,7 @@ part 'full/save_dialog_test.dart';
 part 'full/share_dialog_test.dart';
 part 'full/download_test.dart';
 part 'full/remove_dialog_test.dart';
+part 'full/keyboard_shortcuts_test.dart';
 
 main(){
   Editor.disableJavaScriptWorker = true;
@@ -45,6 +46,7 @@ main(){
   share_dialog_tests();
   download_tests();
   remove_dialog_tests();
+  keyboard_shortcuts_tests();
 
   pollForDone(testCases);
 }

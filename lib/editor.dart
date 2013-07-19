@@ -135,7 +135,7 @@ class Editor {
   }
 
   focus() {
-    if (_isCodeVisible) {
+    if (isCodeVisible) {
       _ace.focus();
     }
     else {
@@ -143,7 +143,7 @@ class Editor {
     }
   }
 
-  bool get _isCodeVisible=> editor_el.style.visibility != 'hidden';
+  bool get isCodeVisible=> editor_el.style.visibility != 'hidden';
 
   Element get el {
     if (__el != null) return __el;

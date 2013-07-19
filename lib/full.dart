@@ -32,6 +32,7 @@ class Full {
   void set content(data) => ice.content = data;
   void remove() {
     _keyUpSubscription.cancel();
+    _keyDownSubscription.cancel();
     el.remove();
   }
 
@@ -91,6 +92,15 @@ only way to see changes is to click the button.
 
 If checked, the preview is updated whenever the code is
 changed.''';
+
+  toggleCode() {
+    if (ice.isCodeVisible) {
+      hideCode();
+    }
+    else {
+      showCode();
+    }
+  }
 
   Element _hide_code_button;
   get _hideCodeButton {
@@ -179,13 +189,36 @@ changed.''';
 
   String get encodedContent => Gzip.encode(ice.content);
 
-  var _keyUpSubscription;
+  var _keyUpSubscription, _keyDownSubscription;
   _attachKeyboardHandlers() {
     _keyUpSubscription = document.onKeyUp.listen((e) {
       if (!_isEscapeKey(e)) return;
       _hideMenu();
       _hideDialog();
     });
+
+    _keyDownSubscription = document.onKeyDown.listen((e) {
+      if (!e.ctrlKey) return;
+
+      switch(e.$dom_keyIdentifier) {
+        case 'n':
+        case 'U+004E':
+          new NewProjectDialog(this).open();
+          e.preventDefault();
+          break;
+        case 'o':
+        case 'U+004F':
+          new OpenDialog(this).open();
+          e.preventDefault();
+          break;
+        case 'e':
+        case 'U+0045':
+          toggleCode();
+          e.preventDefault();
+          break;
+      }
+    });
+
 
     editorReady.then((_){
       el.onFocus.listen((e)=> ice.focus());
@@ -277,7 +310,7 @@ _maybeFocus() {
 
 _isEscapeKey(e) => e.keyCode == 27 ||
   e.$dom_keyIdentifier == KeyName.ESC ||
-  e.$dom_keyIdentifier == new String.fromCharCodes([85, 43, 48, 48, 49, 66]);
+  e.$dom_keyIdentifier == 'U+001B';
 
 _isEnterKey(e) =>
   e.keyCode == 13 || e.$dom_keyIdentifier == KeyName.ENTER;
