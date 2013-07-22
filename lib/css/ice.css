@@ -97,12 +97,12 @@ div.ice-menu ul {
   cursor: auto;
 }
 
-.ice-menu li:hover {
+.ice-menu li:hover, .ice-menu li:focus {
   color: white;
   background-color: rgba(0,0,0,0.66);
 }
 
-.ice-menu li.empty:hover {
+.ice-menu li.empty:hover, .ice-menu li.empty:focus {
   color: rgba(0,0,0,0.5);
   background-color: white;
 }

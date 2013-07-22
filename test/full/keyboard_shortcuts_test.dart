@@ -8,9 +8,15 @@ keyboard_shortcuts_tests() {
       editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
+      editor.store.clear();
+
+      new Iterable.generate(12, (i){
+        editor.store['Project ${i}'] = {'code': 'code ${i}'};
+      }).toList();
+
       editor.store
-        ..clear()
-        ..['Current Project'] = {'code': 'Test'};
+        ..['Old Project'] = {'code': 'Old'}
+        ..['Current Project'] = {'code': 'Current'};
 
       return editor.editorReady;
     });
@@ -35,19 +41,53 @@ keyboard_shortcuts_tests() {
       );
     });
 
-    test("can open the open dialog", (){
-      document.activeElement.dispatchEvent(
-        new KeyboardEvent(
-          'keydown',
-          keyIdentifier: "o",
-          ctrlKey: true
-        )
-      );
+    group("Open Projects Dialog", (){
+      test("can open the project dialog", (){
+        document.activeElement.dispatchEvent(
+          new KeyboardEvent(
+            'keydown',
+             keyIdentifier: "o",
+            ctrlKey: true
+          )
+        );
 
-      expect(
-        queryAll('div'),
-        helpers.elementsContain('Saved Projects')
-      );
+        expect(
+          queryAll('div'),
+          helpers.elementsContain('Saved Projects')
+        );
+      });
+
+      test("hitting enter with no filter text does nothing", (){
+        helpers.typeCtrl('o');
+        helpers.hitEnter();
+
+        expect(
+          editor.content,
+          equals('Current')
+        );
+      });
+
+      test("enter opens the top project", (){
+        helpers.typeCtrl('o');
+        helpers.typeIn('old');
+        helpers.hitEnter();
+
+        expect(
+          editor.content,
+          equals('Old')
+        );
+      });
+
+      test("tab key moves forward in list", (){
+        helpers.typeCtrl('o');
+        helpers.typeIn('old');
+
+        expect(
+          queryAll('li').where((e)=> e.tabIndex==0).first.text,
+          equals('Old Project')
+        );
+      });
+
     });
 
     test("can toggle the code editor", (){

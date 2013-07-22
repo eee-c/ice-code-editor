@@ -39,7 +39,14 @@ queryWithContent(selector, text) {
     firstWhere((e)=> re.hasMatch(e.text));
 }
 
-typeIn(String text)=>  document.activeElement.value = text;
+typeIn(String text) {
+  document.activeElement.value = text;
+
+  document.activeElement.dispatchEvent(
+    new KeyboardEvent('keyup')
+  );
+
+}
 
 hitEnter()=> type(KeyName.ENTER);
 hitEscape()=> type(KeyName.ESC);
@@ -49,6 +56,16 @@ type(String key) {
     new KeyboardEvent(
       'keyup',
       keyIdentifier: key
+    )
+  );
+}
+
+typeCtrl(char) {
+  document.activeElement.dispatchEvent(
+    new KeyboardEvent(
+      'keydown',
+      keyIdentifier: char,
+      ctrlKey: true
     )
   );
 }

@@ -19,7 +19,7 @@ class OpenDialog extends Dialog implements MenuAction {
     parent.children.add(menu);
     addProjectsToMenu();
 
-    menu.queryAll('input').forEach(_initializeFilter);
+    menu.queryAll('input').forEach(_addListeners);
 
     menu.style
       ..maxHeight = '560px'
@@ -39,9 +39,12 @@ class OpenDialog extends Dialog implements MenuAction {
         return title.toLowerCase().contains(filter.toLowerCase());
       }).
       map((title) {
-        return new Element.html('<li>${title}</li>')
+        return new Element.html('<li tabindex=0>${title}</li>')
           ..onClick.listen((e)=> _openProject(title))
-          ..onClick.listen((e)=> _hideMenu());
+          ..onClick.listen((e)=> _hideMenu())
+          ..onKeyUp.listen((e){
+            if (_isEnterKey(e)) e.target.click();
+          });
       }).
       toList();
 
@@ -60,12 +63,26 @@ class OpenDialog extends Dialog implements MenuAction {
     ice.content = project['code'];
   }
 
+  _addListeners(el) {
+    _initializeFilter(el);
+    _handleEnter(el);
+  }
+
   _initializeFilter(el) {
     el.focus();
     el.onKeyUp.listen((e) {
       query('.ice-menu ul')
         ..children.clear();
       addProjectsToMenu(filter: el.value);
+    });
+  }
+
+  _handleEnter(el) {
+    el.onKeyUp.listen((e) {
+      if (!_isEnterKey(e)) return;
+      if (el.value.isEmpty) return;
+
+      query('.ice-menu ul').children.first.click();
     });
   }
 }

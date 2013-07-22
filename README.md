@@ -42,6 +42,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
  * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Nik Graf](https://github.com/nikgraf)
+ * [Timothy King](https://github.com/lordzork)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
  * [Morgan Nelson](https://github.com/korishev)
