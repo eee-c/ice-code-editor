@@ -211,9 +211,9 @@ changed.''';
           new OpenDialog(this).open();
           e.preventDefault();
           break;
-        case 'e':
-        case 'U+0045':
-          toggleCode();
+        case 'h':
+        case 'U+0048':
+          if (e.shiftKey) toggleCode();
           e.preventDefault();
           break;
       }

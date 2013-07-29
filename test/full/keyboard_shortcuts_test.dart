@@ -94,8 +94,9 @@ keyboard_shortcuts_tests() {
       document.activeElement.dispatchEvent(
         new KeyboardEvent(
           'keydown',
-          keyIdentifier: "e",
-          ctrlKey: true
+          keyIdentifier: "h",
+          ctrlKey: true,
+          shiftKey: true
         )
       );
 
