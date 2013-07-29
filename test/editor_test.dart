@@ -35,9 +35,15 @@ editor_tests() {
   });
 
   group("content", () {
+    var editor;
+
     setUp(() {
-      var el = new Element.html('<div id=ice-${currentTestCase.id}>');
-      document.body.nodes.add(el);
+      document.body.
+        append(new Element.html('<div id=ice-${currentTestCase.id}>'));
+
+      editor = new Editor('#ice-${currentTestCase.id}')
+        ..content = 'asdf';
+      return editor.editorReady;
     });
     tearDown(() {
       var el = document.query('#ice-${currentTestCase.id}');
@@ -45,16 +51,29 @@ editor_tests() {
     });
 
     test("can set the content", () {
-      var it = new Editor('#ice-${currentTestCase.id}');
+      expect(editor.content, equals('asdf'));
+    });
 
-      it.content = 'asdf';
+    test("it can extract just the script content", (){
+      editor.content = '''
+<body></body>
+<script src="dart.js"></script>
+<script type="application/dart">
+main() {
+  // Test space:
 
-      it.editorReady.then(
-        expectAsync1((_) {
-          expect(it.content, equals('asdf'));
-        })
-      );
+  print("Yay Dart!!!");
+}
+</script>
+''';
+      expect(
+        editor.scriptContent,
+        startsWith('''
+main() {
+  // Test space:
 
+  print("Yay Dart!!!");
+}'''));
     });
   });
 

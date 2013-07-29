@@ -63,6 +63,14 @@ class Editor {
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
 
+  String get scriptContent {
+    return content.
+      split("\n").
+      skipWhile((str)=> !str.contains(new RegExp(r"<script[^<]+>$"))).
+      where((str)=> !str.contains(new RegExp(r"</?script"))).
+      join("\n");
+  }
+
   /// Update the preview layer with the current contents of the editor
   /// layer.
   updatePreview() {
