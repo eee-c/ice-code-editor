@@ -27,14 +27,7 @@ keyboard_shortcuts_tests() {
     });
 
     test("can open the new dialog", (){
-      document.activeElement.dispatchEvent(
-        new KeyboardEvent(
-          'keydown',
-          keyIdentifier: "n",
-          ctrlKey: true
-        )
-      );
-
+      helpers.typeCtrl('n');
       expect(
         queryAll('button'),
         helpers.elementsContain('Save')
@@ -43,14 +36,7 @@ keyboard_shortcuts_tests() {
 
     group("Open Projects Dialog", (){
       test("can open the project dialog", (){
-        document.activeElement.dispatchEvent(
-          new KeyboardEvent(
-            'keydown',
-             keyIdentifier: "o",
-            ctrlKey: true
-          )
-        );
-
+        helpers.typeCtrl("o");
         expect(
           queryAll('div'),
           helpers.elementsContain('Saved Projects')
@@ -88,6 +74,36 @@ keyboard_shortcuts_tests() {
         );
       });
 
+      test("donw arrow key moves forward in list", (){
+        helpers.typeCtrl('o');
+        helpers.typeIn('project 1');
+        // project 11
+        // project 10 *
+        // project 1
+
+        helpers.arrowDown(2);
+
+        expect(
+          document.activeElement.text,
+          equals('Project 10')
+        );
+      });
+
+      test("up arrow key moves backward in list", (){
+        helpers.typeCtrl('o');
+        helpers.typeIn('project 1');
+        // project 11
+        // project 10 *
+        // project 1
+
+        helpers.arrowDown(3);
+        helpers.arrowUp();
+
+        expect(
+          document.activeElement.text,
+          equals('Project 10')
+        );
+      });
     });
 
     test("can toggle the code editor", (){

@@ -51,6 +51,18 @@ typeIn(String text) {
 hitEnter()=> type(KeyName.ENTER);
 hitEscape()=> type(KeyName.ESC);
 
+arrowDown([times=1]) {
+  new Iterable.generate(times, (i) {
+    type(KeyName.DOWN);
+  }).toList();
+}
+
+arrowUp([times=1]) {
+  new Iterable.generate(times, (i) {
+    type(KeyName.UP);
+  }).toList();
+}
+
 type(String key) {
   document.activeElement.dispatchEvent(
     new KeyboardEvent(

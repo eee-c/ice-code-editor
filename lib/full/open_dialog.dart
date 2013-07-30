@@ -20,6 +20,7 @@ class OpenDialog extends Dialog implements MenuAction {
     addProjectsToMenu();
 
     menu.queryAll('input').forEach(_addListeners);
+    _handleArrowKeys(menu);
 
     menu.style
       ..maxHeight = '560px'
@@ -84,5 +85,31 @@ class OpenDialog extends Dialog implements MenuAction {
 
       query('.ice-menu ul').children.first.click();
     });
+  }
+
+  _handleArrowKeys(el) {
+    el.onKeyUp.listen((e) {
+      switch(e.$dom_keyIdentifier) {
+        case KeyName.DOWN:
+          _handleDown(el);
+          break;
+        case KeyName.UP:
+          _handleUp(el);
+          break;
+      }
+    });
+  }
+
+  _handleDown(el) {
+    var next = document.activeElement.nextElementSibling;
+    if (next.tagName == 'UL') {
+      next = next.children.first;
+    }
+    next.focus();
+  }
+
+  _handleUp(el) {
+    var prev = document.activeElement.previousElementSibling;
+    prev.focus();
   }
 }
