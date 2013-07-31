@@ -8,6 +8,9 @@ class SaveAction extends Dialog implements MenuAction {
   void open() {
     var title = store.isEmpty ? 'Untitled' : store.currentProjectTitle;
 
-    store[title] = {'code': ice.content};
+    store[title] = {
+      'code': ice.content,
+      'lineNumber': ice.lineNumber
+    };
   }
 }

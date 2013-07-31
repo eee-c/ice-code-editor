@@ -62,6 +62,9 @@ class OpenDialog extends Dialog implements MenuAction {
     var project = store.remove(title);
     store[title] = project;
     ice.content = project['code'];
+    if (project['lineNumber'] != null) {
+      ice.lineNumber = project['lineNumber'];
+    }
   }
 
   _addListeners(el) {

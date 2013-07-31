@@ -30,6 +30,11 @@ class Full {
   Future get editorReady => ice.editorReady;
   String get content => ice.content;
   void set content(data) => ice.content = data;
+
+  String get lineContent => ice.lineContent;
+  int get lineNumber => ice.lineNumber;
+  set lineNumber(int v) { ice.lineNumber = v; }
+
   void remove() {
     _keyUpSubscription.cancel();
     _keyDownSubscription.cancel();
@@ -259,7 +264,10 @@ changed.''';
     ice.onChange.listen((_){
       var title = store.isEmpty ? 'Untitled' : store.currentProjectTitle;
 
-      store[title] = {'code': ice.content};
+      store[title] = {
+        'code': ice.content,
+        'lineNumber': ice.lineNumber
+      };
     });
   }
 

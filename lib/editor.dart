@@ -63,6 +63,10 @@ class Editor {
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
 
+  int get lineNumber => _ace.lineNumber;
+  set lineNumber(int v) { _ace.lineNumber = v; }
+  String get lineContent => _ace.lineContent;
+
   /// Update the preview layer with the current contents of the editor
   /// layer.
   updatePreview() {
@@ -297,6 +301,15 @@ class Ace extends jsw.TypedProxy {
   String get value => $unsafe.getValue();
   void focus() => $unsafe.focus();
 
+  // This is way crazy, but... getLine() and getCursorPosition() are zero
+  // indexed while gotoLine() and scrollToLine() are 1 indexed o_O
+  String get lineContent => session.getLine(lineNumber - 1);
+  int get lineNumber => $unsafe.getCursorPosition().row + 1;
+  set lineNumber(int row) {
+    $unsafe.gotoLine(row, 0, false);
+    $unsafe.scrollToLine(row, false, false);
+  }
+
   get renderer => $unsafe.renderer;
 
   AceSession get session => AceSession.cast($unsafe.getSession());
@@ -336,6 +349,8 @@ class AceSession extends jsw.TypedProxy {
   set useWrapMode(bool b) => $unsafe.setUseWrapMode(b);
   set useSoftTabs(bool b) => $unsafe.setUseSoftTabs(b);
   set tabSize(int size) => $unsafe.setTabSize(size);
+
+  String getLine(int row) => $unsafe.getLine(row);
 
   StreamController _onChange;
   get onChange {

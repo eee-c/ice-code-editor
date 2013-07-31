@@ -128,8 +128,52 @@ editor_tests() {
         expect(document.activeElement, el);
       });
     });
-
     // focus goes to preview if code is hidden
     // focus goes to preview after update if code is hidden
+  });
+
+  group("line number", (){
+    var editor;
+
+    setUp((){
+      document.body.nodes.
+        add(new Element.html('<div id=ice-${currentTestCase.id}>'));
+
+      editor = new Editor('#ice-${currentTestCase.id}');
+
+      editor.content = '''
+Code line 01
+Code line 02
+Code line 03
+Code line 04
+Code line 05
+Code line 06
+Code line 07''';
+
+      var preview_ready = new Completer();
+      editor.onPreviewChange.listen((e){
+        if (preview_ready.isCompleted) return;
+        preview_ready.complete();
+      });
+      return preview_ready.future;
+    });
+
+    tearDown(()=> document.body.nodes.
+        remove(document.query('#ice-${currentTestCase.id}')));
+
+
+    test("defaults to 1", (){
+      expect(editor.lineNumber, 1);
+    });
+
+    test("can be changed", (){
+      editor.lineNumber = 6;
+      expect(editor.lineNumber, 6);
+    });
+
+    test("can read current content", (){
+      editor.lineNumber = 6;
+      expect(editor.lineContent, 'Code line 06');
+    });
   });
 }

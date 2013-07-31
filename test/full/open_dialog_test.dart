@@ -260,4 +260,54 @@ open_dialog_tests() {
       );
     });
   });
+
+  group("Switching Between Projects", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("restores previous line number", (){
+      editor.content = '''
+Code line 01
+Code line 02
+Code line 03
+Code line 04
+Code line 05
+Code line 06
+Code line 07
+''';
+
+      editor.lineNumber = 6;
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      editor.store
+        ..['Other Project'] = {'code': 'Test'};
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Other Project');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Current Project');
+
+      expect(editor.lineNumber, 6);
+    });
+
+  });
 }
