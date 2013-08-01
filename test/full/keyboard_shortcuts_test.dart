@@ -74,7 +74,7 @@ keyboard_shortcuts_tests() {
         );
       });
 
-      test("donw arrow key moves forward in list", (){
+      test("down arrow key moves forward in list", (){
         helpers.typeCtrl('o');
         helpers.typeIn('project 1');
         // project 11
@@ -104,6 +104,75 @@ keyboard_shortcuts_tests() {
           equals('Project 10')
         );
       });
+
+      test("up arrow at top of list moves back into filter", (){
+        helpers.typeCtrl('o');
+        helpers.typeIn('project 1');
+        // *filter*
+        // project 11
+        // project 10
+        // project 1
+
+        helpers.arrowDown();
+        helpers.arrowUp();
+
+        expect(
+          document.activeElement.tagName,
+          'INPUT'
+        );
+      });
+
+      group("With Less Than 10 Projects", (){
+        setUp((){
+          editor.store
+            ..remove('Project 2')
+            ..remove('Project 3')
+            ..remove('Project 4')
+            ..remove('Project 5')
+            ..remove('Project 6')
+            ..remove('Project 7');
+        });
+        test("first project has keyboard focus", (){
+          helpers.typeCtrl('o');
+          // Current Project
+          // Old Project
+          // project 11
+          // ...
+
+          expect(
+            document.activeElement.text,
+            equals('Current Project')
+          );
+        });
+
+        test("up arrow at top of list stays at top of list", (){
+          helpers.typeCtrl('o');
+          // Current Project
+          // Old Project
+          // project 11
+          // ...
+          helpers.arrowUp();
+
+          expect(
+            document.activeElement.text,
+            equals('Current Project')
+          );
+        });
+
+        test("down arrow at bottom of list stays at bottom of list", (){
+          helpers.typeCtrl('o');
+          // Current Project
+          // Old Project
+          // project 11
+          // ...
+          helpers.arrowDown(11);
+
+          expect(
+            document.activeElement.text,
+            equals('Project 0')
+          );
+        });
+      });
     });
 
     test("can toggle the code editor", (){
@@ -121,6 +190,5 @@ keyboard_shortcuts_tests() {
         equals('hidden')
       );
     });
-
   });
 }

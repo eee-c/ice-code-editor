@@ -20,6 +20,7 @@ class OpenDialog extends Dialog implements MenuAction {
     addProjectsToMenu();
 
     menu.queryAll('input').forEach(_addListeners);
+    _focus(menu);
     _handleArrowKeys(menu);
 
     menu.style
@@ -73,7 +74,6 @@ class OpenDialog extends Dialog implements MenuAction {
   }
 
   _initializeFilter(el) {
-    el.focus();
     el.onKeyUp.listen((e) {
       query('.ice-menu ul')
         ..children.clear();
@@ -88,6 +88,15 @@ class OpenDialog extends Dialog implements MenuAction {
 
       query('.ice-menu ul').children.first.click();
     });
+  }
+
+  _focus(el) {
+    if (el.query('input') == null) {
+      el.query('li').focus();
+    }
+    else {
+      el.query('input').focus();
+    }
   }
 
   _handleArrowKeys(el) {
@@ -105,6 +114,9 @@ class OpenDialog extends Dialog implements MenuAction {
 
   _handleDown(el) {
     var next = document.activeElement.nextElementSibling;
+    if (next == null) {
+      next = document.activeElement;
+    }
     if (next.tagName == 'UL') {
       next = next.children.first;
     }
@@ -113,6 +125,12 @@ class OpenDialog extends Dialog implements MenuAction {
 
   _handleUp(el) {
     var prev = document.activeElement.previousElementSibling;
+    if (prev == null) {
+      prev = el.query('input');
+    }
+    if (prev == null) {
+      prev = document.activeElement;
+    }
     prev.focus();
   }
 }
