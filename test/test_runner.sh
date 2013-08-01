@@ -19,4 +19,9 @@ do
   then
       exit 1
   fi
+
+  if [[ "$results" == *"Exception: "* ]]
+  then
+      exit 1
+  fi
 done
