@@ -123,7 +123,7 @@ class Editor {
   // worry about waitForAce?
   showCode() {
     editor_el.style.visibility = 'visible';
-    query('.ace_print-margin').style.visibility = 'visible';
+    queryAll('.ace_print-margin').forEach((e) { e.style.visibility = 'visible'; });
 
     _ace.renderer.onResize();
     focus();

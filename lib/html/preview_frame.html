@@ -8,6 +8,7 @@ function receiveMessage(event) {
   // document.open();
 
   var html = event.data;
+  // Trying to get line numbers for error reporting.
   var start = html.indexOf("<script>\n");
   if (start > 0) {
     var open = html.substr(0, start + 9),
@@ -20,8 +21,18 @@ function receiveMessage(event) {
      );
   }
   document.write(html);
+  document.write(
+    "\n<script>\n" +
+    'document.addEventListener("keydown", function(event) {' +
+    '  if (event.keyCode == 72 && event.shiftKey && event.ctrlKey) {' +
+    '    parent.postMessage("showCode", "*");' +
+    '  }' +
+    '});' +
+    "\n<\/script>\n"
+  );
   document.close();
 
   document.body.style.margin = '0';
 }
+
 </script>

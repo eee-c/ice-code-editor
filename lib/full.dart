@@ -14,6 +14,7 @@ class Full {
 
     _attachKeyboardHandlers();
     _attachMouseHandlers();
+    _attachMessageHandlers();
 
     _fullScreenStyles();
 
@@ -238,6 +239,12 @@ changed.''';
           _hideMenu();
           _hideDialog();
         });
+    });
+  }
+
+  _attachMessageHandlers() {
+    window.onMessage.listen((e) {
+      showCode();
     });
   }
 

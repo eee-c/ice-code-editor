@@ -175,7 +175,31 @@ keyboard_shortcuts_tests() {
       });
     });
 
-    test("can toggle the code editor", (){
+
+  });
+
+  group("Toggling the code editor", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store.clear();
+
+      editor.store
+        ..['Old Project'] = {'code': 'Old'}
+        ..['Current Project'] = {'code': 'Current'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("with hotkey", (){
       document.activeElement.dispatchEvent(
         new KeyboardEvent(
           'keydown',
@@ -187,8 +211,21 @@ keyboard_shortcuts_tests() {
 
       expect(
         query('.ice-code-editor-editor').style.visibility,
-        equals('hidden')
+        'hidden'
       );
+    });
+
+    test("with post message", () {
+      var url = new RegExp(r'^file://').hasMatch(window.location.href)
+        ? '*': window.location.href;
+      editor.hideCode();
+      window.postMessage('showCode', url);
+      Timer.run(expectAsync0( () {
+        expect(
+          query('.ice-code-editor-editor').style.visibility,
+          'visible'
+        );
+      }));
     });
   });
 }
