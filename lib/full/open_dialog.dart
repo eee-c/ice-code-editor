@@ -36,12 +36,20 @@ class OpenDialog extends Dialog implements MenuAction {
   addProjectsToMenu({filter:''}) {
     var menu = query('.ice-menu');
 
-    var projects = store.keys.
-      where((title) {
-        return title.toLowerCase().contains(filter.toLowerCase());
+    var projects = store.projects.
+      where((project) {
+        return project['filename'].toLowerCase().contains(filter.toLowerCase());
       }).
-      map((title) {
-        return new Element.html('<li tabindex=0>${title}</li>')
+      map((project) {
+        var title = project["filename"],
+          created_at = project["created_at"],
+          updated_at = project["updated_at"];
+
+        var tooltip = (created_at == null || updated_at == null) ? '' : '''
+Created: ${created_at.substring(0,10)}
+Last Updated: ${updated_at.substring(0,10)}''';
+
+        return new Element.html('<li title="${tooltip}" tabindex=0>${title}</li>')
           ..onClick.listen((e)=> _openProject(title))
           ..onClick.listen((e)=> _hideMenu())
           ..onKeyUp.listen((e){

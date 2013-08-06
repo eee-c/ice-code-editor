@@ -78,6 +78,40 @@ open_dialog_tests() {
       );
     });
 
+    test("includes the create and update date", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+      helpers.typeIn('My New Project');
+      helpers.click('button', text: 'Save');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      String today = new DateTime.now().toString().substring(0, 10);
+      expect(
+        query('li').title,
+        '''
+Created: ${today}
+Last Updated: ${today}'''
+      );
+    });
+
+    test("does not include timestamps if they are null", (){
+      // Give auto-save a chance to kick-in:
+      Timer.run(expectAsync0((){
+        editor.store
+          ..['Current Project'] = {'code': 'Current', 'updated_at': null};
+
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'Open');
+
+        expect(
+          query('li').title,
+          isEmpty
+        );
+      }));
+    });
+
     test("click names to switch between projects", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');

@@ -54,12 +54,17 @@ class Store implements HashMap<String, HashMap> {
 
   int _indexOfKey(String key) => projects.indexOf(this[key]);
 
+  // TODO: use Dart's built-in ordered hashmap
   void _updateAtIndex(i, data) {
+    data.putIfAbsent('updated_at', ()=> new DateTime.now().toString());
     if (i == -1) {
       projects.insert(0, data);
+      projects[0]['created_at'] = new DateTime.now().toString();
     }
     else {
+      var created_at = projects[i]['created_at'];
       projects[i] = data;
+      projects[i]['created_at'] = created_at;
     }
   }
 

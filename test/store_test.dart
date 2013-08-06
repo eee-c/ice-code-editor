@@ -218,5 +218,51 @@ store_tests() {
     });
   });
 
+  group("Store", (){
+    var it;
+    setUp((){
+      it = new Store()..clear();
+      it['one'] = {'code': 1};
+      it['two'] = {'code': 2};
+    });
+
+    tearDown(()=> new Store()..clear());
+
+    test("automatically includes creation date", (){
+      expect(
+        DateTime.parse(it.currentProject['created_at']).millisecondsSinceEpoch,
+        closeTo(new DateTime.now().millisecondsSinceEpoch, 100)
+      );
+    });
+
+    test("creation date does not change on update", (){
+      var original = it.currentProject['created_at'];
+
+      it['two'] = {'code': 3};
+      expect(
+        it.currentProject['created_at'],
+        original
+      );
+    });
+
+    test("automatically includes update date", (){
+      expect(
+        DateTime.parse(it.currentProject['updated_at']).millisecondsSinceEpoch,
+        closeTo(new DateTime.now().millisecondsSinceEpoch, 100)
+      );
+    });
+
+    test("update date changes… on update", (){
+      var original = it.currentProject['updated_at'];
+
+      it['two'] = {'code': 3};
+      expect(
+        it.currentProject['updated_at'],
+        isNot(original)
+      );
+    });
+
+
+  });
   // next project named
 }
