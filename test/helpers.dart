@@ -76,10 +76,30 @@ typeCtrl(char) {
   document.activeElement.dispatchEvent(
     new KeyboardEvent(
       'keydown',
-      keyIdentifier: char,
+      keyIdentifier: keyIdentifierFor(char),
       ctrlKey: true
     )
   );
+}
+
+typeCtrlShift(char) {
+  document.activeElement.dispatchEvent(
+    new KeyboardEvent(
+      'keydown',
+      keyIdentifier: keyIdentifierFor(char),
+      ctrlKey: true,
+      shiftKey: true
+    )
+  );
+}
+
+String keyIdentifierFor(char) {
+  if (char.codeUnits.length != 1) fail("Don't know how to type “$char”");
+
+  // Keys are uppercase (see Event.keyCode)
+  var key = char.toUpperCase();
+
+  return 'U+00' + key.codeUnits.first.toRadixString(16).toUpperCase();
 }
 
 get elementsAreEmpty =>

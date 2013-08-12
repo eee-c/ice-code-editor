@@ -200,15 +200,7 @@ keyboard_shortcuts_tests() {
     });
 
     test("with hotkey", (){
-      document.activeElement.dispatchEvent(
-        new KeyboardEvent(
-          'keydown',
-          keyIdentifier: "h",
-          ctrlKey: true,
-          shiftKey: true
-        )
-      );
-
+      helpers.typeCtrlShift('H');
       expect(
         query('.ice-code-editor-editor').style.visibility,
         'hidden'

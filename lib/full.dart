@@ -203,28 +203,20 @@ changed.''';
       _hideDialog();
     });
 
-    _keyDownSubscription = document.onKeyDown.listen((e) {
-      if (!e.ctrlKey) return;
-
-      switch(e.$dom_keyIdentifier) {
-        case 'n':
-        case 'U+004E':
-          new NewProjectDialog(this).open();
-          e.preventDefault();
-          break;
-        case 'o':
-        case 'U+004F':
-          new OpenDialog(this).open();
-          e.preventDefault();
-          break;
-        case 'h':
-        case 'U+0048':
-          if (e.shiftKey) toggleCode();
-          e.preventDefault();
-          break;
+    _keyDownSubscription = KeyboardEventStreamX.onKeyDown(document).listen((e) {
+      if (e.isCtrl('N')) {
+        new NewProjectDialog(this).open();
+        e.preventDefault();
+      }
+      if (e.isCtrl('O')) {
+        new OpenDialog(this).open();
+        e.preventDefault();
+      }
+      if (e.isCtrlShift('H')) {
+        toggleCode();
+        e.preventDefault();
       }
     });
-
 
     editorReady.then((_){
       el.onFocus.listen((e)=> ice.focus());
