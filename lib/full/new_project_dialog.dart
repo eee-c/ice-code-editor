@@ -26,8 +26,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
     dialog.query('button')
       ..onClick.listen((e)=> _create());
 
-    dialog.query('input')
-      ..onKeyUp.listen((e){if (_isEnterKey(e)) _create();});
+    Keys.onEnter(dialog.query('input'), _create);
 
     parent.children.add(dialog);
     dialog.query('input').focus();

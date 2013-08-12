@@ -37,8 +37,7 @@ class Full {
   set lineNumber(int v) { ice.lineNumber = v; }
 
   void remove() {
-    _keyUpSubscription.cancel();
-    _keyDownSubscription.cancel();
+    Keys.cancel();
     el.remove();
   }
 
@@ -195,36 +194,13 @@ changed.''';
 
   String get encodedContent => Gzip.encode(ice.content);
 
-  var _keyUpSubscription, _keyDownSubscription;
   _attachKeyboardHandlers() {
-    _keyUpSubscription = document.onKeyUp.listen((e) {
-      if (!_isEscapeKey(e)) return;
-      _hideMenu();
-      _hideDialog();
+    Keys.shortcuts({
+      'Esc':          (){ _hideMenu(); _hideDialog(); },
+      'Ctrl+N':       ()=> new NewProjectDialog(this).open(),
+      'Ctrl+O, ⌘+O':  ()=> new OpenDialog(this).open(),
+      'Ctrl+Shift+H': ()=> toggleCode()
     });
-
-    _keyDownSubscription = document.onKeyDown.listen((e) {
-      if (!e.ctrlKey) return;
-
-      switch(e.$dom_keyIdentifier) {
-        case 'n':
-        case 'U+004E':
-          new NewProjectDialog(this).open();
-          e.preventDefault();
-          break;
-        case 'o':
-        case 'U+004F':
-          new OpenDialog(this).open();
-          e.preventDefault();
-          break;
-        case 'h':
-        case 'U+0048':
-          if (e.shiftKey) toggleCode();
-          e.preventDefault();
-          break;
-      }
-    });
-
 
     editorReady.then((_){
       el.onFocus.listen((e)=> ice.focus());
@@ -322,10 +298,3 @@ _maybeFocus() {
   if (document.activeElement.tagName == 'INPUT') return;
   query('#ice').dispatchEvent(new UIEvent('focus'));
 }
-
-_isEscapeKey(e) => e.keyCode == 27 ||
-  e.$dom_keyIdentifier == KeyName.ESC ||
-  e.$dom_keyIdentifier == 'U+001B';
-
-_isEnterKey(e) =>
-  e.keyCode == 13 || e.$dom_keyIdentifier == KeyName.ENTER;

@@ -8,6 +8,8 @@ import 'package:js/js.dart' as js;
 import 'package:js/js_wrapping.dart' as jsw;
 import 'package:crypto/crypto.dart';
 
+import 'package:ctrl_alt_foo/keys.dart';
+
 part 'editor.dart';
 part 'store.dart';
 part 'gzip.dart';
