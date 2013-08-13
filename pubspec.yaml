@@ -10,3 +10,4 @@ dependencies:
   unittest: ">=0.6.5 <0.6.6"
   js: ">=0.0.24 <0.0.25"
   crypto: ">=0.6.5 <0.6.6"
+  ctrl_alt_foo: any

@@ -3,6 +3,8 @@ library key_event_x;
 import 'dart:html';
 import 'dart:async';
 
+import 'package:ctrl_alt_foo/key_identifier.dart';
+
 class KeyboardEventStreamX extends KeyboardEventStream {
   static Stream<KeyEventX> onKeyPress(target) { throw UnimplementedError; }
   static Stream<KeyEventX> onKeyUp(target) { throw UnimplementedError; }

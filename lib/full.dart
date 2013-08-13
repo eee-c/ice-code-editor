@@ -197,8 +197,8 @@ changed.''';
 
   var _keyUpSubscription, _keyDownSubscription;
   _attachKeyboardHandlers() {
-    _keyUpSubscription = document.onKeyUp.listen((e) {
-      if (!_isEscapeKey(e)) return;
+    _keyUpSubscription = KeyboardEventStreamX.onKeyUp(document).listen((e) {
+      if (!e.isEscape) return;
       _hideMenu();
       _hideDialog();
     });
@@ -314,10 +314,3 @@ _maybeFocus() {
   if (document.activeElement.tagName == 'INPUT') return;
   query('#ice').dispatchEvent(new UIEvent('focus'));
 }
-
-_isEscapeKey(e) => e.keyCode == 27 ||
-  e.$dom_keyIdentifier == KeyName.ESC ||
-  e.$dom_keyIdentifier == 'U+001B';
-
-_isEnterKey(e) =>
-  e.keyCode == 13 || e.$dom_keyIdentifier == KeyName.ENTER;

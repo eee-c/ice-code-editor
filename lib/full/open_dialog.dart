@@ -52,8 +52,9 @@ Last Updated: ${updated_at.substring(0,10)}''';
         return new Element.html('<li title="${tooltip}" tabindex=0>${title}</li>')
           ..onClick.listen((e)=> _openProject(title))
           ..onClick.listen((e)=> _hideMenu())
-          ..onKeyUp.listen((e){
-            if (_isEnterKey(e)) e.target.click();
+          ..onKeyUp.listen((e) {
+            var _e = new KeyEventX(e);
+            if (_e.isEnter) e.target.click();
           });
       }).
       toList();
@@ -90,8 +91,8 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleEnter(el) {
-    el.onKeyUp.listen((e) {
-      if (!_isEnterKey(e)) return;
+    KeyboardEventStreamX.onKeyDown(el).listen((e) {
+      if (!e.isEnter) return;
       if (el.value.isEmpty) return;
 
       query('.ice-menu ul').children.first.click();
@@ -108,15 +109,9 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleArrowKeys(el) {
-    el.onKeyUp.listen((e) {
-      switch(e.$dom_keyIdentifier) {
-        case KeyName.DOWN:
-          _handleDown(el);
-          break;
-        case KeyName.UP:
-          _handleUp(el);
-          break;
-      }
+    KeyboardEventStreamX.onKeyDown(el).listen((e) {
+      if (e.isDown) _handleDown(el);
+      if (e.isUp) _handleUp(el);
     });
   }
 
