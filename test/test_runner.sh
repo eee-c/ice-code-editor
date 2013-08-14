@@ -1,10 +1,23 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Static type analysis
-dartanalyzer lib/ice.dart
-if [[ $? != 0 ]]
-  then exit 1
+results=$(dartanalyzer lib/ice.dart 2>&1)
+non_js_results=$(
+  echo "$results" | \
+    grep -v "is not defined for the class 'Proxy'" | \
+    grep -v "There is no such getter '.*' in 'Proxy'"
+)
+echo "$non_js_results"
+non_js_count=$(echo "$non_js_results" | wc -l)
+if [[ "$non_js_count" != "2" ]]
+then
+  exit 1
 fi
+if [[ "$non_js_results" == *"warnings found."* ]]
+then
+  echo "Ignoring js-interop warnings..."
+fi
+echo
 
 # Run different test contexts
 for X in index html5
