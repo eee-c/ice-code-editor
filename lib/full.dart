@@ -197,7 +197,7 @@ changed.''';
 
   var _keyUpSubscription, _keyDownSubscription;
   _attachKeyboardHandlers() {
-    _keyUpSubscription = KeyboardEventStreamX.onKeyUp(document).listen((e) {
+    _keyUpSubscription = KeyboardEventStreamX.onKeyDown(document).listen((e) {
       if (!e.isEscape) return;
       _hideMenu();
       _hideDialog();

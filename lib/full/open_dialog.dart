@@ -52,7 +52,7 @@ Last Updated: ${updated_at.substring(0,10)}''';
         return new Element.html('<li title="${tooltip}" tabindex=0>${title}</li>')
           ..onClick.listen((e)=> _openProject(title))
           ..onClick.listen((e)=> _hideMenu())
-          ..onKeyUp.listen((e) {
+          ..onKeyDown.listen((e) {
             var _e = new KeyEventX(e);
             if (_e.isEnter) e.target.click();
           });
