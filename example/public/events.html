@@ -1,0 +1,325 @@
+<body onload="console.log('load')">
+<div>
+<label>Name:<input id="foo" type="text" size="30"></label>
+
+<h1>Input Field</h1>
+<table width=100%>
+<tr>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyDown</th></tr>
+<tr>
+<td>target:</td>
+<td id=input-down-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=input-down-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=input-down-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=input-down-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=input-down-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=input-down-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=input-down-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=input-down-alt></td>
+</tr>
+</table>
+</td>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyPress</th></tr>
+<tr>
+<td>target:</td>
+<td id=input-press-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=input-press-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=input-press-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=input-press-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=input-press-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=input-press-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=input-press-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=input-press-alt></td>
+</tr>
+</table>
+</td>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyUp</th></tr>
+<tr>
+<td>target:</td>
+<td id=input-up-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=input-up-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=input-up-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=input-up-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=input-up-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=input-up-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=input-up-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=input-up-alt></td>
+</tr>
+</table>
+</td>
+
+
+</tr>
+</table>
+
+<!-- ............................................................ -->
+
+<h1>Body</h1>
+<table width=100%>
+<tr>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyDown</th></tr>
+<tr>
+<td>target:</td>
+<td id=body-down-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=body-down-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=body-down-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=body-down-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=body-down-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=body-down-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=body-down-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=body-down-alt></td>
+</tr>
+</table>
+</td>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyPress</th></tr>
+<tr>
+<td>target:</td>
+<td id=body-press-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=body-press-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=body-press-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=body-press-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=body-press-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=body-press-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=body-press-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=body-press-alt></td>
+</tr>
+</table>
+</td>
+
+<td width=33%>
+<table>
+<tr><th colspan=2 align=left>onKeyUp</th></tr>
+<tr>
+<td>target:</td>
+<td id=body-up-target></td>
+</tr>
+<tr>
+<td>keyIdentifier:</td>
+<td id=body-up-key-identifier></td>
+</tr>
+<tr>
+<td>keyCode:</td>
+<td id=body-up-key-code></td>
+</tr>
+<tr>
+<td>charCode:</td>
+<td id=body-up-char-code></td>
+</tr>
+<tr>
+<td>ctrl:</td>
+<td id=body-up-ctrl></td>
+</tr>
+<tr>
+<td>shift:</td>
+<td id=body-up-shift></td>
+</tr>
+<tr>
+<td>meta:</td>
+<td id=body-up-meta></td>
+</tr>
+<tr>
+<td>alt:</td>
+<td id=body-up-alt></td>
+</tr>
+</table>
+</td>
+
+
+</tr>
+</table>
+
+
+
+</div>
+</body>
+<script>
+var input = document.getElementById('foo');
+
+input.addEventListener('keydown', function(e){
+  clearAll();
+  writeEvent('input-down', e);
+});
+
+input.addEventListener('keypress', function(e){
+  writeEvent('input-press', e);
+});
+
+input.addEventListener('keyup', function(e){
+  writeEvent('input-up', e);
+});
+
+document.body.addEventListener('keydown', function(e){
+  if (e.target.tagName != 'INPUT') clearAll();
+  writeEvent('body-down', e);
+});
+
+document.body.addEventListener('keypress', function(e){
+  writeEvent('body-press', e);
+});
+
+document.body.addEventListener('keyup', function(e){
+  writeEvent('body-up', e);
+});
+
+
+function writeEvent(prefix, e) {
+  writeCell(prefix + '-target', e.target.tagName);
+  writeCell(prefix + '-key-identifier', e.keyIdentifier);
+  writeCell(prefix + '-key-code', e.keyCode);
+  writeCell(prefix + '-char-code', e.charCode);
+  writeCell(prefix + '-ctrl', e.ctrlKey ? 'yes' : '');
+  writeCell(prefix + '-shift', e.shiftKey ? 'yes' : '');
+  writeCell(prefix + '-meta', e.metaKey ? 'yes' : '');
+  writeCell(prefix + '-alt', e.altKey ? 'yes' : '');
+}
+
+function writeCell(id, value) {
+  document.getElementById(id).innerHTML = value;
+}
+
+function clearAll() {
+  clearEvent('input-down');
+  clearEvent('input-press');
+  clearEvent('input-up');
+  clearEvent('body-down');
+  clearEvent('body-press');
+  clearEvent('body-up');
+}
+
+function clearEvent(prefix) {
+  var props = [
+    'target',
+    'key-identifier',
+    'key-code',
+    'char-code',
+    'ctrl',
+    'shift',
+    'meta',
+    'alt'
+  ];
+
+  for (var i=0; i<props.length; i++) {
+    writeCell(prefix + '-' + props[i], '');
+  }
+}
+</script>
