@@ -204,15 +204,15 @@ changed.''';
     });
 
     _keyDownSubscription = KeyboardEventStreamX.onKeyDown(document).listen((e) {
-      if (e.isCtrl('N')) {
+      if (e.isCtrl('N') || e.isCommand('N')) {
         new NewProjectDialog(this).open();
         e.preventDefault();
       }
-      if (e.isCtrl('O')) {
+      if (e.isCtrl('O') || e.isCommand('O')) {
         new OpenDialog(this).open();
         e.preventDefault();
       }
-      if (e.isCtrlShift('H')) {
+      if (e.isCtrlShift('H') || e.isCommandShift('H')) {
         toggleCode();
         e.preventDefault();
       }
