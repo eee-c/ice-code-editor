@@ -37,8 +37,7 @@ class Full {
   set lineNumber(int v) { ice.lineNumber = v; }
 
   void remove() {
-    _keyUpSubscription.cancel();
-    _keyDownSubscription.cancel();
+    Keys.cancel();
     el.remove();
   }
 
@@ -195,27 +194,12 @@ changed.''';
 
   String get encodedContent => Gzip.encode(ice.content);
 
-  var _keyUpSubscription, _keyDownSubscription;
   _attachKeyboardHandlers() {
-    _keyUpSubscription = KeyboardEventStreamX.onKeyDown(document).listen((e) {
-      if (!e.isEscape) return;
-      _hideMenu();
-      _hideDialog();
-    });
-
-    _keyDownSubscription = KeyboardEventStreamX.onKeyDown(document).listen((e) {
-      if (e.isCtrl('N') || e.isCommand('N')) {
-        new NewProjectDialog(this).open();
-        e.preventDefault();
-      }
-      if (e.isCtrl('O') || e.isCommand('O')) {
-        new OpenDialog(this).open();
-        e.preventDefault();
-      }
-      if (e.isCtrlShift('H') || e.isCommandShift('H')) {
-        toggleCode();
-        e.preventDefault();
-      }
+    Keys.map({
+      'Esc':          (){ _hideMenu(); _hideDialog(); },
+      'Ctrl+N':       ()=> new NewProjectDialog(this).open(),
+      'Ctrl+O, ⌘+O':  ()=> new OpenDialog(this).open(),
+      'Ctrl+Shift+H': ()=> toggleCode()
     });
 
     editorReady.then((_){

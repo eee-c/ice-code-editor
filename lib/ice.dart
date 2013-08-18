@@ -9,6 +9,7 @@ import 'package:js/js_wrapping.dart' as jsw;
 import 'package:crypto/crypto.dart';
 
 import 'package:ctrl_alt_foo/key_event_x.dart';
+import 'package:ctrl_alt_foo/keys.dart';
 
 part 'editor.dart';
 part 'store.dart';
