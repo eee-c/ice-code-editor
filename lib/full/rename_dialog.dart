@@ -18,8 +18,7 @@ class RenameDialog extends Dialog implements MenuAction {
     dialog.query('button').onClick
       .listen((_)=> _renameProject());
 
-    KeyboardEventStreamX.onKeyDown(dialog.query('input'))
-      .listen((e) {if (e.isEnter) _renameProject();});
+    Keys.onEnter(dialog.query('input'), _renameProject);
 
     parent.children.add(dialog);
 

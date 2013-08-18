@@ -195,7 +195,7 @@ changed.''';
   String get encodedContent => Gzip.encode(ice.content);
 
   _attachKeyboardHandlers() {
-    Keys.map({
+    Keys.shortcuts({
       'Esc':          (){ _hideMenu(); _hideDialog(); },
       'Ctrl+N':       ()=> new NewProjectDialog(this).open(),
       'Ctrl+O, ⌘+O':  ()=> new OpenDialog(this).open(),
