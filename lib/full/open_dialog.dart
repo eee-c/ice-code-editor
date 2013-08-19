@@ -68,6 +68,11 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _openProject(title) {
+    var old = store.currentProject,
+        old_title = old['filename'];
+    old['lineNumber'] = ice.lineNumber;
+    store[old_title] = old;
+
     // TODO: Move this into Store (should be a way to make a project as
     // current)
     var project = store.remove(title);

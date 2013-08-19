@@ -304,6 +304,7 @@ Last Updated: ${today}'''
 
       editor.store
         ..clear()
+        ..['Other Project'] = {'code': 'Test'}
         ..['Current Project'] = {'code': 'Test'};
 
       return editor.editorReady;
@@ -329,8 +330,32 @@ Code line 07
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Save');
 
-      editor.store
-        ..['Other Project'] = {'code': 'Test'};
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Other Project');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Current Project');
+
+      expect(editor.lineNumber, 6);
+    });
+
+    test("remembers last active before switch (even w/o save)", (){
+      editor.content = '''
+Code line 01
+Code line 02
+Code line 03
+Code line 04
+Code line 05
+Code line 06
+Code line 07
+''';
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      editor.lineNumber = 6;
 
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Open');
