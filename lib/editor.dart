@@ -307,7 +307,7 @@ class Ace extends jsw.TypedProxy {
   int get lineNumber => $unsafe.getCursorPosition().row + 1;
   set lineNumber(int row) {
     $unsafe.gotoLine(row, 0, false);
-    $unsafe.scrollToLine(row, false, false);
+    $unsafe.scrollToLine(row-1, false, false);
   }
 
   get renderer => $unsafe.renderer;
