@@ -10,6 +10,7 @@ open_dialog_tests() {
 
       editor.store
         ..clear()
+        ..['Old Project'] = {'code': 'Old Test'}
         ..['Current Project'] = {'code': 'Test'};
 
       return editor.editorReady;
@@ -110,6 +111,19 @@ Last Updated: ${today}'''
           isEmpty
         );
       }));
+    });
+
+    test("does not change the created at timestamp", (){
+      var original = editor.store['Old Project']['created_at'];
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Old Project');
+
+      expect(
+        editor.store['Old Project']['created_at'],
+        original
+      );
     });
 
     test("click names to switch between projects", (){

@@ -59,7 +59,7 @@ class Store implements HashMap<String, HashMap> {
     data.putIfAbsent('updated_at', ()=> new DateTime.now().toString());
     if (i == -1) {
       projects.insert(0, data);
-      projects[0]['created_at'] = new DateTime.now().toString();
+      projects[0].putIfAbsent('created_at', ()=> new DateTime.now().toString());
     }
     else {
       var created_at = projects[i]['created_at'];

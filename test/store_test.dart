@@ -221,9 +221,10 @@ store_tests() {
   group("Store", (){
     var it;
     setUp((){
-      it = new Store()..clear();
-      it['one'] = {'code': 1};
-      it['two'] = {'code': 2};
+      it = new Store()
+        ..clear()
+        ..['one'] = {'code': 1}
+        ..['two'] = {'code': 2};
     });
 
     tearDown(()=> new Store()..clear());
@@ -238,11 +239,13 @@ store_tests() {
     test("creation date does not change on update", (){
       var original = it.currentProject['created_at'];
 
-      it['two'] = {'code': 3};
-      expect(
-        it.currentProject['created_at'],
-        original
-      );
+      Timer.run(expectAsync0((){
+        it['two'] = {'code': 3};
+        expect(
+          it.currentProject['created_at'],
+          original
+        );
+      }));
     });
 
     test("automatically includes update date", (){
@@ -255,11 +258,13 @@ store_tests() {
     test("update date changes… on update", (){
       var original = it.currentProject['updated_at'];
 
-      it['two'] = {'code': 3};
-      expect(
-        it.currentProject['updated_at'],
-        isNot(original)
-      );
+      Timer.run(expectAsync0((){
+        it['two'] = {'code': 3};
+        expect(
+          it.currentProject['updated_at'],
+          isNot(original)
+        );
+      }));
     });
 
 
