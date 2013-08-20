@@ -132,7 +132,16 @@ class Store implements HashMap<String, HashMap> {
     if (_projects != null) return _projects;
 
     var json = window.localStorage[storage_key];
-    return _projects = (json == null) ? [] : JSON.parse(json);
+    if (json == null) return [];
+
+    var ret = JSON.parse(json)..
+    sort((a, b) {
+      var av = a['updated_at'] == null ? '' : a['updated_at'];
+      var bv = b['updated_at'] == null ? '' : b['updated_at'];
+      return Comparable.compare(av, bv);
+    });
+
+    return ret;
   }
 
   /// Force the list of projects to refresh itself by reloading from

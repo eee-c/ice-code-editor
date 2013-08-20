@@ -75,8 +75,9 @@ Last Updated: ${updated_at.substring(0,10)}''';
 
     // TODO: Move this into Store (should be a way to make a project as
     // current)
-    var project = store.remove(title);
+    var project = store[title];
     store[title] = project;
+    //store[title] = project;
     ice.content = project['code'];
     if (project['lineNumber'] != null) {
       ice.lineNumber = project['lineNumber'];
