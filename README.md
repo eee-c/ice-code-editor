@@ -37,18 +37,19 @@ The example app contained in `example` is a simple Dart web server. From the `ex
 
 ## Contributors
 
+ * [Sangeet Agarwal](https://github.com/SangeetAgarwal)
  * [Robert Åkerblom-Andersson](https://github.com/scorpiion)
  * [Luke Barbuto](https://github.com/lexun)
  * [Kate Bladow](https://github.com/kbladow)
  * [Stephen Cagle](https://github.com/samedhi)
  * [Damon Douglas](https://github.com/damondouglas)
- * Lindsey Miller
  * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
+ * Lindsey Miller
  * [Morgan Nelson](https://github.com/korishev)
  * [Michael Risse](https://github.com/rissem)
 

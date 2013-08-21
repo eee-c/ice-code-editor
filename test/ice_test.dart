@@ -34,6 +34,10 @@ main(){
   gzip_tests();
 
   full_tests();
+
+  // TODO: why does this fail when it is run last?
+  keyboard_shortcuts_tests();
+
   update_button_tests();
   hide_button_tests();
   show_button_tests();
@@ -46,7 +50,6 @@ main(){
   share_dialog_tests();
   download_tests();
   remove_dialog_tests();
-  keyboard_shortcuts_tests();
 
   pollForDone(testCases);
 }
