@@ -151,6 +151,16 @@ share_dialog_tests() {
       );
     });
 
+    test("share dialog's shortened URL include game-only mode (if set)", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Share');
+      helpers.click('.ice-dialog label input[type=checkbox]');
+      expect(
+        query('.ice-dialog a').href,
+        contains('url=http%3A%2F%2Fgamingjs.com%2Fice%2F%3Fg%23B%2FC0ktLgEA')
+      );
+    });
+
     test("clicking the game mode twice removes game mode from link", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Share');

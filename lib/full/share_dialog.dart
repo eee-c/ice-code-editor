@@ -9,8 +9,6 @@ class ShareDialog extends Dialog implements MenuAction {
   get name => 'Share';
 
   open() {
-    var content_for_sharing = "http://gamingjs.com/ice/#B/${full.encodedContent}";
-    var encoded_url = Uri.encodeComponent(content_for_sharing);
     var dialog = new Element.html(
       '''
       <div class=ice-dialog>
@@ -28,7 +26,7 @@ class ShareDialog extends Dialog implements MenuAction {
         <span>..or, for easier sharing</span>
         <a
           target="_blank"
-          href="http://is.gd/create.php?url=${encoded_url}">
+          href="${short_url}">
         make a short link</a>
       </div>
       </div>
@@ -44,15 +42,36 @@ class ShareDialog extends Dialog implements MenuAction {
       ..style.width = '100%';
 
     _checkbox
-      ..onChange.listen((e)=> _toggleGameMode(e.target.checked));
+      ..onChange.listen((e)=> _toggleGameMode(e.target.checked))
+      ..onChange.listen((e)=> _updateShortUrl(e.target.checked));
+  }
+
+  String get short_url => 'http://is.gd/create.php?url=${encoded_url}';
+
+  String get encoded_url => Uri.encodeComponent(content_for_sharing);
+
+  String get content_for_sharing {
+    var query_string = game_mode ? '?g' : '';
+
+    return "http://gamingjs.com/ice/${query_string}#B/${full.encodedContent}";
   }
 
   InputElement get _field => query('.ice-dialog').query('input');
   InputElement get _checkbox => query('.ice-dialog input[type=checkbox]');
+  AnchorElement get _share_link => query('.ice-dialog a');
+
+  bool get game_mode {
+    if (_checkbox == null) return false;
+    return _checkbox.checked;
+  }
 
   _toggleGameMode(bool enabled) {
     _field.value = enabled ?
       _field.value.replaceFirst('ice/#B', 'ice/?g#B') :
       _field.value.replaceFirst('?g', '');
+  }
+
+  _updateShortUrl(bool enabled) {
+    _share_link.href = short_url;
   }
 }
