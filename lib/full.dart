@@ -196,7 +196,10 @@ changed.''';
 
   _attachKeyboardHandlers() {
     Keys.shortcuts({
-      'Esc':          (){ _hideMenu(); _hideDialog(); },
+      'Ctrl+N, Ctrl+O, ⌘+O, Ctrl+Shift+H': _hideDialog
+    });
+    Keys.shortcuts({
+      'Esc':          ()=> _hideDialog(),
       'Ctrl+N':       ()=> new NewProjectDialog(this).open(),
       'Ctrl+O, ⌘+O':  ()=> new OpenDialog(this).open(),
       'Ctrl+Shift+H': ()=> toggleCode()

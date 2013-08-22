@@ -175,7 +175,35 @@ keyboard_shortcuts_tests() {
       });
     });
 
+    test("opening project dialog after new dialog closes the first", (){
+      helpers.typeCtrl('N');
+      helpers.typeCtrl('O');
 
+      expect(
+        queryAll('button'),
+        helpers.elementsDoNotContain('Save')
+      );
+    });
+
+    test("opening new dialog after open dialog closes the first", (){
+      helpers.typeCtrl('O');
+      helpers.typeCtrl('N');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsDoNotContain('Saved Projects')
+      );
+    });
+
+    test("toggling code after new dialog closes the dialog", (){
+      helpers.typeCtrl('N');
+      helpers.typeCtrlShift('H');
+
+      expect(
+        queryAll('button'),
+        helpers.elementsDoNotContain('Save')
+      );
+    });
   });
 
   group("Toggling the code editor", (){

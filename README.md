@@ -47,6 +47,7 @@ The example app contained in `example` is a simple Dart web server. From the `ex
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
+ * [Marty Hines](https://github.com/martyhines)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
  * Lindsey Miller
