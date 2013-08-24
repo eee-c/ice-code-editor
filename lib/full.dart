@@ -4,8 +4,9 @@ class Full {
   Element el;
   Editor ice;
   Store store;
+  Map templates;
 
-  Full() {
+  Full({this.templates}) {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
