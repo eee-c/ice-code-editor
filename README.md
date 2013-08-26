@@ -4,19 +4,21 @@
 
 __*** [Try it now!](http://gamingjs.com/ice/) ***__
 
-The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).”
+The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).” Written in **[Dart](http://dartlang.org)**.
 
 ![ICE Code Editor Screenshot](https://raw.github.com/eee-c/ice-code-editor/master/ice_code_editor.png)
 
-The old [JavaScript version](https://github.com/eee-c/code-editor) proved unmaintainable, hence the switch to Dart. This version leverages the benefits of Dart: cross-browser support, testing, documentation.
+The old [JavaScript version](https://github.com/eee-c/code-editor) proved unmaintainable, hence the switch to **Dart**. This version leverages many of the benefits of **Dart**: cross-browser support, testing, documentation.
 
 ## Running the Example App
 
-Examples are contained in the `web` directory. To access:
+You'll need **[Dart](http://dartlang.org)** installed to run. To run the examples:
 
  1. Install dependencies with `pub install`
  2. Start the [pub](http://pub.dartlang.org) web server with `pub serve`
  3. Open the full-screen version of ICE at http://localhost:8080/full.html with Dartium
+
+Examples are contained in the `web` directory.
 
 ## Features
 
