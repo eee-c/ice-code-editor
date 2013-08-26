@@ -2,13 +2,13 @@
 
 [![Build Status](https://drone.io/github.com/eee-c/ice-code-editor/status.png)](https://drone.io/github.com/eee-c/ice-code-editor/latest)
 
-__*** Try the [it out!](http://gamingjs.com/ice/) ***__
+__*** [Try it now!](http://gamingjs.com/ice/) ***__
 
 The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).”
 
 ![ICE Code Editor Screenshot](https://raw.github.com/eee-c/ice-code-editor/master/ice_code_editor.png)
 
-The old JavaScript version ([repository](https://github.com/eee-c/code-editor) proved unmaintainable, hence the switch to Dart. This version leverages the benefits of Dart: cross-browser support, testing, documentation.
+The old [JavaScript version](https://github.com/eee-c/code-editor) proved unmaintainable, hence the switch to Dart. This version leverages the benefits of Dart: cross-browser support, testing, documentation.
 
 ## Running the Example App
 
