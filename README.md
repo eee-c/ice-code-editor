@@ -12,7 +12,7 @@ The old [JavaScript version](https://github.com/eee-c/code-editor) proved unmain
 
 ## Running the Example App
 
-You'll need **[Dart](http://dartlang.org)** installed to run. To run the examples:
+You'll need **[Dart](http://dartlang.org)** installed. To run the examples:
 
  1. Install dependencies with `pub install`
  2. Start the [pub](http://pub.dartlang.org) web server with `pub serve`
