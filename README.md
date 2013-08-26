@@ -15,7 +15,7 @@ The old JavaScript version ([repository](https://github.com/eee-c/code-editor) p
 Examples are contained in the `web` directory. To access:
 
  1. Install dependencies with `pub install`
- 2. Start the [pub](http://pub.dartlang.org] web server with `pub serve`
+ 2. Start the [pub](http://pub.dartlang.org) web server with `pub serve`
  3. Open the full-screen version of ICE at http://localhost:8080/full.html with Dartium
 
 ## Features
