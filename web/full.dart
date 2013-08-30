@@ -5,4 +5,4 @@ var template = {
 This is awesome'''
 };
 
-main()=> new ICE.Full(templates: template);
+main()=> new ICE.Full();

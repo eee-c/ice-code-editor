@@ -2,8 +2,11 @@ part of ice;
 
 class NewProjectDialog extends Dialog implements MenuAction {
   Full full;
+  Templates templates;
+
   NewProjectDialog(Full f): super(f) {
     full = f;
+    templates = new Templates(full.templates);
   }
 
   get name => 'New';
@@ -18,7 +21,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
         <label>
           Template:
           <select>
-            ${_templates.map((t)=> '<option>$t</option>').join()}
+            ${_template_options}
           </select>
         </label>
       </div>
@@ -35,26 +38,16 @@ class NewProjectDialog extends Dialog implements MenuAction {
     dialog.query('input').focus();
   }
 
-  get _templates {
-    if (full.templates != null){
-      return full.templates.keys;
-    }
-    return Templates.list;
-  }
-
-  _templateForTitle(title){
-    if (full.templates != null){
-      return full.templates[title];
-    }
-    return Templates.byTitle(title);
+  get _template_options {
+    return templates.titles.map((t)=> '<option>$t</option>').join();
   }
 
   _create() {
     var title = _field.value;
     if (!new Validate(title, store, parent).isValid) return;
 
-    var template = _list.value,
-        code = _templateForTitle(template);
+    var template_title = _list.value,
+        code = templates[template_title];
 
     store[title] = {'code': code};
     ice.content = code;
