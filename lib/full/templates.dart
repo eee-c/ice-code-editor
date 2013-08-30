@@ -1,18 +1,25 @@
 part of ice;
 
-class Templates {
-  static get list => [
-    '3D starter project',
-    '3D starter project (with Physics)',
-    'Empty project'
-  ];
+class Templates extends IterableBase {
+  Map project_templates = {};
 
-  static String byTitle(title) {
-    if (title == '3D starter project') return threeD;
-    if (title == 'Empty project') return empty;
-    if (title == '3D starter project (with Physics)') return physics;
-    return '';
+  Templates([Map user_defined_templates]) {
+    if (user_defined_templates != null) {
+      project_templates = user_defined_templates;
+    }
+    else {
+      project_templates
+        ..['3D starter project'] = threeD
+        ..['3D starter project (with Physics)'] = physics
+        ..['Empty project'] = empty;
+    }
   }
+
+  Iterable get iterator => project_templates.values.iterator;
+
+  List<String> get titles => project_templates.keys;
+
+  operator [](String title) => project_templates[title];
 
   static String get threeD => '''
 <body></body>
