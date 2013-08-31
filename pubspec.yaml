@@ -1,5 +1,5 @@
 name: ice_code_editor
-version: 0.0.10
+version: 0.0.11
 description: Code Editor + Preview
 authors:
 - Chris Strom <chris@eeecomputes.com>
@@ -7,7 +7,8 @@ authors:
 - Srdjan Pejic <spejic@gmail.com>
 homepage: https://github.com/eee-c/ice-code-editor
 dependencies:
-  crypto: ">=0.6.17+2 <0.6.18"
+  crypto: ">=0.6.19 <0.6.20"
   js: ">=0.0.24 <0.0.25"
   unittest: ">=0.6.15+3 <0.6.16"
   ctrl_alt_foo: ">=0.1.2 <0.1.3"
+  json: ">=0.6.9 <0.6.10"
