@@ -12,9 +12,13 @@ class Editor {
 
   static bool disableJavaScriptWorker = false;
 
-  Editor(this._el) {
+  Editor(this._el, {preview_el}) {
+    if (preview_el != null) {
+      this._preview_el = preview_el
+        ..classes.add('ice-code-editor-preview');
+    }
     this._startAce();
-    this._applyStyles();
+    this.applyStyles();
   }
 
   set content(String data) {
@@ -152,7 +156,7 @@ class Editor {
   Element get el {
     if (__el != null) return __el;
 
-    if (this._el.runtimeType == Element) {
+    if (this._el.runtimeType.toString().contains('Element')) {
       __el = _el;
     }
     else {
@@ -184,7 +188,7 @@ class Editor {
   }
 
   static List _scripts;
-  static get _isAceJsAttached => (_scripts != null);
+  static bool get _isAceJsAttached => (_scripts != null);
   static _attachScripts() {
     if (_scripts != null) return [];
 
@@ -208,21 +212,28 @@ class Editor {
     return _scripts = scripts;
   }
 
+  static Completer _waitForJS;
+  static Future get jsReady {
+    if (!_isAceJsAttached) {
+      _waitForJS = new Completer();
+      _attachScripts().
+        first.
+        onLoad.
+        listen((_)=> _waitForJS.complete());
+    }
+
+    return _waitForJS.future;
+  }
+
   _startAce() {
     this._waitForAce = new Completer();
-
-    if (_isAceJsAttached) {
-      _startJsAce();
-    }
-    else {
-      var scripts = _attachScripts();
-      scripts.first.onLoad.listen((_)=> _startJsAce());
-    }
-
+    jsReady.then((_)=> _startJsAce());
     _attachKeyHandlersForAce();
   }
 
   _startJsAce() {
+    js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
     _ace = Ace.edit(editor_el);
 
     _ace
@@ -261,7 +272,7 @@ class Editor {
     });
   }
 
-  _applyStyles() {
+  applyStyles() {
     var style = new LinkElement()
       ..type = "text/css"
       ..rel = "stylesheet"
@@ -275,8 +286,13 @@ class Editor {
       ..position = 'absolute'
       ..zIndex = '20';
 
+    var offset = this.el.documentOffset;
     this.preview_el.style
       ..position = 'absolute'
+      ..width = this.el.style.width
+      ..height = this.el.style.height
+      ..top = '${offset.y}'
+      ..left = '${offset.x}'
       ..zIndex = '10';
   }
 }

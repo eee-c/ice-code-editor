@@ -32,7 +32,7 @@ part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 
 main(){
-  // useHtmlConfiguration(true);
+  // useHtmlConfiguration();
   Editor.disableJavaScriptWorker = true;
 
   editor_tests();
