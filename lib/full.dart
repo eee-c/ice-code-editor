@@ -29,6 +29,7 @@ class Full {
 
   Stream get onPreviewChange => ice.onPreviewChange;
   Future get editorReady => ice.editorReady;
+  Future get gzipReady => ice.gzipReady;
   String get content => ice.content;
   void set content(data) => ice.content = data;
 
@@ -235,15 +236,19 @@ changed.''';
 
   _openProject() {
     if (window.location.hash.startsWith('#B/')) {
-      var title = store.nextProjectNamed('Untitled');
-      content = Gzip.decode(window.location.hash.substring(3));
-      store[title] = {'code': content};
-      window.location.hash = '';
+      gzipReady.then((_){ _openSharedProject(); });
       return;
     }
 
     content = store.isEmpty ?
           DefaultProject.content : store.projects.first['code'];
+  }
+
+  _openSharedProject() {
+    var title = store.nextProjectNamed('Untitled');
+    content = Gzip.decode(window.location.hash.substring(3));
+    store[title] = {'code': content};
+    window.location.hash = '';
   }
 
   _startAutoSave() {

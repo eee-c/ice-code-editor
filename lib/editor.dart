@@ -8,7 +8,7 @@ class Editor {
   Element __el, _editor_el, _preview_el;
 
   var _ace;
-  Completer _waitForAce, _waitForPreview;
+  Completer _waitForAce, _waitForGzip, _waitForPreview;
 
   static bool disableJavaScriptWorker = false;
 
@@ -62,6 +62,7 @@ class Editor {
   // worry about waitForAce?
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
+  Future get gzipReady => _waitForGzip.future;
 
   int get lineNumber => _ace.lineNumber;
   set lineNumber(int v) { _ace.lineNumber = v; }
@@ -210,6 +211,7 @@ class Editor {
 
   _startAce() {
     this._waitForAce = new Completer();
+    this._waitForGzip = new Completer();
 
     if (_isAceJsAttached) {
       _startJsAce();
@@ -217,6 +219,7 @@ class Editor {
     else {
       var scripts = _attachScripts();
       scripts.first.onLoad.listen((_)=> _startJsAce());
+      scripts.last.onLoad.listen((_)=> _waitForGzip.complete());
     }
 
     _attachKeyHandlersForAce();

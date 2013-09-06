@@ -1,0 +1,8 @@
+CACHE MANIFEST
+# 2013-09-04
+
+CACHE:
+/test/packages/ice_code_editor/js/ace/ace.js
+
+NETWORK:
+*

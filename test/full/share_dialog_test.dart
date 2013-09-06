@@ -1,7 +1,7 @@
 part of ice_test;
 
 share_dialog_tests() {
-  group("Opening Shared Link", (){
+  solo_group("Opening Shared Link", (){
     var editor, store;
 
     setUp((){
@@ -14,7 +14,7 @@ share_dialog_tests() {
         ..clear()
         ..['Current Project'] = {'code': 'Test'};
 
-      return editor.editorReady;
+      return new Future.delayed(new Duration(milliseconds: 10));
     });
 
     tearDown((){
