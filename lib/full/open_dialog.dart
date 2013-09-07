@@ -20,7 +20,7 @@ class OpenDialog extends Dialog implements MenuAction {
     addProjectsToMenu();
 
     menu.queryAll('input').forEach(_addListeners);
-    Timer.run(()=> _focus(menu));
+    _focus(menu);
     _handleArrowKeys(menu);
 
     menu.style
