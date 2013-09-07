@@ -16,11 +16,11 @@ class OpenDialog extends Dialog implements MenuAction {
       '''
     );
 
-    parent.children.add(menu);
+    parent.append(menu);
     addProjectsToMenu();
 
     menu.queryAll('input').forEach(_addListeners);
-    _focus(menu);
+    Timer.run(()=> _focus(menu));
     _handleArrowKeys(menu);
 
     menu.style

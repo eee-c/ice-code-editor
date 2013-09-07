@@ -28,8 +28,8 @@ class NewProjectDialog extends Dialog implements MenuAction {
 
     Keys.onEnter(dialog.query('input'), _create);
 
-    parent.children.add(dialog);
-    dialog.query('input').focus();
+    parent.append(dialog);
+    Timer.run(()=> dialog.query('input').focus());
   }
 
   _create() {
