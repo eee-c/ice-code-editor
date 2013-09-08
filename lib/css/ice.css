@@ -34,7 +34,6 @@
 	background: rgba(0,0,255,0.1);
 }
 
-
 button {
   font-family: sans-serif;
   font-size: 10px;
@@ -53,6 +52,10 @@ button {
 button:hover {
   background-color: rgba(0,0,0,0.66);
   color: white;
+}
+
+button input {
+  margin: -10px 4px;
 }
 
 .ice-menu, .ice-dialog {

@@ -75,11 +75,7 @@ class Full {
   get _updateButton {
     return _update_button = new Element.html('''
         <button>
-           <input
-              checked
-              type=checkbox
-              title="$_update_tooltip"
-              style="margin: -10px 4px;"/>
+           <input checked type=checkbox title="$_update_tooltip"/>
            Update
          </button>'''
       )

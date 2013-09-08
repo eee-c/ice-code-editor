@@ -9,37 +9,34 @@ class ShareDialog extends Dialog implements MenuAction {
   get name => 'Share';
 
   open() {
-    var dialog = new Element.html(
-      '''
-      <div class=ice-dialog>
-      <h1>Copy this link to share your creation:</h1>
-      <input
-        value="${content_for_sharing}"
-        style="width=400px; padding=5px; border=0px">
-      <div>
-       <label title="If this is checked, then the share link will start with the code hidden.">
-         <input type=checkbox>
-         start in game mode
-       </label>
-      </div>
-      <div class='instructions'>
-        <span>..or, for easier sharing</span>
-        <a
-          target="_blank"
-          href="${short_url}">
-        make a short link</a>
-      </div>
-      </div>
-      '''
+    parent.append(
+      new Element.html('''
+        <div class=ice-dialog>
+        <h1>Copy this link to share your creation:</h1>
+        <input value="${content_for_sharing}">
+        <div>
+         <label title="If this is checked, then the share link will start with the code hidden.">
+           <input type=checkbox>
+           start in game mode
+         </label>
+        </div>
+        <div class='instructions'>
+          <span>..or, for easier sharing</span>
+          <a target="_blank">make a short link</a>
+        </div>
+        </div>'''
+      )
     );
 
-    parent.children.add(dialog);
+    _share_link.href = short_url;
 
     _field
       ..focus()
       ..select()
       ..disabled = true
-      ..style.width = '100%';
+      ..style.width = '350px'
+      ..style.padding = '5px'
+      ..style.border = '0px';
 
     _checkbox
       ..onChange.listen((e)=> _toggleGameMode(e.target.checked))

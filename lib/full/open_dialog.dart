@@ -49,7 +49,8 @@ class OpenDialog extends Dialog implements MenuAction {
 Created: ${created_at.substring(0,10)}
 Last Updated: ${updated_at.substring(0,10)}''';
 
-        return new Element.html('<li title="${tooltip}" tabindex=0>${title}</li>')
+        return new Element.html('<li title="${tooltip}">${title}</li>')
+          ..tabIndex = 0
           ..onClick.listen((e)=> _openProject(title))
           ..onClick.listen((e)=> _hideMenu())
           ..onKeyDown.listen((e) {
