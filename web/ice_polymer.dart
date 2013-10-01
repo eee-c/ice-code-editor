@@ -1,17 +1,18 @@
 import 'package:polymer/polymer.dart';
+
 import 'dart:html';
 import 'package:ice_code_editor/ice.dart' as ICE;
 
 @CustomTag('ice-code-editor')
 class IceCodeEditorElement extends PolymerElement with ObservableMixin {
-  @observable String src = '';
-  @observable int lineNumber = 0;
+  @published String src;
+  @published int line_number;
 
   void created() {
     super.created();
 
-    src = host.attributes['src'];
-    lineNumber = int.parse(host.attributes['line-number']);
+    // src = host.attributes['src'];
+    // line_number = int.parse(host.attributes['line-number']);
 
     var container = new DivElement()
       ..id = 'ice-${this.hashCode}'
@@ -24,7 +25,7 @@ class IceCodeEditorElement extends PolymerElement with ObservableMixin {
 
     HttpRequest.getString(src).then((response) {
       editor.content = response;
-      editor.editorReady.then((_)=> editor.lineNumber = lineNumber);
+      editor.editorReady.then((_)=> editor.lineNumber = line_number);
     });
 
   }
