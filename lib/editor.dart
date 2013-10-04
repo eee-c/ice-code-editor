@@ -12,7 +12,12 @@ class Editor {
 
   static bool disableJavaScriptWorker = false;
 
-  Editor(this._el) {
+  Editor(this._el, {preview_el}) {
+    if (preview_el != null) {
+      this._preview_el = preview_el
+        ..classes.add('ice-code-editor-preview');
+    }
+    print('gonna start ace');
     this._startAce();
     this._applyStyles();
   }
@@ -152,7 +157,7 @@ class Editor {
   Element get el {
     if (__el != null) return __el;
 
-    if (this._el.runtimeType == Element) {
+    if (this._el.runtimeType.toString().contains('Element')) {
       __el = _el;
     }
     else {
@@ -212,6 +217,7 @@ class Editor {
     this._waitForAce = new Completer();
 
     if (_isAceJsAttached) {
+      print('js already attached');
       _startJsAce();
     }
     else {
@@ -223,6 +229,8 @@ class Editor {
   }
 
   _startJsAce() {
+    // js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+
     _ace = Ace.edit(editor_el);
 
     _ace
@@ -275,8 +283,13 @@ class Editor {
       ..position = 'absolute'
       ..zIndex = '20';
 
+    var offset = this.el.documentOffset;
     this.preview_el.style
       ..position = 'absolute'
+      ..width = this.el.style.width
+      ..height = this.el.style.height
+      ..top = '${offset.y}'
+      ..left = '${offset.x}'
       ..zIndex = '10';
   }
 }

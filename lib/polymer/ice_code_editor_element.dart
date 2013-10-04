@@ -19,9 +19,13 @@ class IceCodeEditorElement extends PolymerElement with ObservableMixin {
       ..style.width = '600px'
       ..style.height = '400px';
 
-    host.children.add(container);
+    host.append(container);
 
-    var editor = new ICE.Editor('#${container.id}');
+    var preview_el = new DivElement();
+    shadowRoot.append(preview_el);
+
+    // var editor = new ICE.Editor('#${container.id}');
+    var editor = new ICE.Editor(container, preview_el: preview_el);
 
     HttpRequest.getString(src).then((response) {
       editor.content = response;

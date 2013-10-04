@@ -47,26 +47,6 @@
   var donut = new THREE.Mesh(shape, cover);
   scene.add(donut);
 
-  // START: spin
-  var clock = new THREE.Clock();
-
-  function animate() {
-    requestAnimationFrame(animate);
-
-    var t = clock.getElapsedTime();
-
-    ball.rotation.set(t, 2*t, 0);
-    box.rotation.set(t, 2*t, 0);
-    tube.rotation.set(t, 2*t, 0);
-    ground.rotation.set(t, 2*t, 0);
-    donut.rotation.set(t, 2*t, 0);
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
-  // END: spin
-
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
 </script>
