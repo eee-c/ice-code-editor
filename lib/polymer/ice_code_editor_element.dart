@@ -6,7 +6,8 @@ import 'package:ice_code_editor/ice.dart' as ICE;
 @CustomTag('ice-code-editor')
 class IceCodeEditorElement extends PolymerElement with ObservableMixin {
   @published String src;
-  @published int line_number;
+  @published int line_number = 0;
+  ICE.Editor editor;
 
   void created() {
     super.created();
@@ -25,13 +26,25 @@ class IceCodeEditorElement extends PolymerElement with ObservableMixin {
     shadowRoot.append(preview_el);
 
     // var editor = new ICE.Editor('#${container.id}');
-    var editor = new ICE.Editor(container, preview_el: preview_el);
+    editor = new ICE.Editor(container, preview_el: preview_el);
+
+    loadContent();
+  }
+
+  void attributeChanged(String name, String oldValue) {
+    print('[attributeChanged] ${name} ${oldValue}');
+    super.attributeChanged(name, oldValue);
+    loadContent();
+  }
+
+  Future loadContent() {
+    print('src: ${src}');
+    if (src == null) return;
 
     HttpRequest.getString(src).then((response) {
       editor.content = response;
       editor.editorReady.then((_)=> editor.lineNumber = line_number);
     });
-
   }
 }
 

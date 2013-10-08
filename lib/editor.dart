@@ -17,7 +17,6 @@ class Editor {
       this._preview_el = preview_el
         ..classes.add('ice-code-editor-preview');
     }
-    print('gonna start ace');
     this._startAce();
     this._applyStyles();
   }
@@ -189,7 +188,7 @@ class Editor {
   }
 
   static List _scripts;
-  static get _isAceJsAttached => (_scripts != null);
+  static bool get _isAceJsAttached => (_scripts != null);
   static _attachScripts() {
     if (_scripts != null) return [];
 
@@ -213,23 +212,28 @@ class Editor {
     return _scripts = scripts;
   }
 
+  static Completer _waitForJS;
+  static Future get jsReady {
+    if (!_isAceJsAttached) {
+      _waitForJS = new Completer();
+      _attachScripts().
+        first.
+        onLoad.
+        listen((_)=> _waitForJS.complete());
+    }
+
+    print('_waitForJS: ${_waitForJS.isCompleted}');
+    return _waitForJS.future;
+  }
+
   _startAce() {
     this._waitForAce = new Completer();
-
-    if (_isAceJsAttached) {
-      print('js already attached');
-      _startJsAce();
-    }
-    else {
-      var scripts = _attachScripts();
-      scripts.first.onLoad.listen((_)=> _startJsAce());
-    }
-
+    jsReady.then((_)=> _startJsAce());
     _attachKeyHandlersForAce();
   }
 
   _startJsAce() {
-    // js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
+    js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
     _ace = Ace.edit(editor_el);
 
