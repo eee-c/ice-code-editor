@@ -22,17 +22,6 @@
 
   // ******** START CODING ON THE NEXT LINE ********
 
-  // START:mesh_basic_material
-  var shape = new THREE.SphereGeometry(100);
-  var cover = new THREE.MeshBasicMaterial();
-  cover.color.setRGB(1, 0, 0);
-  var ball = new THREE.Mesh(shape, cover);
-  scene.add(ball);
-  // END:mesh_basic_material
-  // START:move_basic_ball
-  ball.position.set(500, 0, 0);
-  // END:move_basic_ball
-
   // START:with_cast_shadow
   // START:with_specular
   var shape = new THREE.TorusGeometry(100, 50, 8, 20);
