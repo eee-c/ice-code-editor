@@ -13,7 +13,7 @@ dependencies:
   ctrl_alt_foo: ">=0.3.0 <0.3.1"
   polymer: {path: /home/chris/repos/dart/dart/pkg/polymer}
 dev_dependencies:
-  unittest: any
+  scheduled_test: any
 transformers:
   - $dart2js:
       minify: true
