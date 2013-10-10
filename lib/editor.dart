@@ -18,7 +18,7 @@ class Editor {
         ..classes.add('ice-code-editor-preview');
     }
     this._startAce();
-    this._applyStyles();
+    this.applyStyles();
   }
 
   set content(String data) {
@@ -222,7 +222,6 @@ class Editor {
         listen((_)=> _waitForJS.complete());
     }
 
-    print('_waitForJS: ${_waitForJS.isCompleted}');
     return _waitForJS.future;
   }
 
@@ -273,7 +272,7 @@ class Editor {
     });
   }
 
-  _applyStyles() {
+  applyStyles() {
     var style = new LinkElement()
       ..type = "text/css"
       ..rel = "stylesheet"

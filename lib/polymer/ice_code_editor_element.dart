@@ -31,14 +31,17 @@ class IceCodeEditorElement extends PolymerElement with ObservableMixin {
     loadContent();
   }
 
+  void inserted() {
+    super.inserted();
+    editor.applyStyles();
+  }
+
   void attributeChanged(String name, String oldValue) {
-    print('[attributeChanged] ${name} ${oldValue}');
     super.attributeChanged(name, oldValue);
     loadContent();
   }
 
   Future loadContent() {
-    print('src: ${src}');
     if (src == null) return;
 
     HttpRequest.getString(src).then((response) {
