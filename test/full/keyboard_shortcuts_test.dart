@@ -75,8 +75,9 @@ keyboard_shortcuts_tests() {
       });
 
       test("down arrow key moves forward in list", (){
-        helpers.typeCtrl('o');
+        helpers.typeCtrl('O');
         helpers.typeIn('project 1');
+
         // project 11
         // project 10 *
         // project 1
@@ -160,7 +161,7 @@ keyboard_shortcuts_tests() {
         });
 
         test("down arrow at bottom of list stays at bottom of list", (){
-          helpers.typeCtrl('o');
+          helpers.typeCtrl('O');
           // Current Project
           // Old Project
           // project 11

@@ -2,6 +2,7 @@ library ice_test_helpers;
 
 import 'dart:html';
 import 'package:unittest/matcher.dart';
+import 'package:ctrl_alt_foo/keys.dart';
 import 'package:ctrl_alt_foo/helpers.dart';
 export 'package:ctrl_alt_foo/helpers.dart';
 
@@ -32,6 +33,44 @@ click(String selector, {text}) {
   }
 
   return new FakeCompleter();
+}
+
+typeIn(String text) {
+  document.activeElement.value = text;
+
+  var last_char = new String.fromCharCode(text.runes.last);
+  document.activeElement.dispatchEvent(
+    new KeyboardEvent(
+      'keyup'
+    )
+  );
+}
+
+arrowDown([times=1]) {
+  var e = new KeyEvent('keydown', keyCode: KeyCode.DOWN).wrapped;
+  Keys.lastKeyCode = KeyCode.DOWN;
+
+  new Iterable.generate(times, (i) {
+    document.activeElement.dispatchEvent(e);
+  }).toList();
+}
+
+arrowUp([times=1]) {
+  var e = new KeyEvent('keydown', keyCode: KeyCode.UP).wrapped;
+  Keys.lastKeyCode = KeyCode.UP;
+
+  new Iterable.generate(times, (i) {
+    document.activeElement.dispatchEvent(e);
+  }).toList();
+}
+
+hitEnter() {
+  var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
+  Keys.lastKeyCode = KeyCode.ENTER;
+
+  document.
+    activeElement.
+    dispatchEvent(e);
 }
 
 queryWithContent(selector, text) {

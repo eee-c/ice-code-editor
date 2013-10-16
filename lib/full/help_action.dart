@@ -5,8 +5,11 @@ class HelpAction implements MenuAction {
 
   get name => "Help";
 
+
   open(){
-    var el = new Element.html('<a target="_blank"></a>')
+    AnchorElement el = new Element.html('<a target="_blank"></a>');
+
+    el
       ..style.display = 'none'
       ..href = 'https://github.com/eee-c/ice-code-editor/wiki';
 

@@ -56,7 +56,7 @@ main(){
 
 pollForDone(List tests) {
   if (tests.every((t)=> t.isComplete)) {
-    window.postMessage('done', window.location.href);
+    window.postMessage('dart-main-done', window.location.href);
     return;
   }
 

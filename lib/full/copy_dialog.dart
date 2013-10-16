@@ -18,7 +18,12 @@ class CopyDialog extends Dialog implements MenuAction {
     dialog.query('button').onClick
       ..listen((_)=> _copyProject());
 
-    Keys.onEnter(dialog.query('input'), _copyProject);
+    dialog.query('input').onKeyDown.
+      listen((e) {
+        if (e.keyCode != KeyCode.ENTER && Keys.lastKeyCode != KeyCode.ENTER) return;
+        _copyProject();
+      });
+
 
     parent.children.add(dialog);
 

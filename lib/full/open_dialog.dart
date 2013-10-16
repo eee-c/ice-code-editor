@@ -5,8 +5,10 @@ class OpenDialog extends Dialog implements MenuAction {
 
   get name => "Open";
 
+  Element menu;
+
   open() {
-    var menu = new Element.html(
+    menu = new Element.html(
       '''
       <div class=ice-menu>
       <h1>Saved Projects</h1>
@@ -98,7 +100,8 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleEnter(el) {
-    Keys.onEnter(el, (){
+    el.onKeyDown.listen((e){
+      if (e.keyCode != KeyCode.ENTER && Keys.lastKeyCode != KeyCode.ENTER) return;
       if (el.value.isEmpty) return;
       query('.ice-menu ul').children.first.click();
     });
@@ -114,11 +117,14 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleArrowKeys(el) {
-    Keys.onDown(el, ()=> _handleDown(el));
-    Keys.onUp(el,   ()=> _handleUp(el));
+    el.onKeyDown.listen(_handleDown);
+    el.onKeyDown.listen(_handleUp);
   }
 
-  _handleDown(el) {
+  _handleDown(e) {
+    // print('[_handleDown] keycode: ${e.keyCode}');
+    if (e.keyCode != KeyCode.DOWN && Keys.lastKeyCode != KeyCode.DOWN) return;
+
     var next = document.activeElement.nextElementSibling;
     if (next == null) {
       next = document.activeElement;
@@ -129,10 +135,13 @@ Last Updated: ${updated_at.substring(0,10)}''';
     next.focus();
   }
 
-  _handleUp(el) {
+  _handleUp(e) {
+    // print('[_handleUp] keycode: ${e.keyCode}');
+    if (e.keyCode != KeyCode.UP && Keys.lastKeyCode != KeyCode.UP) return;
+
     var prev = document.activeElement.previousElementSibling;
     if (prev == null) {
-      prev = el.query('input');
+      prev = menu.query('input');
     }
     if (prev == null) {
       prev = document.activeElement;

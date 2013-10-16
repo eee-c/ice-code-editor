@@ -7,8 +7,10 @@ authors:
 - Srdjan Pejic <spejic@gmail.com>
 homepage: https://github.com/eee-c/ice-code-editor
 dependencies:
-  crypto: ">=0.6.19 <0.6.20"
-  js: ">=0.0.24 <0.0.25"
-  unittest: ">=0.6.15+3 <0.6.16"
-  ctrl_alt_foo: ">=0.1.2 <0.1.3"
-  json: ">=0.6.9 <0.6.10"
+  crypto: any
+  js: any
+  json: any
+  ctrl_alt_foo:
+    path: ../ctrl-alt-foo
+dev_dependencies:
+  unittest: any
