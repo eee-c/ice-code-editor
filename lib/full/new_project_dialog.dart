@@ -28,7 +28,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
 
     dialog.query('input').onKeyDown.
       listen((e) {
-        if (e.keyCode != KeyCode.ENTER && Keys.lastKeyCode != KeyCode.ENTER) return;
+        if (e.keyCode != KeyCode.ENTER) return;
         _create();
       });
 
