@@ -11,6 +11,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
       <div class=ice-dialog>
       <label>Name:<input type="text" size="30"></label>
       <button>Save</button>
+      <button id=fake_enter_key></button>
       <div>
         <label>
           Template:
@@ -22,6 +23,11 @@ class NewProjectDialog extends Dialog implements MenuAction {
       </div>
       '''
     );
+
+    // Hack in lieu of KeyEvent tests
+    dialog.query('button#fake_enter_key')
+      ..onClick.listen((e)=> _create())
+      ..style.display = 'none';
 
     dialog.query('button')
       ..onClick.listen((e)=> _create());

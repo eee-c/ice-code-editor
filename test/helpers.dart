@@ -47,30 +47,37 @@ typeIn(String text) {
 }
 
 arrowDown([times=1]) {
-  var e = new KeyEvent('keydown', keyCode: KeyCode.DOWN).wrapped;
-  Keys.lastKeyCode = KeyCode.DOWN;
+  // var e = new KeyEvent('keydown', keyCode: KeyCode.DOWN).wrapped;
+  var fake_button = document.query('#fake_down_key');
+  if (fake_button == null) return;
 
   new Iterable.generate(times, (i) {
-    document.activeElement.dispatchEvent(e);
+    // document.activeElement.dispatchEvent(e);
+    fake_button.click();
   }).toList();
 }
 
 arrowUp([times=1]) {
-  var e = new KeyEvent('keydown', keyCode: KeyCode.UP).wrapped;
-  Keys.lastKeyCode = KeyCode.UP;
+  // var e = new KeyEvent('keydown', keyCode: KeyCode.UP).wrapped;
+  var fake_button = document.query('#fake_up_key');
+  if (fake_button == null) return;
 
   new Iterable.generate(times, (i) {
-    document.activeElement.dispatchEvent(e);
+    // document.activeElement.dispatchEvent(e);
+    fake_button.click();
   }).toList();
 }
 
 hitEnter() {
-  var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
-  Keys.lastKeyCode = KeyCode.ENTER;
+  // var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
 
-  document.
-    activeElement.
-    dispatchEvent(e);
+  // document.
+  //   activeElement.
+  //   dispatchEvent(e);
+
+  var fake_button = document.query('#fake_enter_key');
+  if (fake_button == null) return;
+  fake_button.click();
 }
 
 queryWithContent(selector, text) {

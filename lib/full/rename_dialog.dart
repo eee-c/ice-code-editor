@@ -11,9 +11,15 @@ class RenameDialog extends Dialog implements MenuAction {
       <div class=ice-dialog>
       <label>Name:<input type="text" size="30" value="$_currentProjectTitle"></label>
       <button>Rename</button>
+      <button id=fake_enter_key></button>
       </div>
       '''
     );
+
+    // Hack in lieu of KeyEvent tests
+    dialog.query('button#fake_enter_key')
+      ..onClick.listen((e)=> _renameProject())
+      ..style.display = 'none';
 
     dialog.query('button').onClick
       .listen((_)=> _renameProject());

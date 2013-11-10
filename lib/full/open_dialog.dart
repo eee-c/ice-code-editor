@@ -14,9 +14,16 @@ class OpenDialog extends Dialog implements MenuAction {
       <h1>Saved Projects</h1>
       ${filterField}
       <ul></ul>
+      <button id=fake_enter_key></button>
+      <button id=fake_down_key></button>
+      <button id=fake_up_key></button>
       </div>
       '''
     );
+
+    menu.
+      queryAll('button').
+      forEach((b){ b.style.display = 'none';});
 
     parent.append(menu);
     addProjectsToMenu();
@@ -100,11 +107,18 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleEnter(el) {
-    el.onKeyDown.listen((e){
-      if (e.keyCode != KeyCode.ENTER && Keys.lastKeyCode != KeyCode.ENTER) return;
+    clickActive() {
       if (el.value.isEmpty) return;
       query('.ice-menu ul').children.first.click();
+    }
+
+    el.onKeyDown.listen((e){
+      if (e.keyCode != KeyCode.ENTER) return;
+      clickActive();
     });
+
+    // Hack in lieu of KeyEvent tests
+    menu.query('#fake_enter_key').onClick.listen((_)=> clickActive());
   }
 
   _focus(el) {
@@ -119,11 +133,14 @@ Last Updated: ${updated_at.substring(0,10)}''';
   _handleArrowKeys(el) {
     el.onKeyDown.listen(_handleDown);
     el.onKeyDown.listen(_handleUp);
+
+    // Hacks in lieu of KeyEvent tests
+    menu.query('#fake_down_key').onClick.listen(_handleDown);
+    menu.query('#fake_up_key').onClick.listen(_handleUp);
   }
 
   _handleDown(e) {
-    // print('[_handleDown] keycode: ${e.keyCode}');
-    if (e.keyCode != KeyCode.DOWN && Keys.lastKeyCode != KeyCode.DOWN) return;
+    if (e.type == 'keydown' && e.keyCode != KeyCode.DOWN) return;
 
     var next = document.activeElement.nextElementSibling;
     if (next == null) {
@@ -136,8 +153,7 @@ Last Updated: ${updated_at.substring(0,10)}''';
   }
 
   _handleUp(e) {
-    // print('[_handleUp] keycode: ${e.keyCode}');
-    if (e.keyCode != KeyCode.UP && Keys.lastKeyCode != KeyCode.UP) return;
+    if (e.type == 'keydown' && e.keyCode != KeyCode.UP) return;
 
     var prev = document.activeElement.previousElementSibling;
     if (prev == null) {
