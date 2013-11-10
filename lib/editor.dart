@@ -226,7 +226,6 @@ class Editor {
     js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
     _ace = Ace.edit(editor_el);
-    js.retain(_ace);
 
     _ace
       ..theme = "ace/theme/chrome"
@@ -327,7 +326,6 @@ class Ace extends jsw.TypedProxy {
   get commandManager {
     if (_commandManager != null) return _commandManager;
     _commandManager = $unsafe.getKeyboardHandler();
-    js.retain(_commandManager);
     return _commandManager;
   }
 
@@ -335,7 +333,6 @@ class Ace extends jsw.TypedProxy {
   get emacsManager {
     if (_emacsManager != null) return _emacsManager;
     _emacsManager = js.context.ace.require("ace/keyboard/emacs").handler;
-    js.retain(_emacsManager);
     return _emacsManager;
   }
 }
@@ -357,9 +354,9 @@ class AceSession extends jsw.TypedProxy {
     if (_onChange != null) return _onChange.stream;
 
     _onChange = new StreamController();
-    $unsafe.on('change', new js.Callback.many((e,a){
+    $unsafe.on('change', (e,a){
       _onChange.add(e);
-    }));
+    });
     return _onChange.stream;
   }
 
