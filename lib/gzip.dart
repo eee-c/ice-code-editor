@@ -7,8 +7,9 @@ class Gzip {
   }
 
   static String decode(String string) {
-    var bytes = CryptoUtils.base64StringToBytes(string);
-    var gzip = new String.fromCharCodes(bytes);
-    return js.context.RawDeflate.inflate(gzip);
+    // var bytes = CryptoUtils.base64StringToBytes(string);
+    // var gzip = new String.fromCharCodes(bytes);
+    // return js.context.RawDeflate.inflate(gzip);
+    return js.context.RawDeflate.inflateFromBase64(string);
   }
 }

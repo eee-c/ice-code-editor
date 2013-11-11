@@ -186,7 +186,7 @@ class Editor {
   static List _scripts;
   static get _isAceJsAttached => (_scripts != null);
   static _attachScripts() {
-    if (_scripts != null) return;
+    if (_scripts != null) return [];
 
     var script_paths = [
       "packages/ice_code_editor/js/ace/ace.js",

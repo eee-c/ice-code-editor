@@ -8,9 +8,10 @@ non_js_results=$(
     grep -v "There is no such getter '.*' in 'Proxy'"
 )
 echo "$non_js_results"
-non_js_count=$(echo "$non_js_results" | wc -l)
+non_js_count=$(echo "$non_js_results" | grep -vF '[hint]' | wc -l)
 if [[ "$non_js_count" != "2" ]]
 then
+  echo "$non_js_count"
   exit 1
 fi
 if [[ "$non_js_results" == *"warnings found."* ]]
