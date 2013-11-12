@@ -1,7 +1,7 @@
 library ice_test;
 
 import 'package:unittest/unittest.dart';
-import 'package:unittest/html_config.dart';
+// import 'package:unittest/html_config.dart';
 import 'dart:html';
 import 'dart:async';
 
@@ -28,7 +28,7 @@ part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 
 main(){
-  useHtmlConfiguration();
+  // useHtmlConfiguration(true);
   Editor.disableJavaScriptWorker = true;
 
   editor_tests();
@@ -52,4 +52,16 @@ main(){
   share_dialog_tests();
   download_tests();
   remove_dialog_tests();
+
+  pollForDone(testCases);
 }
+
+pollForDone(List tests) {
+  if (tests.every((t)=> t.isComplete)) {
+    window.postMessage('dart-main-done', window.location.href);
+    return;
+  }
+
+  var wait = new Duration(milliseconds: 100);
+  new Timer(wait, ()=> pollForDone(tests));
+ }
