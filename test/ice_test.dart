@@ -24,6 +24,7 @@ part 'full/rename_dialog_test.dart';
 part 'full/save_dialog_test.dart';
 part 'full/share_dialog_test.dart';
 part 'full/download_test.dart';
+part 'full/export_test.dart';
 part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 
@@ -51,6 +52,7 @@ main(){
   save_dialog_tests();
   share_dialog_tests();
   download_tests();
+  export_tests();
   remove_dialog_tests();
 
   pollForDone(testCases);

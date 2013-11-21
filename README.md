@@ -56,7 +56,7 @@ Examples are contained in the `web` directory.
  * [Marty Hines](https://github.com/martyhines)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
- * Lindsey Miller
+ * [Lindsey Miller](https://github.com/tech-bluenette)
  * [Morgan Nelson](https://github.com/korishev)
  * [Michael Risse](https://github.com/rissem)
 
