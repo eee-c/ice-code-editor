@@ -123,7 +123,7 @@ class Editor {
   // worry about waitForAce?
   showCode() {
     editor_el.style.visibility = 'visible';
-    queryAll('.ace_print-margin').forEach((e) { e.style.visibility = 'visible'; });
+    querySelectorAll('.ace_print-margin').forEach((e) { e.style.visibility = 'visible'; });
 
     _ace.renderer.onResize();
     focus();
@@ -132,7 +132,7 @@ class Editor {
   /// Hide the code layer
   hideCode() {
     editor_el.style.visibility = 'hidden';
-    query('.ace_print-margin').style.visibility = 'hidden';
+    querySelector('.ace_print-margin').style.visibility = 'hidden';
 
     if (this.edit_only) return;
     focus();
@@ -156,7 +156,7 @@ class Editor {
       __el = _el;
     }
     else {
-      __el = document.query(_el);
+      __el = document.querySelector(_el);
     }
     return __el;
   }
