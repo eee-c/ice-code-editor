@@ -38,9 +38,6 @@ main(){
 
   full_tests();
 
-  // TODO: why does this fail when it is run last?
-  keyboard_shortcuts_tests();
-
   update_button_tests();
   hide_button_tests();
   show_button_tests();
@@ -54,6 +51,10 @@ main(){
   download_tests();
   export_tests();
   remove_dialog_tests();
+
+  // Leave these tests last b/c they were failing at one point, but only when
+  // last (hoping to see this again).
+  keyboard_shortcuts_tests();
 
   pollForDone(testCases);
 }
