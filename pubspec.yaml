@@ -11,9 +11,11 @@ dependencies:
   browser: ">=0.9.0 < 0.10.0"
   crypto: ">=0.9.0 < 0.10.0"
   ctrl_alt_foo: ">=0.3.0 <0.3.1"
-  polymer: {path: /home/chris/repos/dart/dart/pkg/polymer}
+  polymer: any
 dev_dependencies:
   scheduled_test: any
 transformers:
   - $dart2js:
       minify: true
+  - polymer:
+      entry_points: web/polymer.html
