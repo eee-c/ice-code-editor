@@ -19,3 +19,5 @@ transformers:
       minify: true
   - polymer:
       entry_points: web/polymer.html
+  - ice_code_editor:
+      entry_points: web/polymer.html
