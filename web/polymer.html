@@ -1,26 +1,107 @@
 <head>
+  <title>Demo: Polymer Version of ICE</title>
+
   <!-- Load component(s) -->
   <link rel="import" href="packages/ice_code_editor/polymer/ice_code_editor.html">
   <!-- Load Polymer -->
   <script type="application/dart">
     export 'package:polymer/init.dart';
   </script>
+
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 </head>
 <body>
+  <div class=container>
+    <h1>Demo: Inline ICE Code Editor via Polymer</h1>
 
-<p>
-asdf asdf as df sadf as df asdf
-</p>
+    <div class=row>
+      <div class=col-md-8>
+        <p>
+          The
+          <a href="https://github.com/eee-c/ice-code-editor">ICE Code Editor</a>,
+          which is used throughout
+          <a href="http://pragprog.com/book/csjava/3d-game-programming-for-kids">3D
+            Game Programming for Kids</a>,
+          can also be used on web pages to illustrate progressing
+          concepts. The two <strong>live</strong> code editors below
+          are added to the document with
+          <code>&lt;ice-code-editor&gt;</code>
+          tags, thanks to the power of
+          <a href="http://www.polymer-project.org/">Polymer</a>.
+        </p>
+        <p>
+          <em>This is a work in progress.</em> If you are interested
+          in learning more, I am currently writing an amazing book on
+          Polymer titled,
+          <a href="http://patternsinpolymer.com">Patterns in
+          Polymer</a>.
+          If you want to help,
+          <a href="https://github.com/eee-c/ice-code-editor#want-to-help">#pairwithme</a>!
+        </p>
+      </div>
+    </div>
 
-<ice-code-editor src="embed_a.html" line_number="21"></ice-code-editor>
+    <h2>Simple Three.js Shapes</h2>
 
-<p>
-asdfsadfasd sadf asdf  sdf asdf a sdfsfd
-</p>
+    <div class=row>
+      <div class=col-md-8>
+        <p>
+          The <em>live</em> demo below shows some simple
+          <a href="http://threejs.org">Three.js</a> shapes. What do I
+          mean by live? Change the numbers in the code below and see
+          the shapes change size and position!
+        </p>
+      </div>
+    </div>
 
-<ice-code-editor src="embed_b.html" line_number="49"></ice-code-editor>
+    <ice-code-editor src="embed_a.html" line_number="21"></ice-code-editor>
 
-<p>
-asdfsadfasd sadf asdf  sdf asdf a sdfsfd
-</p>
+    <h2>Three.js Animation!</h2>
+
+    <div class=row>
+      <div class=col-md-8>
+        <p>
+          Where's the fun in shapes that just sit there? Let's animate!
+        </p>
+      </div>
+    </div>
+
+    <ice-code-editor src="embed_b.html" line_number="49"></ice-code-editor>
+
+    <div class=row>
+      <div class=col-md-8>
+        <p>
+          Play with animation! What happen if you change the donut
+          rotation values on line 62 to <code>8*t, t, 0</code>?
+          Experiment with any of these numbers!
+        </p>
+        <p>
+          <strong>Challenge:</strong> Can you animate movement as
+          well as rotation?
+        </p>
+      </div>
+    </div>
+
+
+    <h2>Want More?</h2>
+
+    <div class=row>
+      <div class=col-md-8>
+        <p>
+          These examples are just the first chapter in
+          <a href="http://pragprog.com/book/csjava/3d-game-programming-for-kids">3D
+            Game Programming for Kids</a>. There is also game
+          programming, space simulations, sounds, WebGL, physics and
+          so much more. Buy it from
+          <a href="http://pragprog.com/book/csjava/3d-game-programming-for-kids">The
+          Pragmatic Programmers</a> today!
+        </p>
+
+        <p>Made with love by
+          <a href="http://japhr.blogspot.com">Chris Strom</a>.
+        </p>
+      </div>
+    </div>
+
+  </div>
 </body>

@@ -1,7 +1,9 @@
 <polymer-element name="ice-code-editor">
   <template>
-    <h1>The src is "{{src}}" ({{line_number}})</h1>
     <content></content>
+    <p>
+      <small><em>Code loaded from "{{src}}". Starting at line number {{line_number}}.</em></small>
+    </p>
   </template>
   <script type="application/dart" src="ice_code_editor_element.dart"></script>
 </polymer-element>
