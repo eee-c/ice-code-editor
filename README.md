@@ -54,6 +54,7 @@ Examples are contained in the `web` directory.
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
  * [Marty Hines](https://github.com/martyhines)
+ * [James Hurford](https://github.com/terrasea)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)
