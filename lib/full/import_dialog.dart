@@ -22,7 +22,7 @@ class ImportDialog extends Dialog implements MenuAction {
         });
 
   void import(String json) {
-    var projects = JSON.parse(json);
+    var projects = JSON.decode(json);
     projects.reversed.forEach((project) {
       store[project['filename']] = project;
     });

@@ -2,8 +2,9 @@ library ice;
 
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:html';
-import 'package:json/json.dart' as JSON;
+
 import 'package:js/js.dart' as js;
 import 'package:js/js_wrapping.dart' as jsw;
 import 'package:crypto/crypto.dart';

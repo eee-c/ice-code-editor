@@ -9,7 +9,7 @@ class ExportDialog extends Dialog implements MenuAction {
   open()=> el.click();
 
   get el {
-  	var blob = new Blob([JSON.stringify(store.projects)], "text/plain");
+    var blob = new Blob([JSON.encode(store.projects)], "text/plain");
     var object_url = Url.createObjectUrl(blob);
 
     return new AnchorElement(href: object_url)

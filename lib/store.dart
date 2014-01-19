@@ -132,7 +132,7 @@ class Store implements HashMap<String, HashMap> {
     if (_projects != null) return _projects;
 
     var json = window.localStorage[storage_key];
-    return _projects = (json == null) ? [] : JSON.parse(json);
+    return _projects = (json == null) ? [] : JSON.decode(json);
   }
 
   /// Force the list of projects to refresh itself by reloading from
@@ -145,7 +145,7 @@ class Store implements HashMap<String, HashMap> {
 
   void _sync() {
     if (_frozen) return;
-    window.localStorage[storage_key] = JSON.stringify(projects);
+    window.localStorage[storage_key] = JSON.encode(projects);
     _syncController.add(true);
   }
 
