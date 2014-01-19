@@ -19,12 +19,16 @@ class ImportDialog extends Dialog implements MenuAction {
 
           var reader = new FileReader();
           reader.onLoad.listen((e) {
-            var projects = JSON.parse(reader.result.toString());
-            projects.forEach((project) {
-              store[project['filename']] = project;
-            });
+            import(reader.result.toString());
           });
           reader.readAsText(files[0]);
         });
+  }
+
+  void import(String json) {
+    var projects = JSON.parse(json);
+    projects.reversed.forEach((project) {
+      store[project['filename']] = project;
+    });
   }
 }

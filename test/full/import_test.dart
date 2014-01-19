@@ -30,5 +30,32 @@ import_tests() {
 
       expect(queryAll('li'), helpers.elementsAreEmpty);
     });
+
+    test("First imported project should be at the top of project list", (){
+      var dialog = new ImportDialog(editor);
+
+      var json = '''[{
+          "filename":"Project #1",
+          "code":"imported code",
+          "lineNumber":0,
+          "updated_at":"2014-01-02 00:00:00.000",
+          "created_at":"2013-01-01 00:00:00.000"
+        },
+        {
+          "filename":"Project #2",
+          "code":"imported code",
+          "lineNumber":0,
+          "updated_at":"2014-01-01 00:00:00.000",
+          "created_at":"2013-01-01 00:00:00.000"
+        }]''';
+
+      dialog.import(json);
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      var menu_items = queryAll('li');
+      expect(menu_items[0].text, 'Project #1');
+    });
   });
 }
