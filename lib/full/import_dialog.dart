@@ -6,13 +6,10 @@ class ImportDialog extends Dialog implements MenuAction {
 
   get name => "Import";
 
-  open() {
-    print(store);
-    el.click();
-  }
+  open() => el.click();
 
-  get el {
-    return new FileUploadInputElement()
+  get el =>
+    new FileUploadInputElement()
       ..onChange.listen((e) {
           var files = e.target.files;
           if (files.length != 1) return;
@@ -23,12 +20,12 @@ class ImportDialog extends Dialog implements MenuAction {
           });
           reader.readAsText(files[0]);
         });
-  }
 
   void import(String json) {
     var projects = JSON.parse(json);
     projects.reversed.forEach((project) {
       store[project['filename']] = project;
     });
+    ice.content = projects[0]['code'];
   }
 }
