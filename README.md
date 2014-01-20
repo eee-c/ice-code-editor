@@ -35,6 +35,14 @@ Examples are contained in the `web` directory.
    * Remove
    * Help
 
+## Build
+
+Because ICE relies on [js-interop](http://dart-lang.github.io/js-interop/docs/js.html), not just `dart:js`, the build process requires that it is always built for development release (even in production):
+
+````sh
+$ pub build --mode=development
+````
+
 ## Core Collaborators
 
  * [Santiago Arias](https://github.com/santiaago)
