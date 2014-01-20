@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Static type analysis
-results=$(dartanalyzer lib/ice.dart 2>&1)
+results=$(dartanalyzer --no-hints lib/ice.dart 2>&1)
 non_js_results=$(
   echo "$results" | \
     grep -v "is not defined for the class 'Proxy'" | \
