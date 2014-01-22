@@ -15,6 +15,7 @@ class Full {
     _attachKeyboardHandlers();
     _attachMouseHandlers();
     _attachMessageHandlers();
+    _attachDropHandlers();
 
     _fullScreenStyles();
 
@@ -224,6 +225,30 @@ changed.''';
   _attachMessageHandlers() {
     window.onMessage.listen((e) {
       showCode();
+    });
+  }
+
+
+  _attachDropHandlers() {
+    document.onDragOver.listen((e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    document.onDrop.listen((e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // TODO: iterate over all files
+      var file = e.dataTransfer.files[0];
+      var title = file.name;
+
+      var reader = new FileReader();
+      reader.onLoad.listen((e) {
+        content = reader.result.toString();
+        store[title] = {'code': content};
+      });
+      reader.readAsText(file);
     });
   }
 
