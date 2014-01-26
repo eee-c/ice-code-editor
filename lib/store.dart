@@ -139,7 +139,7 @@ class Store implements HashMap<String, HashMap> {
   /// localStorage.
   void refresh() => _projects = null;
 
-  bool _frozen;
+  bool _frozen = false;
   /// Prevent further syncs to localStorage
   void freeze() { _frozen = true; }
 
