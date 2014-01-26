@@ -8,6 +8,10 @@ import_tests() {
       editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
+      editor.store
+        ..clear()
+        ..['Project #2'] = {'code': 'Original Project #2'};
+
       return editor.editorReady;
     });
 
@@ -63,6 +67,26 @@ import_tests() {
 
       expect(
         editor.content,
+        equals('imported code')
+      );
+    });
+
+    test("shouldn't clobber existing projects with the same name", (){
+      var dialog = new ImportDialog(editor)
+        ..import(json);
+
+      expect(
+        editor.store['Project #2']['code'],
+        equals('Original Project #2')
+      );
+    });
+
+    test("it still imports the project as a copy of the original project", () {
+      var dialog = new ImportDialog(editor)
+      ..import(json);
+
+      expect(
+        editor.store['Project #2 (1)']['code'],
         equals('imported code')
       );
     });

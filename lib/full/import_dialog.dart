@@ -24,7 +24,12 @@ class ImportDialog extends Dialog implements MenuAction {
   void import(String json) {
     var projects = JSON.decode(json);
     projects.reversed.forEach((project) {
-      store[project['filename']] = project;
+      if (store.containsKey(project['filename'])) {
+        var name = store.nextProjectNamed(project['filename']);
+        store[name] = project;
+      } else {
+        store[project['filename']] = project;
+      }
     });
     ice.content = projects[0]['code'];
   }
