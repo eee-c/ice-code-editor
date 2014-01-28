@@ -1,8 +1,10 @@
 part of ice;
 
 class ImportDialog extends Dialog implements MenuAction {
-
-  ImportDialog(Full f): super(f);
+  Full full;
+  ImportDialog(Full f): super(f) {
+    full = f;
+  }
 
   get name => "Import";
 
@@ -24,13 +26,8 @@ class ImportDialog extends Dialog implements MenuAction {
   void import(String json) {
     var projects = JSON.decode(json);
     projects.reversed.forEach((project) {
-      if (store.containsKey(project['filename'])) {
-        var name = store.nextProjectNamed(project['filename']);
-        store[name] = project;
-      } else {
-        store[project['filename']] = project;
-      }
+      full._createNewProject(project);
     });
-    ice.content = projects[0]['code'];
+    full.showCurrentProject();
   }
 }

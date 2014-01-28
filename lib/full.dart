@@ -245,12 +245,25 @@ changed.''';
 
       var reader = new FileReader();
       reader.onLoad.listen((e) {
-        content = reader.result.toString();
-        store[title] = {'code': content};
+        _createNewProject({'code': reader.result.toString()}, named: title);
+        showCurrentProject();
       });
       reader.readAsText(file);
     });
   }
+
+  _createNewProject(Map project, {named}) {
+    var name = (named != null) ? named : project['filename'];
+    if (store.containsKey(name)) {
+      name = store.nextProjectNamed(name);
+    }
+    store[name] = project;
+  }
+
+  showCurrentProject() {
+    content = store.projects[0]['code'];
+  }
+
 
   _fullScreenStyles() {
     document.body.style

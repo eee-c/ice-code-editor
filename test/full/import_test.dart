@@ -83,7 +83,7 @@ import_tests() {
 
     test("it still imports the project as a copy of the original project", () {
       var dialog = new ImportDialog(editor)
-      ..import(json);
+        ..import(json);
 
       expect(
         editor.store['Project #2 (1)']['code'],
