@@ -67,6 +67,7 @@ $ pub build --mode=development
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)
  * [Morgan Nelson](https://github.com/korishev)
+ * [Michael Reynolds](https://github.com/mr170)
  * [Michael Risse](https://github.com/rissem)
 
 ## Want to Help?
