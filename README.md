@@ -48,6 +48,7 @@ $ pub build --mode=development
  * [Santiago Arias](https://github.com/santiaago)
  * [Timothy King](https://github.com/lordzork)
  * [Srdjan Pejic](http://batasrki.github.io/)
+ * [James Hurford](https://github.com/terrasea)
 
 ## Contributors
 
@@ -62,7 +63,6 @@ $ pub build --mode=development
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
  * [Marty Hines](https://github.com/martyhines)
- * [James Hurford](https://github.com/terrasea)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)
