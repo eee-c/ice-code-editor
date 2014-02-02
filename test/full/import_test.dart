@@ -90,5 +90,16 @@ import_tests() {
         equals('imported code')
       );
     });
+
+
+    test("alerts user if they import non json", () {
+      var dialog = new ImportDialog(editor)
+        ..import("not JSON");
+
+      expect(
+          query('#alert').text,
+          matches('This does not look like a ICE project file. Unable to import.')
+      );
+    });
   });
 }
