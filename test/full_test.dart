@@ -231,5 +231,65 @@ full_tests() {
     });
   });
 
+  group("Import", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
+      var preview_ready = new Completer();
+      editor.onPreviewChange.listen((e){
+        if (preview_ready.isCompleted) return;
+        preview_ready.complete();
+      });
+      return preview_ready.future;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    final json = '''[{
+        "filename":"Project #1",
+        "code":"imported code",
+        "lineNumber":0,
+        "updated_at":"2014-01-02 00:00:00.000",
+        "created_at":"2013-01-01 00:00:00.000"
+      },
+      {
+        "filename":"Project #2",
+        "code":"imported code",
+        "lineNumber":0,
+        "updated_at":"2014-01-01 00:00:00.000",
+        "created_at":"2013-01-01 00:00:00.000"
+      }]''';
+
+    test("from JSON creates new projects", (){
+      editor.import(json, 'exported_data_file.json');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      var menu_items = queryAll('li');
+      expect(menu_items[0].text, 'Project #1');
+    });
+
+    test("from a regular file create a new project", (){
+      editor.import('regular code', 'regular_code.txt');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      var menu_items = queryAll('li');
+      expect(menu_items[0].text, 'regular_code.txt');
+    });
+  });
+
   // TODO: put current project title in the browser title
 }

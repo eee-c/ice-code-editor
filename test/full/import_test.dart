@@ -1,7 +1,7 @@
 part of ice_test;
 
 import_tests() {
-  group("Import", () {
+  group("Import Dialog", () {
     var editor;
 
     setUp((){

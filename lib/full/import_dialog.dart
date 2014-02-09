@@ -25,11 +25,7 @@ class ImportDialog extends Dialog implements MenuAction {
 
   void import(String json) {
     try {
-      var projects = JSON.decode(json);
-      projects.reversed.forEach((project) {
-        full._createNewProject(project);
-      });
-      full.showCurrentProject();
+      full._importFromJson(json);
     } on FormatException {
       var message = "This does not look like a ICE project file. Unable to import.";
       Notify.alert(message, parent: parent);

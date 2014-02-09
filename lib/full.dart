@@ -228,7 +228,6 @@ changed.''';
     });
   }
 
-
   _attachDropHandlers() {
     document.onDragOver.listen((e) {
       e.preventDefault();
@@ -239,17 +238,38 @@ changed.''';
       e.preventDefault();
       e.stopPropagation();
 
-      // TODO: iterate over all files
+      // TODO: Handle multiple file drops (#59)
       var file = e.dataTransfer.files[0];
       var title = file.name;
 
       var reader = new FileReader();
       reader.onLoad.listen((e) {
-        _createNewProject({'code': reader.result.toString()}, named: title);
-        showCurrentProject();
+        import(reader.result.toString(), title);
       });
       reader.readAsText(file);
     });
+  }
+
+  import(String contents, String title) {
+    // TODO: don't use exceptions for normal workflow
+    try {
+      _importFromJson(contents);
+    } on FormatException {
+      _importProjectFile(contents, title);
+    }
+  }
+
+  _importProjectFile(String contents, String title) {
+    _createNewProject({'code': contents}, named: title);
+    showCurrentProject();
+  }
+
+  _importFromJson(String json) {
+    var projects = JSON.decode(json);
+    projects.reversed.forEach((project) {
+      _createNewProject(project);
+    });
+    showCurrentProject();
   }
 
   _createNewProject(Map project, {named}) {
