@@ -241,7 +241,6 @@ changed.''';
       e.preventDefault();
       e.stopPropagation();
 
-      // TODO: Handle multiple file drops (#59)
       var file = e.dataTransfer.files[0];
       var title = file.name;
 
