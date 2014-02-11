@@ -175,9 +175,11 @@ changed.''';
       ..add(_saveDialog)
       ..add(_shareDialog)
       ..add(_downloadDialog)
+      ..add(_removeDialog)
+      ..add(_menuDivider)
       ..add(_exportDialog)
       ..add(_importDialog)
-      ..add(_removeDialog)
+      ..add(_menuDivider)
       ..add(_helpDialog);
   }
 
@@ -192,6 +194,7 @@ changed.''';
   get _exportDialog=>     new MenuItem(new ExportDialog(this)).el;
   get _importDialog=>     new MenuItem(new ImportDialog(this)).el;
   get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
+  get _menuDivider=>      new Element.hr();
 
   String get encodedContent => Gzip.encode(ice.content);
 
