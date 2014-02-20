@@ -56,6 +56,7 @@ class Full {
       ..add(_mainMenuButton);
 
     editor_el.children.add(toolbar);
+    _drawWhatsNewIndicator(toolbar);
   }
 
   _attachPreviewToolbar() {
@@ -148,21 +149,29 @@ changed.''';
 
   Element _main_menu_button;
   get _mainMenuButton {
-    var new_indicator = new Element.html('<span>★</span>')
-      ..style.color = 'red'
-      ..style.fontSize = '24px'
-      ..style.position = 'absolute'
-      ..style.top = '3px'
-      ..style.right = '-5px'
-      ..style.textShadow = '2px 2px 2px #000000';
-
     return _main_menu_button = new Element.html('<button>☰</button>')
       ..onClick.listen((e) {
         this.toggleMainMenu();
         e.stopPropagation();
-      })
-    ..append(new_indicator);
+      });
   }
+
+  _drawWhatsNewIndicator(toolbar) {
+    var menu_button = toolbar.children.last;
+
+    var new_indicator = new Element.html('<span>★</span>');
+    new_indicator.style
+      ..color = 'red'
+      ..fontSize = '36px'
+      ..position = 'absolute'
+      ..top = '-20px'
+      ..right = '-7px'
+      ..textShadow = '2px 2px 2px #000000'
+      ..zIndex = '99';
+
+    toolbar.append(new_indicator);
+  }
+
   _toggleAutoupdate(CheckboxInputElement e){
     ice.autoupdate = e.checked;
   }
