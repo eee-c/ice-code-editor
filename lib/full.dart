@@ -218,7 +218,7 @@ changed.''';
 
   _attachKeyboardHandlers() {
     Keys.shortcuts({
-      'Ctrl+N, Ctrl+O, ⌘+O, Ctrl+Shift+H': _hideDialog
+      'Ctrl+N, Ctrl+O, ⌘+O, Ctrl+Shift+H': ()=> _hideDialog(focus: false)
     });
     Keys.shortcuts({
       'Esc':          ()=> _hideDialog(),

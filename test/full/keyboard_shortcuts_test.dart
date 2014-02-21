@@ -26,12 +26,35 @@ keyboard_shortcuts_tests() {
       editor.store..clear()..freeze();
     });
 
-    test("can open the new dialog", (){
-      helpers.typeCtrl('n');
-      expect(
-        queryAll('button'),
-        helpers.elementsContain('Save')
-      );
+
+    group("opening the new dialog", (){
+      setUp((){
+        var preview_ready = new Completer();
+        editor.onPreviewChange.listen((e){
+          preview_ready.complete();
+        });
+        return preview_ready.future;
+      });
+
+      test("can open the new dialog", (){
+        helpers.typeCtrl('n');
+        expect(
+          queryAll('button'),
+          helpers.elementsContain('Save')
+        );
+      });
+
+      test("opening new project gives input field focus", (){
+        helpers.typeCtrl('n');
+
+        var wait = new Duration(milliseconds: 500);
+        new Timer(wait, expectAsync0((){
+          expect(
+            document.activeElement,
+            equals(query('.ice-dialog input[type=text]'))
+          );
+        }));
+      });
     });
 
     group("Open Projects Dialog", (){

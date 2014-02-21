@@ -20,6 +20,8 @@ new_project_dialog_tests(){
       editor.store..clear()..freeze();
     });
 
+    // TODO: see keyboard shortcut tests for more realistic setup and apply same
+    // approach here.
     test("new project input field has focus", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
