@@ -58,6 +58,7 @@ $ pub build --mode=development
  * [Kate Bladow](https://github.com/kbladow)
  * [Stephen Cagle](https://github.com/samedhi)
  * [Alex Chacon](https://github.com/alexgchacon)
+ * [Jon Davison](https://github.com/jcdavison)
  * [Damon Douglas](https://github.com/damondouglas)
  * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
