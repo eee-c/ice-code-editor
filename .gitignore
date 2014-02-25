@@ -6,3 +6,5 @@ out
 *.dart.js
 docs
 .DS_Store
+lib/js/ace
+bower_components

@@ -1,0 +1,21 @@
+{
+  "name": "ice_code_editor",
+  "version": "0.0.0",
+  "homepage": "https://github.com/eee-c/ice-code-editor",
+  "authors": [
+    "Chris Strom <github@eeecomputes.com>"
+  ],
+  "description": "A very simple Polymer",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace-builds": "~1.1.1"
+  }
+}
