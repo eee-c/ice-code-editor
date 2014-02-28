@@ -71,6 +71,7 @@ $ pub build --mode=development
  * [Morgan Nelson](https://github.com/korishev)
  * [Michael Reynolds](https://github.com/mr170)
  * [Michael Risse](https://github.com/rissem)
+ * [Alper Sunar](https://github.com/asunar)
 
 ## Want to Help?
 

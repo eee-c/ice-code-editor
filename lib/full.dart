@@ -198,6 +198,7 @@ changed.''';
       ..add(_exportDialog)
       ..add(_importDialog)
       ..add(_menuDivider)
+      ..add(_whatsNewDialog)
       ..add(_helpDialog);
   }
 
@@ -211,8 +212,19 @@ changed.''';
   get _downloadDialog=>   new MenuItem(new DownloadDialog(this)).el;
   get _exportDialog=>     new MenuItem(new ExportDialog(this)).el;
   get _importDialog=>     new MenuItem(new ImportDialog(this)).el;
+  // get _whatsNewDialog=>   new MenuItem(new WhatsNewAction(this)).el;
   get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
   get _menuDivider=>      new Element.hr();
+
+  get _whatsNewDialog {
+    AnchorElement link = new Element.html('<a target="_blank">What\'s New</a>')
+      ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New';
+
+    ListItem li = new Element.html('<li></li>');
+    li.append(link);
+
+    return li;
+  }
 
   String get encodedContent => Gzip.encode(ice.content);
 

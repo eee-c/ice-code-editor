@@ -35,4 +35,5 @@ part 'full/export_dialog.dart';
 part 'full/import_dialog.dart';
 part 'full/copy_dialog.dart';
 part 'full/remove_dialog.dart';
+part 'full/whats_new_action.dart';
 part 'full/help_action.dart';
