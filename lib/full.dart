@@ -218,7 +218,8 @@ changed.''';
 
   get _whatsNewDialog {
     var link = (new Element.html('<a target="_blank">What\'s New</a>') as AnchorElement)
-      ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New';
+      ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New'
+      ..className = 'active';
 
     var li = new Element.html('<li></li>');
     li.append(link);

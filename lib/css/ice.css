@@ -115,6 +115,15 @@ div.ice-menu ul {
   color: rgba(0,0,0,0.5);
 }
 
+.ice-menu li:hover a, .ice-menu li:focus a {
+  color: white;
+}
+
+.ice-menu a.active, .ice-menu li:hover a.active, .ice-menu li:focus a.active {
+  font-weight: bold;
+  color: red;
+}
+
 .ice-dialog h1 {
   margin: 0px 0px 5px;
   font-size: 100%;
