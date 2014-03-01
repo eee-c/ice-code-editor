@@ -183,23 +183,23 @@ changed.''';
 
   _showMainMenu() {
     var menu = new Element.html('<ul class=ice-menu>');
-    el.children.add(menu);
+    el.append(menu);
 
-    menu.children
-      ..add(_newProjectDialog)
-      ..add(_openDialog)
-      ..add(_copyDialog)
-      ..add(_renameDialog)
-      ..add(_saveDialog)
-      ..add(_shareDialog)
-      ..add(_downloadDialog)
-      ..add(_removeDialog)
-      ..add(_menuDivider)
-      ..add(_exportDialog)
-      ..add(_importDialog)
-      ..add(_menuDivider)
-      ..add(_whatsNewDialog)
-      ..add(_helpDialog);
+    menu
+      ..append(_newProjectDialog)
+      ..append(_openDialog)
+      ..append(_copyDialog)
+      ..append(_renameDialog)
+      ..append(_saveDialog)
+      ..append(_shareDialog)
+      ..append(_downloadDialog)
+      ..append(_removeDialog)
+      ..append(_menuDivider)
+      ..append(_exportDialog)
+      ..append(_importDialog)
+      ..append(_menuDivider)
+      ..append(_whatsNewDialog)
+      ..append(_helpDialog);
   }
 
   get _openDialog=>       new MenuItem(new OpenDialog(this)).el;
@@ -217,10 +217,10 @@ changed.''';
   get _menuDivider=>      new Element.hr();
 
   get _whatsNewDialog {
-    AnchorElement link = new Element.html('<a target="_blank">What\'s New</a>')
+    var link = (new Element.html('<a target="_blank">What\'s New</a>') as AnchorElement)
       ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New';
 
-    ListItem li = new Element.html('<li></li>');
+    var li = new Element.html('<li></li>');
     li.append(link);
 
     return li;
