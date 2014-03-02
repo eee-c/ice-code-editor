@@ -157,6 +157,8 @@ changed.''';
   }
 
   _drawWhatsNewIndicator(toolbar) {
+    if (_whatsNewClicked) return;
+
     var menu_button = toolbar.children.last;
 
     var new_indicator = new Element.html('<span>★</span>');
@@ -219,12 +221,19 @@ changed.''';
   get _whatsNewDialog {
     var link = (new Element.html('<a target="_blank">What\'s New</a>') as AnchorElement)
       ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New'
-      ..className = 'active';
+      ..className = _whatsNewClicked ? '' : 'active'
+      ..onClick.listen((_) => rememberWhatsNewClicked());
 
     var li = new Element.html('<li></li>');
     li.append(link);
 
     return li;
+  }
+
+  bool _whatsNewClicked = false;
+
+  rememberWhatsNewClicked() {
+    _whatsNewClicked = true;
   }
 
   String get encodedContent => Gzip.encode(ice.content);

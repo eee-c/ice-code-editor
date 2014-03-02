@@ -30,16 +30,27 @@ whats_new_tests() {
       expect(query('.ice-menu a').target, '_blank');
     });
 
-    // first time editor ever been used (what's new should not be active)
+    // @TODO first time editor ever been used (what's new should not be active)
 
-    // existing editor, what's new hasn't been clicked (should be active)
     group("existing editor, what's new hasn't been clicked", (){
-      test("what's menu item should be active", (){
+      test("what's new menu item should be active", (){
         helpers.click('button', text: '☰');
         expect(query('.ice-menu a').className, contains('active'));
       });
     });
 
-    // existing editor, what's new has been clicked (should not be active)
+    //@TODO - when click on what's new menu item it should close the menu
+    //@TODO - the star should be removed when what's new is clicked
+    //@TODO - it should persist between sessions
+    group("existing editor, what's new has been clicked", () {
+      setUp(() {
+        editor.rememberWhatsNewClicked();
+      });
+
+      test("what's new menu item should not be active", () {
+        helpers.click('button', text: '☰');
+        expect(query('.ice-menu a').className, isNot(contains('active')));
+      });
+    });
   });
 }
