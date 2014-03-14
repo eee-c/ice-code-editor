@@ -65,6 +65,7 @@ $ pub build --mode=development
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
  * [Marty Hines](https://github.com/martyhines)
+ * [Erik Isaksen](https://github.com/nevraeka)
  * [Jon Kirkman](https://github.com/jonkirkman)
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)

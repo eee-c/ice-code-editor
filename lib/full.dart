@@ -56,7 +56,8 @@ class Full {
       ..add(_mainMenuButton);
 
     editor_el.children.add(toolbar);
-    _drawWhatsNewIndicator(toolbar);
+
+    if (!_isFirstUse) _drawWhatsNewIndicator(toolbar);
   }
 
   _attachPreviewToolbar() {
@@ -161,7 +162,7 @@ changed.''';
 
     var menu_button = toolbar.children.last;
 
-    var new_indicator = new Element.html('<span>★</span>');
+    var new_indicator = new Element.html('<span id=somethingsnew>★</span>');
     new_indicator.style
       ..color = 'red'
       ..fontSize = '36px'
@@ -221,8 +222,11 @@ changed.''';
   get _whatsNewDialog {
     var link = (new Element.html('<a target="_blank">What\'s New</a>') as AnchorElement)
       ..href = 'https://github.com/eee-c/ice-code-editor/wiki/What\'s-New'
-      ..className = _whatsNewClicked ? '' : 'active'
       ..onClick.listen((_) => rememberWhatsNewClicked());
+
+    if (!_whatsNewClicked && !_isFirstUse) {
+      link.className = 'active';
+    }
 
     var li = new Element.html('<li></li>');
     li.append(link);
@@ -235,6 +239,9 @@ changed.''';
   rememberWhatsNewClicked() {
     _whatsNewClicked = true;
   }
+
+  bool get _isFirstUse =>
+    store.length == 1 && store.currentProjectTitle == 'Untitled';
 
   String get encodedContent => Gzip.encode(ice.content);
 

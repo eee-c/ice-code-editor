@@ -30,8 +30,6 @@ whats_new_tests() {
       expect(query('.ice-menu a').target, '_blank');
     });
 
-    // @TODO first time editor ever been used (what's new should not be active)
-
     group("existing editor, what's new hasn't been clicked", (){
       test("what's new menu item should be active", (){
         helpers.click('button', text: '☰');
@@ -52,5 +50,36 @@ whats_new_tests() {
         expect(query('.ice-menu a').className, isNot(contains('active')));
       });
     });
+  });
+
+  group("new user", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Untitled'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("it should not show active indicators", (){
+      helpers.click('button', text: '☰');
+      expect(query('.ice-menu a').className, isNot(contains('active')));
+    });
+
+    test("it should not show the something-is-new star", (){
+      expect(query('#somethingsnew'), null);
+    });
+
+    // @TODO: Actual first load in incognito still has star :-\
   });
 }
