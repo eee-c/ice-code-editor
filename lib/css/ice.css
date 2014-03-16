@@ -119,9 +119,14 @@ div.ice-menu ul {
   color: white;
 }
 
-.ice-menu a.active, .ice-menu li:hover a.active, .ice-menu li:focus a.active {
+.ice-menu li.highlighted {
   font-weight: bold;
   color: red;
+}
+
+.ice-menu li:hover.highlighted {
+  color: white;
+  background-color: red;
 }
 
 .ice-dialog h1 {

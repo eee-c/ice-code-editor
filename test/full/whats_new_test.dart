@@ -21,23 +21,22 @@ whats_new_tests() {
     });
 
     test("links to friendly release summary", (){
-      helpers.click('button', text: '☰');
-      expect(query('.ice-menu a').href, contains('github'));
+      var action = new WhatsNewAction(editor);
+      expect(action.el.href, contains('github'));
     });
 
     test("it opens in a new window", (){
-      helpers.click('button', text: '☰');
-      expect(query('.ice-menu a').target, '_blank');
+      var action = new WhatsNewAction(editor);
+      expect(action.el.target, '_blank');
     });
 
     group("existing editor, what's new hasn't been clicked", (){
-      test("what's new menu item should be active", (){
+      test("what's new menu item should be highlighted", (){
         helpers.click('button', text: '☰');
-        expect(query('.ice-menu a').className, contains('active'));
+        expect(query('.ice-menu li.highlighted').text, "What's New");
       });
     });
 
-    //@TODO - when click on what's new menu item it should close the menu
     //@TODO - the star should be removed when what's new is clicked
     //@TODO - it should persist between sessions
     group("existing editor, what's new has been clicked", () {
@@ -45,9 +44,9 @@ whats_new_tests() {
         editor.rememberWhatsNewClicked();
       });
 
-      test("what's new menu item should not be active", () {
+      test("what's new menu item should not be highlighted", () {
         helpers.click('button', text: '☰');
-        expect(query('.ice-menu a').className, isNot(contains('active')));
+        expect(query('.ice-menu li.highlighted'), isNull);
       });
     });
   });
@@ -71,9 +70,9 @@ whats_new_tests() {
       editor.store..clear()..freeze();
     });
 
-    test("it should not show active indicators", (){
+    test("it should not show something's new indicators", (){
       helpers.click('button', text: '☰');
-      expect(query('.ice-menu a').className, isNot(contains('active')));
+      expect(query('.ice-menu li.highlighted'), isNull);
     });
 
     test("it should not show the something-is-new star", (){
