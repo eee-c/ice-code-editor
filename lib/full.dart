@@ -241,7 +241,8 @@ changed.''';
   }
 
   bool get _isFirstUse =>
-    store.length == 1 && store.currentProjectTitle == 'Untitled';
+    store.isEmpty ||
+    (store.length == 1 && store.currentProjectTitle == 'Untitled');
 
   String get encodedContent => Gzip.encode(ice.content);
 

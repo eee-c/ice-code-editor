@@ -79,7 +79,27 @@ whats_new_tests() {
     test("it should not show the something-is-new star", (){
       expect(query('#somethingsnew'), null);
     });
+  });
 
-    // @TODO: Actual first load in incognito still has star :-\
+  group("new user before default project is created", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store.clear();
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("it should not show the something-is-new star", (){
+      expect(query('#somethingsnew'), null);
+    });
   });
 }
