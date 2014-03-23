@@ -13,6 +13,7 @@ import 'package:ctrl_alt_foo/keys.dart';
 
 part 'editor.dart';
 part 'store.dart';
+part 'settings.dart';
 part 'gzip.dart';
 
 part 'full.dart';
