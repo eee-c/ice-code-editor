@@ -226,6 +226,7 @@ changed.''';
 
   rememberWhatsNewClicked() {
     _whatsNewClicked = true;
+    query("#somethingsnew").remove();
   }
 
   bool get _isFirstUse =>

@@ -1,7 +1,8 @@
 part of ice;
 
-class WhatsNewAction implements MenuAction {
-  WhatsNewAction(_);
+class WhatsNewAction extends Dialog implements MenuAction {
+  Full full;
+  WhatsNewAction(f) : super(f) { full = f; }
 
   get name => "What's New";
 
@@ -11,6 +12,8 @@ class WhatsNewAction implements MenuAction {
     el
       ..click()
       ..remove();
+
+    full.rememberWhatsNewClicked();
   }
 
   AnchorElement _el;

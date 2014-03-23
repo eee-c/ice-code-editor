@@ -37,7 +37,6 @@ whats_new_tests() {
       });
     });
 
-    //@TODO - the star should be removed when what's new is clicked
     //@TODO - it should persist between sessions
     group("existing editor, what's new has been clicked", () {
       setUp(() {
@@ -47,6 +46,11 @@ whats_new_tests() {
       test("what's new menu item should not be highlighted", () {
         helpers.click('button', text: '☰');
         expect(query('.ice-menu li.highlighted'), isNull);
+      });
+
+
+      test("the star should be removed when what's new is clicked", () {
+        expect(query('#somethingsnew'), isNull);
       });
     });
   });
