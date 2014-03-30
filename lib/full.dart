@@ -4,6 +4,7 @@ class Full {
   Element el;
   Editor ice;
   Store store;
+  Settings settings;
 
   Full() {
     el = new Element.html('<div id=ice>');
@@ -11,6 +12,7 @@ class Full {
 
     ice = new Editor('#ice');
     store = new Store();
+    settings = new Settings();
 
     _attachKeyboardHandlers();
     _attachMouseHandlers();
@@ -222,10 +224,10 @@ changed.''';
   get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
   get _menuDivider=>      new Element.hr();
 
-  bool _whatsNewClicked = false;
+  bool get _whatsNewClicked => settings['clicked_whats_new'];
 
   rememberWhatsNewClicked() {
-    _whatsNewClicked = true;
+    settings['clicked_whats_new'] = true;
     query("#somethingsnew").remove();
   }
 

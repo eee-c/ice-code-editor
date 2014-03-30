@@ -6,6 +6,7 @@ whats_new_tests() {
 
     setUp((){
       editor = new Full()
+        ..settings.storage_key = "ice-test-settings-${currentTestCase.id}"
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -37,7 +38,6 @@ whats_new_tests() {
       });
     });
 
-    //@TODO - it should persist between sessions
     group("existing editor, what's new has been clicked", () {
       setUp(() {
         editor.rememberWhatsNewClicked();
@@ -48,10 +48,40 @@ whats_new_tests() {
         expect(query('.ice-menu li.highlighted'), isNull);
       });
 
-
       test("the star should be removed when what's new is clicked", () {
         expect(query('#somethingsnew'), isNull);
       });
+    });
+  });
+
+  group("what's new clicked in a previous session", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}"
+        ..settings.storage_key = "ice-test-settings-${currentTestCase.id}"
+        ..settings['clicked_whats_new'] = true;
+
+      editor.store
+        ..clear()
+        ..['Untitled'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("what's new menu item should not be highlighted", () {
+      helpers.click('button', text: '☰');
+      expect(query('.ice-menu li.highlighted'), isNull);
+    });
+
+    test("the star should not be present", () {
+      expect(query('#somethingsnew'), isNull);
     });
   });
 
