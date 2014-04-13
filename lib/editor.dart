@@ -125,7 +125,7 @@ class Editor {
     editor_el.style.visibility = 'visible';
     querySelectorAll('.ace_print-margin').forEach((e) { e.style.visibility = 'visible'; });
 
-    _ace.renderer.onResize();
+    _ace.resize();
     focus();
   }
 
@@ -223,8 +223,6 @@ class Editor {
   }
 
   _startJsAce() {
-    js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
-
     _ace = Ace.edit(editor_el);
 
     _ace
@@ -283,90 +281,101 @@ class Editor {
   }
 }
 
-class Ace extends jsw.TypedProxy {
-  static Ace edit(dynamic el) => Ace.cast(js.context['ace'].edit(el));
+class Ace {
+  static Ace edit(Element el) =>
+    new Ace(js.context['ace'].callMethod('edit', [el]));
 
-  static Ace cast(js.Proxy proxy) =>
-    proxy == null ? null : new Ace.fromProxy(proxy);
+  var jsAce;
 
-  Ace.fromProxy(js.Proxy proxy) : super.fromProxy(proxy);
+  Ace(this.jsAce) {
+    js.context['ace']['config'].
+      callMethod('set', ["workerPath", "packages/ice_code_editor/js/ace"]);
+  }
 
-  set fontSize(String size) => $unsafe.setFontSize(size);
-  set theme(String theme) => $unsafe.setTheme(theme);
-  set printMarginColumn(bool b) => $unsafe.setPrintMarginColumn(b);
-  set displayIndentGuides(bool b) => $unsafe.setDisplayIndentGuides(b);
+  set fontSize(String size) =>
+    jsAce.callMethod('setFontSize', [size]);
+  set theme(String theme) =>
+    jsAce.callMethod('setTheme', [theme]);
+  set printMarginColumn(bool b) =>
+    jsAce.callMethod('setPrintMarginColumn', [b]);
+  set displayIndentGuides(bool b) =>
+    jsAce.callMethod('setDisplayIndentGuides', [b]);
 
-  set value(String content) => $unsafe.setValue(content, -1);
-  String get value => $unsafe.getValue();
-  void focus() => $unsafe.focus();
+  String get value => jsAce.callMethod('getValue');
+  set value(String content) =>
+    jsAce.callMethod('setValue', [content, -1]);
+
+  void focus() => jsAce.callMethod('focus');
 
   // This is way crazy, but... getLine() and getCursorPosition() are zero
   // indexed while gotoLine() and scrollToLine() are 1 indexed o_O
   String get lineContent => session.getLine(lineNumber - 1);
-  int get lineNumber => $unsafe.getCursorPosition().row + 1;
+
+  int get lineNumber => jsAce.callMethod('getCursorPosition')['row'] + 1;
+
   set lineNumber(int row) {
-    $unsafe.gotoLine(row, 0, false);
-    $unsafe.scrollToLine(row-1, false, false);
+    jsAce.callMethod('gotoLine', [row, 0, false]);
+    jsAce.callMethod('scrollToLine', [row-1, false, false]);
   }
 
-  get renderer => $unsafe.renderer;
+  get renderer => jsAce['renderer'];
 
-  AceSession get session => AceSession.cast($unsafe.getSession());
+  void resize() => renderer.callMethod('onResize');
+
+  var _session;
+  AceSession get session {
+    if (_session != null) return _session;
+    return _session = new AceSession(jsAce.callMethod('getSession'));
+  }
 
   void toggleEmacs() {
-    if ($unsafe.getKeyboardHandler() == commandManager) {
-      $unsafe.setKeyboardHandler(emacsManager);
+    if (jsAce.callMethod('getKeyboardHandler') == commandManager) {
+      jsAce.callMethod('setKeyboardHandler', [emacsManager]);
     }
     else {
-      $unsafe.setKeyboardHandler(commandManager);
+      jsAce.callMethod('setKeyboardHandler', [commandManager]);
     }
   }
 
   var _commandManager;
   get commandManager {
     if (_commandManager != null) return _commandManager;
-    _commandManager = $unsafe.getKeyboardHandler();
+    _commandManager = jsAce.callMethod('getKeyboardHandler');
     return _commandManager;
   }
 
   var _emacsManager;
   get emacsManager {
     if (_emacsManager != null) return _emacsManager;
-    _emacsManager = js.context.ace.require("ace/keyboard/emacs").handler;
+    _emacsManager = js.context['ace'].callMethod('require', ["ace/keyboard/emacs"])['handler'];
     return _emacsManager;
   }
 }
 
-class AceSession extends jsw.TypedProxy {
-  static AceSession cast(js.Proxy proxy) =>
-    proxy == null ? null : new AceSession.fromProxy(proxy);
-  AceSession.fromProxy(js.Proxy proxy) : super.fromProxy(proxy);
+class AceSession {
+  var jsSession;
+  AceSession(this.jsSession);
 
-  set mode(String m) => $unsafe.setMode(m);
-  set useWrapMode(bool b) => $unsafe.setUseWrapMode(b);
-  set useSoftTabs(bool b) => $unsafe.setUseSoftTabs(b);
-  set tabSize(int size) => $unsafe.setTabSize(size);
+  set mode(String m) => jsSession.callMethod('setMode', [m]);
+  set useWrapMode(bool b) {
+    jsSession.callMethod('setUseWrapMode', [b]);
+  }
+  set useSoftTabs(bool b) => jsSession.callMethod('setUseSoftTabs', [b]);
+  set tabSize(int size) => jsSession.callMethod('setTabSize', [size]);
 
-  String getLine(int row) => $unsafe.getLine(row);
+  String getLine(int row) => jsSession.callMethod('getLine', [row]);
 
   StreamController _onChange;
   get onChange {
     if (_onChange != null) return _onChange.stream;
 
-    _onChange = new StreamController();
-    $unsafe.on('change', (e,a){
-      _onChange.add(e);
-    });
+    _onChange = new StreamController.broadcast();
+
+    jsSession.callMethod('on', [
+      'change',
+      (e,a){ _onChange.add(e); }
+    ]);
+
     return _onChange.stream;
   }
-
-  // Unsure setting options is a good idea. Need to wait for web workers to be
-  // in place as in the following sample code:
-  // var wait = new Duration(seconds: 2);
-  // new Timer(wait, (){
-  //   _ace.session.workerOptions = {'expr': false, 'undef': true};
-  // });
-  // set workerOptions(o) {
-  //   $unsafe.$worker.send("setOptions", js.array([o]));
-  // }
 }

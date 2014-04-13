@@ -2,7 +2,7 @@ part of ice;
 
 class Gzip {
   static String encode(String string) {
-    var gzip = js.context.RawDeflate.deflate(string);
+    var gzip = js.context['RawDeflate'].callMethod('deflate', [string]);
     return CryptoUtils.bytesToBase64(gzip.codeUnits);
   }
 
@@ -10,6 +10,6 @@ class Gzip {
     // var bytes = CryptoUtils.base64StringToBytes(string);
     // var gzip = new String.fromCharCodes(bytes);
     // return js.context.RawDeflate.inflate(gzip);
-    return js.context.RawDeflate.inflateFromBase64(string);
+    return js.context['RawDeflate'].callMethod('inflateFromBase64', [string]);
   }
 }
