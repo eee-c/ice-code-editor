@@ -6,3 +6,4 @@ out
 *.dart.js
 docs
 .DS_Store
+build
