@@ -1,7 +1,7 @@
 part of ice_test;
 
 new_project_dialog_tests(){
-  group("New Project Dialog", (){
+  solo_group("New Project Dialog", (){
     var editor;
 
     setUp((){
@@ -136,6 +136,22 @@ new_project_dialog_tests(){
       expect(
         queryAll('div'),
         helpers.elementsContain('My New Project')
+      );
+    });
+
+    test("hitting the enter key does not add newline to top of code", (){
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'New');
+
+      helpers.typeIn('My New Project');
+      helpers.hitEnter();
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        editor.content,
+        equals(Templates.threeD)
       );
     });
 

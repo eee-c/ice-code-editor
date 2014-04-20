@@ -1,6 +1,7 @@
 library ice_test_helpers;
 
 import 'dart:html';
+import 'dart:js' as js;
 import 'package:unittest/matcher.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import 'package:ctrl_alt_foo/helpers.dart';
@@ -69,15 +70,38 @@ arrowUp([times=1]) {
 }
 
 hitEnter() {
+  var jsDocument = new js.JsObject.fromBrowserObject(js.context['document']);
+  var event = new js.JsObject.fromBrowserObject(
+    jsDocument.callMethod('createEvent', ["KeyboardEvent"])
+  );
+
+
+  event.callMethod(
+    'initKeyboardEvent', [
+    "keyup",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,  Specifiew. This vale may be null.
+    false,            //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    false,            //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    KeyCode.ENTER,    //  in unsigned long keyCodeArg,
+    0                 //  in unsigned long charCodeArg);
+  ]);
+
+
   // var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
 
-  // document.
-  //   activeElement.
-  //   dispatchEvent(e);
+  var activeElement = new js.JsObject.fromBrowserObject(
+    jsDocument['activeElement']
+   );
 
-  var fake_button = document.query('#fake_enter_key');
-  if (fake_button == null) return;
-  fake_button.click();
+  activeElement.callMethod('dispatchEvent', [event]);
+
+  // var fake_button = document.query('#fake_enter_key');
+  // if (fake_button == null) return;
+  // fake_button.click();
 }
 
 queryWithContent(selector, text) {
