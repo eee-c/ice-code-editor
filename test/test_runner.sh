@@ -1,23 +1,20 @@
 #!/bin/bash
 
 # Static type analysis
-results=$(dartanalyzer --no-hints lib/ice.dart 2>&1)
-non_js_results=$(
+results=$(dartanalyzer lib/ice.dart 2>&1)
+results_ignoring_ok_deprecations=$(
   echo "$results" | \
-    grep -v "is not defined for the class 'Proxy'" | \
-    grep -v "There is no such getter '.*' in 'Proxy'"
+    grep -v "'query' is deprecated" | \
+    grep -v "'queryAll' is deprecated" | \
+    grep -v "hints found.$"
 )
-echo "$non_js_results"
-non_js_count=$(echo "$non_js_results" | grep -vF '[hint]' | wc -l)
-if [[ "$non_js_count" != "2" ]]
+echo "$results_ignoring_ok_deprecations"
+count=$(echo "$results_ignoring_ok_deprecations" | wc -l)
+if [[ "$count" != "1" ]]
 then
-  echo "$non_js_count"
   exit 1
 fi
-if [[ "$non_js_results" == *"warnings found."* ]]
-then
-  echo "Ignoring js-interop warnings..."
-fi
+echo "Looks good!"
 echo
 
 which content_shell
