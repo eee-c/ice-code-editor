@@ -70,39 +70,36 @@ arrowUp([times=1]) {
 }
 
 hitEnter() {
-  var jsDocument = new js.JsObject.fromBrowserObject(js.context['document']);
-  var event = new js.JsObject.fromBrowserObject(
-    jsDocument.callMethod('createEvent', ["KeyboardEvent"])
+  var event = createJSKeyEventObject('keyup', KeyCode.ENTER);
+  var activeElement = new js.JsObject.fromBrowserObject(
+      document.activeElement
   );
 
+  activeElement.callMethod('dispatchEvent', [event]);
+  //document.activeElement.dispatchEvent(new KeyEvent('keyup', keyCode: 13));
+}
+
+
+//http://jsbin.com/awenaq/3
+createJSKeyEventObject(type, keycode) {
+  var jsDocument = new js.JsObject.fromBrowserObject(document);
+  var event = new js.JsObject.fromBrowserObject(
+    jsDocument.callMethod('createEvent', ["Event"])
+  );
+
+  KeyCode.ENTER;
 
   event.callMethod(
-    'initKeyboardEvent', [
-    "keyup",        //  in DOMString typeArg,
-    true,             //  in boolean canBubbleArg,
-    true,             //  in boolean cancelableArg,
-    null,             //  in nsIDOMAbstractView viewArg,  Specifiew. This vale may be null.
-    false,            //  in boolean ctrlKeyArg,
-    false,            //  in boolean altKeyArg,
-    false,            //  in boolean shiftKeyArg,
-    false,            //  in boolean metaKeyArg,
-    KeyCode.ENTER,    //  in unsigned long keyCodeArg,
-    0                 //  in unsigned long charCodeArg);
-  ]);
+    'initEvent', [ type, true, true ]);
 
+  event['keyCode'] = keycode;
+  event['which'] = keycode;
 
-  // var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
+  print(event['keyCode']);
 
-  var activeElement = new js.JsObject.fromBrowserObject(
-    jsDocument['activeElement']
-   );
-
-  activeElement.callMethod('dispatchEvent', [event]);
-
-  // var fake_button = document.query('#fake_enter_key');
-  // if (fake_button == null) return;
-  // fake_button.click();
+  return event;
 }
+
 
 queryWithContent(selector, text) {
   var re = new RegExp(r"^\s*" + text + r"\s*$");

@@ -139,7 +139,7 @@ new_project_dialog_tests(){
       );
     });
 
-    test("hitting the enter key does not add newline to top of code", (){
+    solo_test("hitting the enter key does not add newline to top of code", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');
 
@@ -147,7 +147,7 @@ new_project_dialog_tests(){
       helpers.hitEnter();
 
       helpers.click('button', text: '☰');
-      helpers.click('li', text: 'Open');
+      //helpers.click('li', text: 'Open');
 
       expect(
         editor.content,
