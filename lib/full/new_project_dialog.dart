@@ -36,6 +36,7 @@ class NewProjectDialog extends Dialog implements MenuAction {
       listen((e) {
         if (e.keyCode != KeyCode.ENTER) return;
         _create();
+        e.preventDefault();
       });
 
     parent.append(dialog);

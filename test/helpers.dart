@@ -70,7 +70,7 @@ arrowUp([times=1]) {
 }
 
 hitEnter() {
-  var event = createJSKeyEventObject('keyup', KeyCode.ENTER);
+  var event = createJSKeyEventObject('keydown', KeyCode.ENTER);
   var activeElement = new js.JsObject.fromBrowserObject(
       document.activeElement
   );
@@ -84,18 +84,19 @@ hitEnter() {
 createJSKeyEventObject(type, keycode) {
   var jsDocument = new js.JsObject.fromBrowserObject(document);
   var event = new js.JsObject.fromBrowserObject(
-    jsDocument.callMethod('createEvent', ["Event"])
+    jsDocument.callMethod('createEvent', ["KeyboardEvent"])
   );
 
-  KeyCode.ENTER;
-
   event.callMethod(
-    'initEvent', [ type, true, true ]);
+    'initKeyboardEvent', [ type, true, true, null, keycode ]);
 
+  /*event.callMethod('initKeyboardEvent', [type, true, true, null,
+         false, false, false, false,
+             keycode, 0]);
+  */
   event['keyCode'] = keycode;
   event['which'] = keycode;
 
-  print(event['keyCode']);
 
   return event;
 }
