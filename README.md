@@ -62,6 +62,7 @@ $ pub build --mode=development
  * [Damon Douglas](https://github.com/damondouglas)
  * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
+ * [Simone Giacomelli](https://github.com/simonegiacomelli)
  * [Richard Gould](https://github.com/rgould)
  * [Nik Graf](https://github.com/nikgraf)
  * [Marty Hines](https://github.com/martyhines)

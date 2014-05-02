@@ -26,6 +26,7 @@ class Full {
       ..then((_)=> _attachPreviewToolbar())
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
+      ..then((_)=> _initializeSettingForFirstUse())
       ..then((_)=> _applyEditorModes())
       ..then((_)=> _applyStyles());
   }
@@ -219,17 +220,19 @@ changed.''';
   get _importDialog=>     new MenuItem(new ImportDialog(this)).el;
   get _whatsNewDialog=>   new MenuItem(
                             new WhatsNewAction(this),
-                            isHighlighted: (!_whatsNewClicked && !_isFirstUse)
+                            isHighlighted: _highlightWhatsNew
                           ).el;
   get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
   get _menuDivider=>      new Element.hr();
-
-  bool get _whatsNewClicked => settings['clicked_whats_new'];
 
   rememberWhatsNewClicked() {
     settings['clicked_whats_new'] = true;
     query("#somethingsnew").remove();
   }
+
+  bool get _highlightWhatsNew => !_whatsNewClicked;
+
+  bool get _whatsNewClicked => settings['clicked_whats_new'];
 
   bool get _isFirstUse =>
     store.isEmpty ||
@@ -354,6 +357,12 @@ changed.''';
         'lineNumber': ice.lineNumber
       };
     });
+  }
+
+  _initializeSettingForFirstUse() {
+    if (_isFirstUse) {
+      settings['clicked_whats_new'] = true;
+    }
   }
 
   _applyEditorModes() {

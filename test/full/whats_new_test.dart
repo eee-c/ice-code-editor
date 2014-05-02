@@ -112,6 +112,22 @@ whats_new_tests() {
     test("it should not show the something-is-new star", (){
       expect(query('#somethingsnew'), null);
     });
+
+    group("after creating their first project", (){
+      setUp((){
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'New');
+
+        helpers.typeIn('My New Project');
+
+        helpers.click('button', text: 'Save');
+      });
+
+      test("it should not show something's new indicators", (){
+        helpers.click('button', text: '☰');
+        expect(query('.ice-menu li.highlighted'), isNull);
+      });
+    });
   });
 
   group("new user before default project is created", (){
