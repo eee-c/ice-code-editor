@@ -39,6 +39,31 @@ class NewProjectDialog extends Dialog implements MenuAction {
         e.preventDefault();
       });
 
+    var input = dialog.query('input');
+
+    js.context.callMethod('listenEvent', [input, (keycode){
+      print('[dart] ${keycode}');
+      if (keycode != KeyCode.ENTER) return;
+      _create();
+    }]);
+
+    // var jsInput = new js.JsObject.fromBrowserObject(input);
+    // jsInput.callMethod('addEventListener', ['keydown',
+    //   new js.JsFunction.withThis(proxyEvent)
+    // ]);
+
+    // (KeyboardEvent e){
+    //   print('[keydown] ${e.which}');
+    //   _create();
+    // }]);
+
+    // .onKeyDown.
+    //   listen((e) {
+    //     print("[keydown]  ${e.keyCode} ${e.which}");
+    //     if (e.keyCode != KeyCode.ENTER) return;
+    //     _create();
+    //   });
+
     parent.append(dialog);
     dialog.query('input').focus();
   }

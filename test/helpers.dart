@@ -87,8 +87,34 @@ createJSKeyEventObject(type, keycode) {
     jsDocument.callMethod('createEvent', ["KeyboardEvent"])
   );
 
+  // event.callMethod(
+  //   'initKeyboardEvent', [ type, true, true, null, keycode ]);
+
+  // TODO:
+  //  1. change ctrl_alt_foo to ignore plain event
+  //  2. switch this back to create plain events
+  //  3. change all keyboard event code to JS hack that is currently
+  //     in test/index.html
+
+
   event.callMethod(
-    'initKeyboardEvent', [ type, true, true, null, keycode ]);
+    'initKeyboardEvent', [
+    "keydown",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,  Specifiew. This vale may be null.
+    false,            //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    false,            //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    KeyCode.ENTER,    //  in unsigned long keyCodeArg,
+    0                 //  in unsigned long charCodeArg);
+  ]);
+
+  event['keyCode'] = KeyCode.ENTER;
+  event['which'] = KeyCode.ENTER;
+
+  // var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
 
   /*event.callMethod('initKeyboardEvent', [type, true, true, null,
          false, false, false, false,

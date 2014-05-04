@@ -1,3 +1,15 @@
 <script type="application/dart" src="ice_test.dart"></script>
 <script src="packages/browser/interop.js"></script>
 <script src="packages/unittest/test_controller.js"></script>
+
+
+<script>
+function listenEvent(el, cb) {
+  console.log('[listenEvent] **************');
+  el.addEventListener('keydown', function(event) {
+    console.log(event.which);
+    console.log(event.keyCode);
+    cb(event.which);
+  });
+}
+</script>
