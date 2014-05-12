@@ -72,7 +72,7 @@ arrowUp([times=1]) {
 hitEnter() {
   var event = createJSKeyEventObject('keydown', KeyCode.ENTER);
   var activeElement = new js.JsObject.fromBrowserObject(
-      document.activeElement
+    document.activeElement
   );
 
   activeElement.callMethod('dispatchEvent', [event]);
@@ -83,12 +83,15 @@ hitEnter() {
 //http://jsbin.com/awenaq/3
 createJSKeyEventObject(type, keycode) {
   var jsDocument = new js.JsObject.fromBrowserObject(document);
+  // var event = new js.JsObject.fromBrowserObject(
+  //   jsDocument.callMethod('createEvent', ["KeyboardEvent"])
+  // );
   var event = new js.JsObject.fromBrowserObject(
-    jsDocument.callMethod('createEvent', ["KeyboardEvent"])
+    jsDocument.callMethod('createEvent', ["Event"])
   );
 
-  // event.callMethod(
-  //   'initKeyboardEvent', [ type, true, true, null, keycode ]);
+  event.callMethod(
+    'initEvent', [ type, true, true, null, keycode ]);
 
   // TODO:
   //  1. change ctrl_alt_foo to ignore plain event
@@ -96,20 +99,19 @@ createJSKeyEventObject(type, keycode) {
   //  3. change all keyboard event code to JS hack that is currently
   //     in test/index.html
 
-
-  event.callMethod(
-    'initKeyboardEvent', [
-    "keydown",        //  in DOMString typeArg,
-    true,             //  in boolean canBubbleArg,
-    true,             //  in boolean cancelableArg,
-    null,             //  in nsIDOMAbstractView viewArg,  Specifiew. This vale may be null.
-    false,            //  in boolean ctrlKeyArg,
-    false,            //  in boolean altKeyArg,
-    false,            //  in boolean shiftKeyArg,
-    false,            //  in boolean metaKeyArg,
-    KeyCode.ENTER,    //  in unsigned long keyCodeArg,
-    0                 //  in unsigned long charCodeArg);
-  ]);
+  // event.callMethod(
+  //   'initKeyboardEvent', [
+  //   "keydown",        //  in DOMString typeArg,
+  //   true,             //  in boolean canBubbleArg,
+  //   true,             //  in boolean cancelableArg,
+  //   null,             //  in nsIDOMAbstractView viewArg,  Specifiew. This vale may be null.
+  //   false,            //  in boolean ctrlKeyArg,
+  //   false,            //  in boolean altKeyArg,
+  //   false,            //  in boolean shiftKeyArg,
+  //   false,            //  in boolean metaKeyArg,
+  //   KeyCode.ENTER,    //  in unsigned long keyCodeArg,
+  //   0                 //  in unsigned long charCodeArg);
+  // ]);
 
   event['keyCode'] = KeyCode.ENTER;
   event['which'] = KeyCode.ENTER;
@@ -122,7 +124,6 @@ createJSKeyEventObject(type, keycode) {
   */
   event['keyCode'] = keycode;
   event['which'] = keycode;
-
 
   return event;
 }

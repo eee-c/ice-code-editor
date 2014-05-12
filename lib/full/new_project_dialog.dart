@@ -34,6 +34,8 @@ class NewProjectDialog extends Dialog implements MenuAction {
 
     dialog.query('input').onKeyDown.
       listen((e) {
+        // TODO: double-check if this is necessary
+        if (e.runtimeType == Event) return;
         if (e.keyCode != KeyCode.ENTER) return;
         _create();
         e.preventDefault();

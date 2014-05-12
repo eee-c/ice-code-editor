@@ -2,4 +2,15 @@
   <script src="full.dart" type="application/dart"></script>
   <script src="packages/browser/dart.js"></script>
   <script src="packages/browser/interop.js"></script>
+  <script>
+    function listenEvent(el, cb) {
+    console.log('[listenEvent] **************');
+    el.addEventListener('keydown', function(event) {
+    console.log(event.which);
+    console.log(event.keyCode);
+    cb(event.which);
+    });
+    }
+  </script>
+
 </head>
