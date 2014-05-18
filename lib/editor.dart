@@ -232,7 +232,6 @@ class Editor {
   }
 
   _startJsAce() {
-    js.context.ace.config.set("workerPath", "packages/ice_code_editor/js/ace");
 
     _ace = Ace.edit(editor_el);
 
