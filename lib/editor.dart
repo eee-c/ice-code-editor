@@ -297,8 +297,10 @@ class Editor {
 }
 
 class Ace {
-  static Ace edit(Element el) =>
-    new Ace(js.context['ace'].callMethod('edit', [el]));
+  static Ace edit(Element el) {
+    // TODO: revert this commit and load in Chrome, not Dartium
+    return new Ace(js.context['ace'].callMethod('edit', [el]));
+  }
 
   var jsAce;
 
