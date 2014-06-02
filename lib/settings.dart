@@ -23,7 +23,11 @@ class Settings implements Map<String, Object> {
   remove(String k) => model.remove(k);
   bool containsKey(String k) => model.containsKey(k);
   bool containsValue(Object v) => model.containsValue(v);
-  clear()=> model.clear();
+  void clear() {
+    model.clear();
+    _sync();
+    window.localStorage.remove(storage_key);
+  }
 
   Object operator [](String key) => model[key];
 

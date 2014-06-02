@@ -45,7 +45,7 @@ new_project_dialog_tests(){
         helpers.click('button', text: '☰');
         helpers.click('li', text: 'New');
 
-        Timer.run(expectAsync0((){
+        Timer.run(expectAsync((){
           expect(
             document.activeElement,
             equals(query('.ice-dialog input[type=text]'))

@@ -19,6 +19,7 @@ whats_new_tests() {
     tearDown(() {
       editor.remove();
       editor.store..clear()..freeze();
+      editor.settings..clear();
     });
 
     test("links to friendly release summary", (){
@@ -40,6 +41,7 @@ whats_new_tests() {
 
     group("existing editor, what's new has been clicked", () {
       setUp(() {
+        editor.settings..clear();
         editor.rememberWhatsNewClicked();
       });
 

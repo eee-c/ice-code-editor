@@ -99,7 +99,7 @@ Last Updated: ${today}'''
 
     test("does not include timestamps if they are null", (){
       // Give auto-save a chance to kick-in:
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         editor.store
           ..['Current Project'] = {'code': 'Current', 'updated_at': null};
 

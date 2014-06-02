@@ -180,7 +180,7 @@ store_tests() {
       _test(_)=> expect(store, isNot(isEmpty));
 
       // Once for clear, once for new Test Project
-      store.onSync.listen(expectAsync1(_test, count: 2));
+      store.onSync.listen(expectAsync(_test, count: 2));
 
       store['Test Project'] = {'code': 'Test Code'};
     });
@@ -239,7 +239,7 @@ store_tests() {
     test("creation date does not change on update", (){
       var original = it.currentProject['created_at'];
 
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         it['two'] = {'code': 3};
         expect(
           it.currentProject['created_at'],
@@ -258,7 +258,7 @@ store_tests() {
     test("update date changes… on update", (){
       var original = it.currentProject['updated_at'];
 
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         it['two'] = {'code': 3};
         expect(
           it.currentProject['updated_at'],

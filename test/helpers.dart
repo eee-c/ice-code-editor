@@ -1,7 +1,7 @@
 library ice_test_helpers;
 
 import 'dart:html';
-import 'package:unittest/matcher.dart';
+import 'package:matcher/matcher.dart';
 import 'package:ctrl_alt_foo/keys.dart';
 import 'package:ctrl_alt_foo/helpers.dart';
 export 'package:ctrl_alt_foo/helpers.dart';

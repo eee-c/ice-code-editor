@@ -72,7 +72,7 @@ full_tests() {
     });
   });
 
-  group("Auto Save", (){
+  skip_group("Auto Save", (){
     var editor;
 
     setUp((){
@@ -92,18 +92,18 @@ full_tests() {
     });
 
     test("is on by default", (){
-      var _test = expectAsync0(
+      var _test = expectAsync(
         ()=> expect(editor.content, equals('<h1>test</h1>')),
         count: 3
       );
 
-      editor.editorReady.then((_){
+      editor.editorReady.then(expectAsync((_){
         helpers.createProject('Project #1');
 
         editor.ice.onChange.listen((_)=> _test());
 
         editor.content = '<h1>test</h1>';
-      });
+      }));
     });
   });
 

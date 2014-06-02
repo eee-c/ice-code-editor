@@ -20,7 +20,7 @@ editor_tests() {
     test("starts an ACE instance", (){
       var it = new Editor('#ice-${currentTestCase.id}');
       it.editorReady.then(
-        expectAsync1((_) {
+        expectAsync((_) {
           expect(document.query('.ace_content'), isNotNull);
         })
       );
@@ -50,7 +50,7 @@ editor_tests() {
       it.content = 'asdf';
 
       it.editorReady.then(
-        expectAsync1((_) {
+        expectAsync((_) {
           expect(it.content, equals('asdf'));
         })
       );

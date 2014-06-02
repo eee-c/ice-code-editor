@@ -29,7 +29,7 @@ update_button_tests() {
       document.activeElement.
         dispatchEvent(new TextEvent('textInput', data: '<h1>Hello</h1>'));
 
-      editor.onPreviewChange.listen(expectAsync1((_)=> true));
+      editor.onPreviewChange.listen(expectAsync((_)=> true));
 
       helpers.click('button', text: " Update");
     });
@@ -61,7 +61,7 @@ update_button_tests() {
       document.activeElement.
         dispatchEvent(new TextEvent('textInput', data: '<h1>Hello</h1>'));
 
-      editor.onPreviewChange.listen(expectAsync1((_)=> true));
+      editor.onPreviewChange.listen(expectAsync((_)=> true));
 
       var wait = new Duration(milliseconds: 10);
       new Timer(wait, (){

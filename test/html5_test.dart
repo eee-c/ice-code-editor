@@ -22,7 +22,7 @@ main() {
           expect(editor_el.clientHeight, closeTo(window.innerHeight,1.0));
           expect(document.body.clientHeight, greaterThan(10));
         };
-        it.editorReady.then(expectAsync1(_test));
+        it.editorReady.then(expectAsync(_test));
       });
     });
   });

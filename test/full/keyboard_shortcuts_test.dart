@@ -48,7 +48,7 @@ keyboard_shortcuts_tests() {
         helpers.typeCtrl('n');
 
         var wait = new Duration(milliseconds: 500);
-        new Timer(wait, expectAsync0((){
+        new Timer(wait, expectAsync((){
           expect(
             document.activeElement,
             equals(query('.ice-dialog input[type=text]'))
@@ -264,7 +264,7 @@ keyboard_shortcuts_tests() {
         ? '*': window.location.href;
       editor.hideCode();
       window.postMessage('showCode', url);
-      Timer.run(expectAsync0( () {
+      Timer.run(expectAsync( () {
         expect(
           query('.ice-code-editor-editor').style.visibility,
           'visible'
