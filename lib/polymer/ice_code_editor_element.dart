@@ -11,22 +11,25 @@ class IceCodeEditorElement extends PolymerElement {
   @published int line_number = 0;
   ICE.Editor editor;
 
+  int width = 600;
+  int height = 400;
+
   IceCodeEditorElement.created(): super.created() {
     var container = new DivElement()
       ..id = 'ice-${this.hashCode}'
-      ..style.width = '600px'
-      ..style.height = '400px';
+      ..style.width = '${width}px'
+      ..style.height = '${height}px';
 
     // This only works because we have <content> tag to append to
     append(container);
 
     var preview_el = new DivElement()
-      ..style.top = '-450px';
+      ..style.top = '-${height}px';
     var wrapper = new DivElement()
       ..style.position = 'relative';
     wrapper.append(preview_el);
 
-    shadowRoot.append(wrapper);
+    append(wrapper);
 
     editor = new ICE.Editor(container, preview_el: preview_el);
 
