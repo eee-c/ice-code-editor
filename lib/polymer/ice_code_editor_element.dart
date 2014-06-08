@@ -17,10 +17,16 @@ class IceCodeEditorElement extends PolymerElement {
       ..style.width = '600px'
       ..style.height = '400px';
 
+    // This only works because we have <content> tag to append to
     append(container);
 
-    var preview_el = new DivElement();
-    shadowRoot.append(preview_el);
+    var preview_el = new DivElement()
+      ..style.top = '-450px';
+    var wrapper = new DivElement()
+      ..style.position = 'relative';
+    wrapper.append(preview_el);
+
+    shadowRoot.append(wrapper);
 
     editor = new ICE.Editor(container, preview_el: preview_el);
 

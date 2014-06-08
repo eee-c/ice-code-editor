@@ -181,7 +181,7 @@ class Editor {
       ..classes.add('ice-code-editor-preview');
 
     if (!this.edit_only) {
-      this.el.children.add(_preview_el);
+      this.el.append(wrapper);
     }
 
     return _preview_el;
@@ -297,10 +297,9 @@ class Editor {
 }
 
 class Ace {
-  static Ace edit(Element el) {
-    // TODO: revert this commit and load in Chrome, not Dartium
-    return new Ace(js.context['ace'].callMethod('edit', [el]));
-  }
+  // This line won't work in Dartium because of a Polymer.dart bug
+  static Ace edit(Element el) =>
+    new Ace(js.context['ace'].callMethod('edit', [el]));
 
   var jsAce;
 
