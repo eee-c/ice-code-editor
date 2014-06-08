@@ -20,6 +20,9 @@ class IceCodeEditorElement extends PolymerElement {
     // This only works because we have <content> tag to append to
     append(container);
 
+    // TODO better handling / get rid of the extra 50px. 400px is for the size
+    // of the element, the extra 50 is a eyeball adjustment for the trailing <p>
+    // tag instructions. Should work regardless of the <p> size / presence.
     var preview_el = new DivElement()
       ..style.top = '-450px';
     var wrapper = new DivElement()
