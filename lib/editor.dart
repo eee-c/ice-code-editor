@@ -181,7 +181,7 @@ class Editor {
       ..classes.add('ice-code-editor-preview');
 
     if (!this.edit_only) {
-      this.el.append(wrapper);
+      this.el.append(_preview_el);
     }
 
     return _preview_el;
