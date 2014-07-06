@@ -6,22 +6,54 @@ import 'dart:async';
 import 'package:polymer/polymer.dart';
 import 'package:ice_code_editor/ice.dart';
 
+//
+class PageComponent {
+  final PolymerElement el;
+
+  PageComponent(this.el);
+
+  Future flush() {
+    Completer completer = new Completer();
+    el.async((_) => completer.complete());
+
+    return completer.future;
+  }
+}
+
+@initMethod
 main() {
+  var component1;
+  var component2;
+  //initPolymer();
+
   setUp((){
-    var ready = new Completer();
-    new Timer(
-      new Duration(milliseconds: 5),
-      ready.complete
-    );
-    return ready.future;
+    //@TODO: check to see if async is returning or not
+    schedule(() => Polymer.onReady );
+    print("Entered Setup");
+
+    schedule(() {
+      print("Setup schedule");
+      var elements = queryAll('ice-code-editor');
+
+      component1 = new PageComponent(elements[0]);
+      component2 = new PageComponent(elements[1]);
+
+      //@TODO: investigate better async delay support for init of polymer element before test
+
+      return Future.wait([component1.flush(), component2.flush()]);
+    });
   });
 
   group("[polymer]", (){
-    test("can embed code", (){
-      expect(
-        query('ice-code-editor').shadowRoot.query('h1').text,
-        contains('embed_foo.html')
-      );
+    solo_test("can embed code", (){
+      print("Entered test");
+      schedule(() {
+        print("in test schedule");
+        expect(
+          query('ice-code-editor').shadowRoot.query('h1').text,
+          contains('embed_foo.html')
+        );
+      });
     });
     test("can set line number", (){
       expect(
