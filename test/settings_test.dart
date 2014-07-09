@@ -4,6 +4,7 @@ settings_tests() {
   group("store/retrieve", (){
     var it;
     setUp(()=> it = new Settings()..clear());
+    tearDown(()=> it.clear());
 
     test("it can store data", (){
       it['foo'] = 42;
@@ -37,6 +38,7 @@ settings_tests() {
   group("localStorage", (){
     var it;
     setUp(()=> it = new Settings()..clear());
+    tearDown(()=> it.clear());
 
     test("records persist", (){
       it['foo'] = 42;

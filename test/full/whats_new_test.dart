@@ -75,6 +75,7 @@ whats_new_tests() {
     tearDown(() {
       editor.remove();
       editor.store..clear()..freeze();
+      editor.settings..clear();
     });
 
     test("what's new menu item should not be highlighted", () {
@@ -92,6 +93,7 @@ whats_new_tests() {
 
     setUp((){
       editor = new Full()
+        ..settings.storage_key = "ice-test-settings-${currentTestCase.id}"
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -103,6 +105,7 @@ whats_new_tests() {
 
     tearDown(() {
       editor.remove();
+      editor.settings..clear();
       editor.store..clear()..freeze();
     });
 
@@ -137,6 +140,7 @@ whats_new_tests() {
 
     setUp((){
       editor = new Full()
+        ..settings.storage_key = "ice-test-settings-${currentTestCase.id}"
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store.clear();
@@ -146,6 +150,7 @@ whats_new_tests() {
 
     tearDown(() {
       editor.remove();
+      editor.settings..clear();
       editor.store..clear()..freeze();
     });
 
