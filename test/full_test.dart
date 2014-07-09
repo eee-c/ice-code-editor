@@ -72,7 +72,7 @@ full_tests() {
     });
   });
 
-  skip_group("Auto Save", (){
+  group("Auto Save", (){
     var editor;
 
     setUp((){
