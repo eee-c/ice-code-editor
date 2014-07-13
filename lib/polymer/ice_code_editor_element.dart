@@ -36,8 +36,8 @@ class IceCodeEditorElement extends PolymerElement {
     loadContent();
   }
 
-  void enteredView() {
-    super.enteredView();
+  void attached() {
+    super.attached();
     editor.applyStyles();
   }
 
