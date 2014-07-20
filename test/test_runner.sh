@@ -27,7 +27,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Run different test contexts
-for X in index html5
+for X in polymer/index html5 index
 do
   # Run a set of Dart Unit tests
   results=$(content_shell --dump-render-tree test/$X.html)
