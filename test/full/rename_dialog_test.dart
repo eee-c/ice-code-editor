@@ -17,6 +17,7 @@ rename_dialog_tests() {
 
     tearDown(() {
       editor.remove();
+      editor.settings.clear();
       editor.store..clear()..freeze();
     });
 
