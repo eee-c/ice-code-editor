@@ -18,12 +18,29 @@ class Store implements HashMap<String, HashMap> {
 
   /// The record ID attribute
   static const String title = 'filename';
-  List _projects;
+  LinkedHashMap _projects;
 
-  Store({this.storage_key: codeEditor});
+  Store({this.storage_key: codeEditor}) {
+    _projects = serialize();
+  }
   //   // Uncomment this (and method below) to migrate development data
   //   // _migrateFromTitleIdToFilename();
   // }
+
+
+  LinkedHashMap serialize() {
+    var json = window.localStorage[storage_key];
+    var projects = (json == null) ? [] : JSON.decode(json);
+
+    var map = new LinkedHashMap();
+    projects.forEach((p){
+      map[p['title']] = p;
+    });
+    return map;
+  }
+
+
+
 
   HashMap get currentProject {
     if (this.isEmpty)
@@ -126,13 +143,9 @@ class Store implements HashMap<String, HashMap> {
     return "$title (${count+1})";
   }
 
-
   /// The list of all projects in the store.
   List get projects {
     if (_projects != null) return _projects;
-
-    var json = window.localStorage[storage_key];
-    return _projects = (json == null) ? [] : JSON.decode(json);
   }
 
   /// Force the list of projects to refresh itself by reloading from
