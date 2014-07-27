@@ -1,7 +1,7 @@
 part of ice_tests;
 
 store_tests() {
-  group("store/retrieve", (){
+  solo_group("store/retrieve", (){
     var it;
     setUp(()=> it = new Store()..clear());
 
@@ -41,7 +41,7 @@ store_tests() {
     });
   });
 
-  group("localStorage", (){
+  solo_group("localStorage", (){
     var it;
     setUp(()=> it = new Store()..clear());
 
@@ -63,7 +63,7 @@ store_tests() {
     });
   });
 
-  group("Multiple Stores", (){
+  solo_group("Multiple Stores", (){
     test("can be created with optional named construtor params", (){
       var store1 = new Store(storage_key: 'test1')
             ..['one'] = {'id': 'foo'}
@@ -81,7 +81,7 @@ store_tests() {
     });
   });
 
-  group("current project title", (){
+  solo_group("current project title", (){
     test("is \"Untitled\" when there are no projects", (){
       var it = new Store()..clear();
       expect(
@@ -100,7 +100,7 @@ store_tests() {
     });
   });
 
-  group("destructive operations", (){
+  solo_group("destructive operations", (){
     var it;
     setUp((){
       it = new Store()..clear();
@@ -157,7 +157,7 @@ store_tests() {
       expect(it.length, equals(3));
     });
 
-    group("addAll", (){
+    solo_group("addAll", (){
       setUp(()=> it.addAll({'three': {'id': 42}, 'four': {'id': 4}}));
 
       test("it overwrites existing records with same key", (){
@@ -171,7 +171,7 @@ store_tests() {
     });
   });
 
-  group("onSync", (){
+  solo_group("onSync", (){
     tearDown(()=> new Store()..clear());
 
     test("it generates a stream action when a sync operation occurs", (){
@@ -186,7 +186,7 @@ store_tests() {
     });
   });
 
-  group("Next Project Named", (){
+  solo_group("Next Project Named", (){
     var it;
     setUp((){
       it = new Store()..clear();
@@ -218,7 +218,7 @@ store_tests() {
     });
   });
 
-  group("Store", (){
+  solo_group("Store", (){
     var it;
     setUp((){
       it = new Store()
@@ -266,8 +266,22 @@ store_tests() {
         );
       }));
     });
-
-
   });
-  // next project named
+
+  solo_group("Snapshots", (){
+    var it;
+    setUp((){
+      it = new Store()
+        ..clear()
+        ..['one'] = {'code': 1}
+        ..['two'] = {'code': 2, 'snapshot': true}
+        ..['three'] = {'code': 3};
+    });
+
+    tearDown(()=> new Store()..clear());
+
+    test('project list does not inlcude snapshots by default', (){
+      expect(it.length, equals(2));
+    });
+  });
 }
