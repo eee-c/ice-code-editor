@@ -89,7 +89,7 @@ store_tests() {
         equals('Untitled')
       );
     });
-    test("is this title of the first project when there are projects", (){
+    test("is the title of the first project when there are projects", (){
       var it = new Store()..clear();
       it['one'] = {'id': 1};
       it['two'] = {'id': 2};
@@ -119,7 +119,7 @@ store_tests() {
       expect(it.remove('four'), isNull);
     });
 
-    test("it persists removes", (){
+    test("persist removes", (){
       it.remove('two');
       it.refresh();
       expect(it['two'], isNull);
@@ -283,5 +283,11 @@ store_tests() {
     test('project list does not inlcude snapshots by default', (){
       expect(it.length, equals(2));
     });
+
+    // TODO:
+    // Need to make sure this persists snapshot records in localStorage
+    // does forEach inlcude snapshots?
+    // audit library code for any other instances of treating _projects like a List
+    // if no other questions then try the entire build
   });
 }
