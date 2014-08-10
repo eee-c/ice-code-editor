@@ -53,14 +53,13 @@ class Store implements HashMap<String, HashMap> {
   HashMap operator [](String key)=> _projects[key];
 
   void operator []=(String key, HashMap data) {
-    // TODO: do we still need to do this after the conversion to LinkedHashMap
-    // is complete?
     data[title] = key; // store filename directly in DB record
 
     data.putIfAbsent('updated_at', ()=> new DateTime.now().toString());
 
     if (_projects.containsKey(key)) {
       data['created_at'] = _projects[key]['created_at'];
+      _projects.remove(key);
     }
     else {
       data.putIfAbsent('created_at', ()=> new DateTime.now().toString());
@@ -70,17 +69,14 @@ class Store implements HashMap<String, HashMap> {
     _sync();
   }
 
-  int _indexOfKey(String key) => projects.indexOf(this[key]);
-
   bool get isEmpty => _projects.isEmpty;
   bool get isNotEmpty => _projects.isNotEmpty;
   Iterable<String> get keys => _projects.keys;
   Iterable<HashMap> get values => _projects.values;
   bool containsKey(key) => _projects.containsKey(key);
   bool containsValue(value) => _projects.containsValue(value);
-  void forEach(f) {
-    projects.forEach((p)=> f(p[title], p));
-  }
+  void forEach(f) { _projects.forEach(f); }
+
   HashMap remove(key) {
     var removed = _projects.remove(key);
     _sync();
@@ -122,11 +118,16 @@ class Store implements HashMap<String, HashMap> {
 
   /// The list of all projects in the store.
   List get projects {
+    return projectsIncludingSnapshots.
+      where((p)=> p['snapshot'] != true).
+      toList();
+  }
+
+  List get projectsIncludingSnapshots {
     if (_projects == null) return [];
 
     return _projects.
       values.
-      where((p)=> p['snapshot'] != true).
       toList().
       reversed.
       toList();
@@ -144,7 +145,7 @@ class Store implements HashMap<String, HashMap> {
   void _sync() {
     if (_frozen) return;
 
-    window.localStorage[storage_key] = JSON.encode(projects);
+    window.localStorage[storage_key] = JSON.encode(projectsIncludingSnapshots);
     _syncController.add(true);
   }
 

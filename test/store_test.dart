@@ -1,7 +1,7 @@
 part of ice_tests;
 
 store_tests() {
-  solo_group("store/retrieve", (){
+  group("store/retrieve", (){
     var it;
     setUp(()=> it = new Store()..clear());
 
@@ -41,7 +41,7 @@ store_tests() {
     });
   });
 
-  solo_group("localStorage", (){
+  group("localStorage", (){
     var it;
     setUp(()=> it = new Store()..clear());
 
@@ -63,7 +63,7 @@ store_tests() {
     });
   });
 
-  solo_group("Multiple Stores", (){
+  group("Multiple Stores", (){
     test("can be created with optional named construtor params", (){
       var store1 = new Store(storage_key: 'test1')
             ..['one'] = {'id': 'foo'}
@@ -81,7 +81,7 @@ store_tests() {
     });
   });
 
-  solo_group("current project title", (){
+  group("current project title", (){
     test("is \"Untitled\" when there are no projects", (){
       var it = new Store()..clear();
       expect(
@@ -100,7 +100,7 @@ store_tests() {
     });
   });
 
-  solo_group("destructive operations", (){
+  group("destructive operations", (){
     var it;
     setUp((){
       it = new Store()..clear();
@@ -157,7 +157,7 @@ store_tests() {
       expect(it.length, equals(3));
     });
 
-    solo_group("addAll", (){
+    group("addAll", (){
       setUp(()=> it.addAll({'three': {'id': 42}, 'four': {'id': 4}}));
 
       test("it overwrites existing records with same key", (){
@@ -171,7 +171,7 @@ store_tests() {
     });
   });
 
-  solo_group("onSync", (){
+  group("onSync", (){
     tearDown(()=> new Store()..clear());
 
     test("it generates a stream action when a sync operation occurs", (){
@@ -186,7 +186,7 @@ store_tests() {
     });
   });
 
-  solo_group("Next Project Named", (){
+  group("Next Project Named", (){
     var it;
     setUp((){
       it = new Store()..clear();
@@ -218,7 +218,7 @@ store_tests() {
     });
   });
 
-  solo_group("Store", (){
+  group("Store", (){
     var it;
     setUp((){
       it = new Store()
@@ -266,9 +266,21 @@ store_tests() {
         );
       }));
     });
+
+    test("initial order is insertion order", (){
+      var titles = it.projects.map((p) => p[Store.title]);
+      expect(titles, ['two', 'one']);
+    });
+
+    test("updating a record moves it to the top of the list", (){
+      it['one'] = {'code': 'updated code'};
+
+      var titles = it.projects.map((p) => p[Store.title]);
+      expect(titles, equals(['one', 'two']));
+    });
   });
 
-  solo_group("Snapshots", (){
+  group("Snapshots", (){
     var it;
     setUp((){
       it = new Store()
@@ -284,10 +296,19 @@ store_tests() {
       expect(it.length, equals(2));
     });
 
-    // TODO:
-    // Need to make sure this persists snapshot records in localStorage
-    // does forEach inlcude snapshots?
-    // audit library code for any other instances of treating _projects like a List
-    // if no other questions then try the entire build
+    test("existing snapshots persist", (){
+      it.refresh();
+
+      expect(it['two']['code'], equals(2));
+      expect(it['two']['snapshot'], isTrue);
+    });
+
+    test("new snapshots persist", (){
+      it['foo'] = {'code': 42, 'snapshot': true};
+      it.refresh();
+
+      expect(it['foo']['code'], equals(42));
+      expect(it['foo']['snapshot'], isTrue);
+    });
   });
 }
