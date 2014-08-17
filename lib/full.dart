@@ -4,6 +4,7 @@ class Full {
   Element el;
   Editor ice;
   Store store;
+  Snapshotter snapshotter;
   Settings settings;
 
   Full() {
@@ -12,6 +13,7 @@ class Full {
 
     ice = new Editor('#ice');
     store = new Store();
+    snapshotter = new Snapshotter(this);
     settings = new Settings();
 
     _attachKeyboardHandlers();
