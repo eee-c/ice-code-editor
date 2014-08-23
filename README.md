@@ -76,6 +76,7 @@ $ pub build --mode=development
  * [Michael Risse](https://github.com/rissem)
  * [Chris Sciolla](https://github.com/chrisski)
  * [Alper Sunar](https://github.com/asunar)
+ * Stefan Dausend-Werner
 
 ## Want to Help?
 

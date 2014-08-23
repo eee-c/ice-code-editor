@@ -291,5 +291,41 @@ full_tests() {
     });
   });
 
+  // TODO: Need to see this fail with the undo manager commented out in
+  // editor.dart before we have confidence in this test.
+  skip_group("undo", (){
+    var editor;
+
+    setUp((){
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Old Project'] = {'code': 'Old Test'}
+        ..['Current Project'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+    });
+
+    test("Cannot undo past the initial content", (){
+      expect(editor.content, 'Test');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+      helpers.click('li', text: 'Old Project');
+
+      editor.ice.undo();
+      editor.ice.undo();
+
+      expect(editor.content, 'Old Test');
+    });
+  });
+
   // TODO: put current project title in the browser title
 }

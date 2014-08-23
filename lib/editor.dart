@@ -67,6 +67,10 @@ class Editor {
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
 
+  void undo() {
+    _ace.session.undoManager.callMethod('undo', []);
+  }
+
   int get lineNumber => _ace.lineNumber;
   set lineNumber(int v) { _ace.lineNumber = v; }
   String get lineContent => _ace.lineContent;
@@ -318,8 +322,12 @@ class Ace {
     jsAce.callMethod('setDisplayIndentGuides', [b]);
 
   String get value => jsAce.callMethod('getValue');
-  set value(String content) =>
+  set value(String content) {
     jsAce.callMethod('setValue', [content, -1]);
+
+    var UndoManager = js.context['ace'].callMethod('require', ['ace/undomanager'])['UndoManager'];
+    session.undoManager = new js.JsObject(UndoManager);
+  }
 
   void focus() => jsAce.callMethod('focus');
 
@@ -378,6 +386,11 @@ class AceSession {
   }
   set useSoftTabs(bool b) => jsSession.callMethod('setUseSoftTabs', [b]);
   set tabSize(int size) => jsSession.callMethod('setTabSize', [size]);
+
+  get undoManager => jsSession.callMethod('getUndoManager', [false]);
+  set undoManager(u) {
+    jsSession.callMethod('setUndoManager', [u]);
+  }
 
   String getLine(int row) => jsSession.callMethod('getLine', [row]);
 
