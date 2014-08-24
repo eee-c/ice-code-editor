@@ -1,7 +1,7 @@
 part of ice_test;
 
 snapshotter_tests() {
-  group('Snapshotter', () {
+  solo_group('Snapshotter', () {
     var editor;
 
     setUp((){
@@ -18,12 +18,32 @@ snapshotter_tests() {
       editor.store..clear()..freeze();
     });
 
-    solo_test('take a snapshot of code', () {
+    test('take a snapshot of code', () {
       editor.snapshotter.take();
-      var dateStr = new DateTime.now().toIso8601String().replaceFirst('T', ' ').replaceFirst(new RegExp(r':\d\d\.\d\d\d.*'), '');
-      print(dateStr);
-      expect(editor.store['SNAPSHOT: Saved Project ($dateStr)'], isNotNull);
+      expect(editor.store['SNAPSHOT: Saved Project (${Snapshotter.dateStr})'], isNotNull);
     });
-    //TODO: snapshot should have the snapshot flag set to true
+
+    test('Snapshot flag set to true', () {
+      editor.snapshotter.take();
+      var snapshot = editor.store['SNAPSHOT: Saved Project (${Snapshotter.dateStr})'];
+      expect(snapshot['snapshot'], isTrue);
+    });
+
+    test('snapshot should have copy of most recent code', () {
+      editor.snapshotter.take();
+      var snapshot = editor.store['SNAPSHOT: Saved Project (${Snapshotter.dateStr})'];
+      expect(snapshot['code'], equals('asdf'));
+    });
+
+    test('snapshot should not be taken if code is not changed', () {
+      editor.store['SNAPSHOT: Saved Project (2014-08-23 23:08)'] = {'code': 'asdf', 'snapshot': true};
+      editor.snapshotter.take();
+      var snapshot = editor.store['SNAPSHOT: Saved Project (${Snapshotter.dateStr})'];
+      expect(snapshot, isNull);
+    });
+
+    //TODO: if 20 snapshots exists a new snapshot should delete oldest from the list
+    //TODO: set a timer to take a snapshot every ten minutes
+    //TODO: implement ?s URL to show the snapshots
   });
 }
