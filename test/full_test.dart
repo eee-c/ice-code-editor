@@ -292,7 +292,9 @@ full_tests() {
   });
 
   // TODO: Need to see this fail with the undo manager commented out in
-  // editor.dart before we have confidence in this test.
+  // editor.dart before we have confidence in this test. Manually calling the
+  // session's undo has no effect -- maybe using a different undoManager under
+  // test?
   skip_group("undo", (){
     var editor;
 
@@ -319,9 +321,14 @@ full_tests() {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'Open');
       helpers.click('li', text: 'Old Project');
+      expect(editor.content, 'Old Test');
 
-      editor.ice.undo();
-      editor.ice.undo();
+      // TODO: some combination of the following should work for this test to
+      // work...
+      // editor.ice.insertAt('asdf', 12);
+      // editor.ice.undo();
+      // editor.ice.undo();
+      // editor.ice.undo();
 
       expect(editor.content, 'Old Test');
     });

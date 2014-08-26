@@ -67,10 +67,6 @@ class Editor {
   String get content => _ace.value;
   Future get editorReady => _waitForAce.future;
 
-  void undo() {
-    _ace.session.undoManager.callMethod('undo', []);
-  }
-
   int get lineNumber => _ace.lineNumber;
   set lineNumber(int v) { _ace.lineNumber = v; }
   String get lineContent => _ace.lineContent;
@@ -390,6 +386,11 @@ class AceSession {
   get undoManager => jsSession.callMethod('getUndoManager', [false]);
   set undoManager(u) {
     jsSession.callMethod('setUndoManager', [u]);
+  }
+
+  void insertAt(String content, int row, int col) {
+    var pos = jsSession.callMethod('screenToDocumentPosition', [row, col]);
+    jsSession.callMethod('insert', [pos, content]);
   }
 
   String getLine(int row) => jsSession.callMethod('getLine', [row]);
