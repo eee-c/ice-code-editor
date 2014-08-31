@@ -42,7 +42,21 @@ snapshotter_tests() {
       expect(snapshot, isNull);
     });
 
-    //TODO: if 20 snapshots exists a new snapshot should delete oldest from the list
+    test('snapshot deletes the oldest if if 20 snapshots exist', (){
+      for (var i=0; i<20; i++) {
+        editor.store['SNAPSHOT: Saved Project #$i (2014-08-30: 22:48)'] = {
+          'code': 'asdf',
+          'snapshot': true
+        };
+      }
+
+      editor.snapshotter.take();
+
+      var snapshot = editor.store['SNAPSHOT: Saved Project #0 (2014-08-30: 22:48)'];
+      expect(snapshot, isNull);
+    });
+
+    // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
     //TODO: set a timer to take a snapshot every ten minutes
     //TODO: implement ?s URL to show the snapshots
   });
