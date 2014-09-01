@@ -75,6 +75,7 @@ $ pub build --mode=development
  * [Michael Reynolds](https://github.com/mr170)
  * [Michael Risse](https://github.com/rissem)
  * [Chris Sciolla](https://github.com/chrisski)
+ * [Christian Smith](https://github.com/christiansmith)
  * [Alper Sunar](https://github.com/asunar)
  * Stefan Dausend-Werner
 
