@@ -254,21 +254,34 @@ class Editor {
     _waitForAce.complete();
   }
 
+  var _lastKeyUp;
   _attachKeyHandlersForAce() {
     // Using keyup b/c ACE swallows keydown events
-    document.onKeyUp.listen((e) {
-      // only handling arrow keys
-      if (e.keyCode < 37) return;
-      if (e.keyCode > 40) return;
-      _extendDelayedUpdatePreview();
-    });
-
-    document.onKeyPress.listen((event) {
-      if (event.keyCode == 9829) {
-        event.preventDefault();
-        _ace.toggleEmacs();
-      }
-    });
+    document.
+      onKeyUp
+      ..listen((event) {
+          // only handling arrow keys
+          if (event.keyCode < 37) return;
+          if (event.keyCode > 40) return;
+          _extendDelayedUpdatePreview();
+        })
+      ..listen((event) {
+           if (event.keyCode == 188) {
+            _lastKeyUp = 188;
+            return;
+          }
+          if (_lastKeyUp != 188) {
+            _lastKeyUp = null;
+            return;
+          }
+          if (event.keyCode == 16) {
+            return;
+          }
+          if (event.keyCode == 51) {
+            _ace.toggleEmacs();
+          }
+          _lastKeyUp = null;
+        });
   }
 
   applyStyles() {
