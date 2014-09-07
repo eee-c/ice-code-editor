@@ -29,7 +29,7 @@ class Full {
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
       ..then((_)=> _initializeSettingForFirstUse())
-      ..then((_)=> _applyEditorModes())
+      ..then((_)=> _applyQueryStringSettings())
       ..then((_)=> _applyStyles());
   }
 
@@ -367,7 +367,7 @@ changed.''';
     }
   }
 
-  _applyEditorModes() {
+  _applyQueryStringSettings() {
     // Users should use query params. Checking hash because it plays better
     // with tests. Query params cause a browser reload (bad in unit tests).
     if (window.location.search.contains('?e')) ice.edit_only = true;
@@ -375,6 +375,9 @@ changed.''';
 
     if (window.location.search.contains('?g')) hideCode();
     if (window.location.hash.startsWith('#g')) hideCode();
+
+    if (window.location.search.contains('?s')) store.show_snapshots = true;
+    if (window.location.hash.startsWith('#s')) store.show_snapshots = true;
   }
 
   Element get editor_el => ice.editor_el;
