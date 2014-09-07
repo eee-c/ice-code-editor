@@ -20,6 +20,9 @@ class Store implements HashMap<String, HashMap> {
   static const String title = 'filename';
   LinkedHashMap _projects;
 
+  /// Include snapshots by default (normally they are not displayed).
+  bool show_snapshots = false;
+
   Store({this.storage_key: codeEditor}) {
     _projects = deserialize();
   }
@@ -43,7 +46,7 @@ class Store implements HashMap<String, HashMap> {
     if (this.isEmpty)
       return {'code': ''}..[title] = 'Untitled';
 
-    return projects.first;
+    return projectsExcludingSnapshots.first;
   }
 
   String get currentProjectTitle => currentProject[title];
@@ -118,6 +121,11 @@ class Store implements HashMap<String, HashMap> {
 
   /// The list of all projects in the store.
   List get projects {
+    return show_snapshots ?
+      projectsIncludingSnapshots : projectsExcludingSnapshots;
+  }
+
+  List get projectsExcludingSnapshots {
     return projectsIncludingSnapshots.
       where((p)=> p['snapshot'] != true).
       toList();

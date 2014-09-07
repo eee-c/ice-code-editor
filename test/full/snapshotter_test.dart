@@ -1,7 +1,7 @@
 part of ice_test;
 
 snapshotter_tests() {
-  solo_group('Snapshotter', () {
+  group('Snapshotter', () {
     var editor;
 
     setUp((){
@@ -57,7 +57,8 @@ snapshotter_tests() {
     });
 
     // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
-    //TODO: set a timer to take a snapshot every ten minutes
-    //TODO: implement ?s URL to show the snapshots
+    // QUESTION: When someone opens a Snapshot, what happens to the flag?
+
+    //TODO: after ?s, the last project should be opened, *not* the most recent snapshot
   });
 }

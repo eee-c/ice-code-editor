@@ -2,6 +2,7 @@ part of ice;
 
 class Snapshotter {
   Full full;
+  final duration = const Duration(seconds: 8);
 
   static get dateStr => new DateTime.
     now().
@@ -9,7 +10,9 @@ class Snapshotter {
     replaceFirst('T', ' ').
     replaceFirst(new RegExp(r':\d\d\.\d\d\d.*'), '');
 
-  Snapshotter(this.full);
+  Snapshotter(this.full) {
+    _startTimer();
+  }
 
   void take() {
     var currentProjectTitle = full.store.currentProjectTitle;
@@ -45,5 +48,9 @@ class Snapshotter {
     return store.
       projectsIncludingSnapshots.
       where((item) => item['snapshot']);
+  }
+
+  void _startTimer() {
+    new Timer.periodic(duration, (_){ take(); });
   }
 }
