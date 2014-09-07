@@ -25,7 +25,10 @@ class Snapshotter {
 
     if( lastSnapshot['code'] == full.store.currentProject['code']) return;
 
-    var title = 'SNAPSHOT: $currentProjectTitle ($dateStr)';
+    var oldTitle = currentProjectTitle.
+      replaceFirst('SNAPSHOT: ', '').
+      replaceFirst(new RegExp(r' \([^(]+\)$'), '');
+    var title = 'SNAPSHOT: $oldTitle ($dateStr)';
 
     full.store[title] = new Map.from(full.store.currentProject)
       ..[Store.title] = title
