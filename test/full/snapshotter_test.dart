@@ -71,6 +71,6 @@ snapshotter_tests() {
 
     // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
     // QUESTION: When someone opens a Snapshot, what happens to the flag?
-    //TODO: after ?s, the last project should be opened, *not* the most recent snapshot
+    // QUESTION: the deserialized projects list was reversed, but we did not noticed any order problems in the UI -- why?
   });
 }
