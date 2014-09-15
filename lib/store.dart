@@ -36,7 +36,7 @@ class Store implements HashMap<String, HashMap> {
     var projects = (json == null) ? [] : JSON.decode(json);
 
     var map = new LinkedHashMap();
-    projects.forEach((p){
+    projects.reversed.forEach((p){
       map[p[title]] = p;
     });
     return map;
@@ -152,6 +152,12 @@ class Store implements HashMap<String, HashMap> {
 
   void _sync() {
     if (_frozen) return;
+
+    if (projectsExcludingSnapshots.isNotEmpty) {
+      var title = currentProjectTitle;
+      var current = _projects.remove(title);
+      _projects[title] = current;
+    }
 
     window.localStorage[storage_key] = JSON.encode(projectsIncludingSnapshots);
     _syncController.add(true);

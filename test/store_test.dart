@@ -218,7 +218,7 @@ store_tests() {
     });
   });
 
-  group("Store", (){
+  solo_group("Store", (){
     var it;
     setUp((){
       it = new Store()
@@ -272,6 +272,12 @@ store_tests() {
       expect(titles, ['two', 'one']);
     });
 
+    test("order persists after save / reload", (){
+      it.refresh();
+      var titles = it.projects.map((p) => p[Store.title]);
+      expect(titles, ['two', 'one']);
+    });
+
     test("updating a record moves it to the top of the list", (){
       it['one'] = {'code': 'updated code'};
 
@@ -280,7 +286,7 @@ store_tests() {
     });
   });
 
-  group("Snapshots", (){
+  solo_group("Snapshots", (){
     var it;
     setUp((){
       it = new Store()
@@ -309,6 +315,26 @@ store_tests() {
 
       expect(it['foo']['code'], equals(42));
       expect(it['foo']['snapshot'], isTrue);
+    });
+
+    test("are never first on the project list", (){
+      it['new snapshot'] = {'code': 4, 'snapshot': true};
+      it.show_snapshots = true;
+
+      it.refresh();
+
+      expect(it.projects.first['snapshot'], null);
+    });
+
+    test("when they are the only projects in the list, still persist", (){
+      it
+        ..clear()
+        ..['two'] = {'code': 2, 'snapshot': true}
+        ..['four'] = {'code': 4, 'snapshot': true};
+
+      it.refresh();
+
+      expect(it.projects.length, 0);
     });
   });
 }
