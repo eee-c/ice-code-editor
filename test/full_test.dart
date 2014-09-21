@@ -170,6 +170,37 @@ full_tests() {
     });
   });
 
+  solo_group("Snapshot Mode", (){
+    var editor;
+
+    setUp((){
+      window.location.hash = '#s';
+
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+      window.location.hash = '';
+    });
+
+    test("is enabled when the ?s query param is present", (){
+      expect(editor.store.show_snapshots, isTrue);
+    });
+
+    test("does not have a running snapshotter", (){
+      expect(editor.snapshotter, isNull);
+    });
+  });
+
   group("Focus", (){
     var editor;
 

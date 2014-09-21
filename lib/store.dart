@@ -153,7 +153,8 @@ class Store implements HashMap<String, HashMap> {
   void _sync() {
     if (_frozen) return;
 
-    if (projectsExcludingSnapshots.isNotEmpty) {
+    // not showing snapshots and there are non-snapshot projects
+    if (!show_snapshots && projectsExcludingSnapshots.isNotEmpty) {
       var title = currentProjectTitle;
       var current = _projects.remove(title);
       _projects[title] = current;

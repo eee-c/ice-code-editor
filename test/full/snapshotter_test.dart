@@ -69,8 +69,16 @@ snapshotter_tests() {
       expect(snapshot['snapshot'], isTrue);
     });
 
-    // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
+    // TODO: trace opening snapshots. When 04 is current project and we want a previous snapshot (be sure that snapshot doesn't overwrite snapshot from same minutes), need to trace title -- should wind up with SNAPSHOT title, but often winds up with non-snapshot title.
+
+    // TODO: multiple snapshots of a projects that had parens should only produce one snapshot
+
     // QUESTION: When someone opens a Snapshot, what happens to the flag?
-    // QUESTION: the deserialized projects list was reversed, but we did not noticed any order problems in the UI -- why?
+    // QUESTION: disable edit / create in snapshot? Initial thought is that its' not worth it.
+
+
+    // TODO: snapshots every 10 minutes, not 8 seconds
+
+    // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
   });
 }
