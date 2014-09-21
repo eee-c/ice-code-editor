@@ -13,7 +13,6 @@ class Full {
 
     ice = new Editor('#ice');
     store = new Store();
-    snapshotter = new Snapshotter(this);
     settings = new Settings();
 
     _attachKeyboardHandlers();
@@ -378,6 +377,10 @@ changed.''';
 
     if (window.location.search.contains('?s')) store.show_snapshots = true;
     if (window.location.hash.startsWith('#s')) store.show_snapshots = true;
+
+    if (!store.show_snapshots) {
+      snapshotter = new Snapshotter(this);
+    }
   }
 
   Element get editor_el => ice.editor_el;
