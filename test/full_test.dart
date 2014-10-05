@@ -1,7 +1,7 @@
 part of ice_tests;
 
 full_tests() {
-  group("initial UI", (){
+  solo_group("initial UI", (){
     var editor;
 
     setUp((){
@@ -27,7 +27,12 @@ full_tests() {
       expect(editor_el.clientHeight, closeTo(window.innerHeight,1.0));
     });
 
-    //test("has a default project", (){});
+    test("does not show leave snapshot mode button", (){
+      expect(
+        queryAll('button'),
+        helpers.elementsDoNotContain('Leave Snapshot Mode')
+      );
+    });
   });
 
   group("main toolbar", (){
@@ -199,7 +204,23 @@ full_tests() {
     test("does not have a running snapshotter", (){
       expect(editor.snapshotter, isNull);
     });
+
+    test("does not include update button", (){
+      expect(
+        queryAll('button'),
+        helpers.elementsDoNotContain('Update')
+      );
+    });
+
+    test("shows leave snapshot mode button", (){
+      expect(
+        helpers.queryWithContent('button', 'Leave Snapshot Mode'),
+        isNotNull
+      );
+    });
   });
+
+
 
   group("Focus", (){
     var editor;
