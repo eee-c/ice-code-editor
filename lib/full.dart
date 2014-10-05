@@ -23,12 +23,12 @@ class Full {
     _fullScreenStyles();
 
     editorReady
+      ..then((_)=> _applyQueryStringSettings())
       ..then((_)=> _attachCodeToolbar())
       ..then((_)=> _attachPreviewToolbar())
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
       ..then((_)=> _initializeSettingForFirstUse())
-      ..then((_)=> _applyQueryStringSettings())
       ..then((_)=> _applyStyles());
   }
 
@@ -56,6 +56,7 @@ class Full {
 
     toolbar.children
       ..add(_updateButton)
+      ..add(_leaveSnapshotModeButton)
       ..add(_hideCodeButton)
       ..add(_mainMenuButton);
 
@@ -80,6 +81,8 @@ class Full {
 
   Element _update_button;
   get _updateButton {
+    if (store.show_snapshots) return new Element.span();
+
     return _update_button = new Element.html('''
         <button>
            <input checked type=checkbox title="$_update_tooltip"/>
@@ -93,6 +96,24 @@ class Full {
           where((e) => e.target.checked).
           listen((e)=> ice.updatePreview());
   }
+
+  Element _leave_snapshot_mode_button;
+  get _leaveSnapshotModeButton {
+    if (!store.show_snapshots) return new Element.span();
+
+   // new_indicator.style
+   //    ..color = 'red'
+
+   return _leave_snapshot_mode_button = new Element.html('''
+        <button>Leave Snapshot Mode</button>'''
+      )
+      ..onClick.listen((e){
+        throw "Can't click yet";
+      })
+      ..style.color = 'red'
+      ..style.fontWeight = 'bold';
+  }
+
 
   get _update_tooltip => '''
 If not checked, then the preview is not auto-updated. The
@@ -121,6 +142,7 @@ changed.''';
     _hide_code_button.style.display = 'none';
     _main_menu_button.style.display = 'none';
     _update_button.style.display = 'none';
+    _leave_snapshot_mode_button.display = 'none';
     _show_code_button.style.display = '';
     _focusAfterPreviewChange();
   }
@@ -149,6 +171,7 @@ changed.''';
     _show_code_button.style.display = 'none';
     _main_menu_button.style.display = '';
     _update_button.style.display = '';
+    _leave_snapshot_mode_button.display = '';
     _hide_code_button.style.display = '';
   }
 
@@ -375,8 +398,14 @@ changed.''';
     if (window.location.search.contains('?g')) hideCode();
     if (window.location.hash.startsWith('#g')) hideCode();
 
-    if (window.location.search.contains('?s')) store.show_snapshots = true;
-    if (window.location.hash.startsWith('#s')) store.show_snapshots = true;
+    if (window.location.search.contains('?s')) {
+      store.show_snapshots = true;
+      ice.read_only = true;
+    }
+    if (window.location.hash.startsWith('#s')) {
+      store.show_snapshots = true;
+      ice.read_only = true;
+    }
 
     if (!store.show_snapshots) {
       snapshotter = new Snapshotter(this);

@@ -69,16 +69,21 @@ snapshotter_tests() {
       expect(snapshot['snapshot'], isTrue);
     });
 
-    // TODO: trace opening snapshots. When 04 is current project and we want a previous snapshot (be sure that snapshot doesn't overwrite snapshot from same minutes), need to trace title -- should wind up with SNAPSHOT title, but often winds up with non-snapshot title.
+    // Snapshot mode:
+    //   1. Read-only ACE
+    //   2. Hide Update button
+    //   3. Show a snapshot-mode warning (in-place of update button)
+
+    // START HERE:
+    //       - Leave snapshot when button is clicked
+    //   4. Menu button only includes:
+    //       - Open
+    //       - Make a Copy
+    //       - Help
+    //   5. Open only shows snapshots (no "real" projects)
+    //   6. Make a Copy drop out of snapshot mode.
 
     // TODO: multiple snapshots of a projects that had parens should only produce one snapshot
-
-    // QUESTION: When someone opens a Snapshot, what happens to the flag?
-    // QUESTION: disable edit / create in snapshot? Initial thought is that its' not worth it.
-
-
     // TODO: snapshots every 10 minutes, not 8 seconds
-
-    // QUESTION: should we add a test for the update-by-reference bug we ran into last time?
   });
 }

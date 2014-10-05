@@ -3,6 +3,7 @@ part of ice;
 class Editor {
   bool autoupdate = true;
   bool _edit_only = false;
+  bool _read_only = false;
 
   var _el;
   Element __el, _editor_el, _preview_el;
@@ -61,6 +62,14 @@ class Editor {
   void set edit_only(v) {
     _edit_only = v;
     if (v) removePreview();
+  }
+
+  bool get read_only => _read_only;
+  void set read_only(v) {
+    _read_only = v;
+    if (v) {
+      _ace.readOnly = true;
+    }
   }
 
   // worry about waitForAce?
@@ -309,6 +318,8 @@ class Ace {
     jsAce.callMethod('setPrintMarginColumn', [b]);
   set displayIndentGuides(bool b) =>
     jsAce.callMethod('setDisplayIndentGuides', [b]);
+  set readOnly(bool b) =>
+    jsAce.callMethod('setReadOnly', [b]);
 
   String get value => jsAce.callMethod('getValue');
   set value(String content) {
