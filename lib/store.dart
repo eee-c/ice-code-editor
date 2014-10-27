@@ -122,7 +122,7 @@ class Store implements HashMap<String, HashMap> {
   /// The list of all projects in the store.
   List get projects {
     return show_snapshots ?
-      projectsIncludingSnapshots : projectsExcludingSnapshots;
+      _projectSnapshots : projectsExcludingSnapshots;
   }
 
   List get projectsExcludingSnapshots {
@@ -141,6 +141,13 @@ class Store implements HashMap<String, HashMap> {
       toList();
   }
 
+  List get _projectSnapshots {
+    return projectsIncludingSnapshots.
+      where((p)=> p['snapshot']).
+      toList();
+  }
+
+
   /// Refresh projects data from localStorage.
   void refresh() {
     _projects = deserialize();
@@ -152,13 +159,7 @@ class Store implements HashMap<String, HashMap> {
 
   void _sync() {
     if (_frozen) return;
-
-    // not showing snapshots and there are non-snapshot projects
-    if (!show_snapshots && projectsExcludingSnapshots.isNotEmpty) {
-      var title = currentProjectTitle;
-      var current = _projects.remove(title);
-      _projects[title] = current;
-    }
+    if (show_snapshots) return;
 
     window.localStorage[storage_key] = JSON.encode(projectsIncludingSnapshots);
     _syncController.add(true);

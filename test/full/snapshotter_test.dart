@@ -73,17 +73,20 @@ snapshotter_tests() {
     //   1. Read-only ACE
     //   2. Hide Update button
     //   3. Show a snapshot-mode warning (in-place of update button)
-
-    // START HERE:
     //       - Leave snapshot when button is clicked
     //   4. Menu button only includes:
     //       - Open
     //       - Make a Copy
     //       - Help
     //   5. Open only shows snapshots (no "real" projects)
+
+    // *** START Here ****
     //   6. Make a Copy drop out of snapshot mode.
 
+    // TODO: Show code button still needs to work
     // TODO: multiple snapshots of a projects that had parens should only produce one snapshot
+    // TODO: projectsExcludingSnapshots should prolly be private (ensure nothing outside the class is using it first, maybe rename)
+    // TODO: write test to verify that sync does not occur in snapshot mode
     // TODO: snapshots every 10 minutes, not 8 seconds
   });
 }
