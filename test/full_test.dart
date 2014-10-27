@@ -184,10 +184,6 @@ full_tests() {
       editor = new Full()
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      editor.store
-        ..clear()
-        ..['Current Project'] = {'code': 'Test'};
-
       return editor.editorReady;
     });
 
@@ -218,8 +214,29 @@ full_tests() {
         isNotNull
       );
     });
-  });
 
+    test("clicking leave snapshot mode button leaves snapshot mode", (){
+      helpers.
+        queryWithContent('button', 'Leave Snapshot Mode').
+        click();
+
+      expect(
+        window.location.hash,
+        ''
+      );
+    });
+
+    test("menu only includes Open, Make a Copy, and Help", (){
+      helpers.click('button', text: '☰');
+
+      var items = queryAll('li');
+
+      expect(
+       items.map((i)=> i.text),
+       ['Open', 'Make a Copy', 'Help']
+      );
+    });
+  });
 
 
   group("Focus", (){

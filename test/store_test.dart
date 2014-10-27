@@ -317,13 +317,18 @@ store_tests() {
       expect(it['foo']['snapshot'], isTrue);
     });
 
-    test("are never first on the project list", (){
-      it['new snapshot'] = {'code': 4, 'snapshot': true};
+    test("project list is real projects only when show_snapshots==false", (){
+      it.show_snapshots = false;
+      expect(it.projects.length, 2);
+      expect(it['one']['code'], equals(1));
+      expect(it['three']['code'], equals(3));
+    });
+
+    test("project list is snapshots only when show_snapshots==true", (){
       it.show_snapshots = true;
-
-      it.refresh();
-
-      expect(it.projects.first['snapshot'], null);
+      expect(it.projects.length, 1);
+      expect(it['two']['code'], equals(2));
+      expect(it['two']['snapshot'], isTrue);
     });
 
     test("when they are the only projects in the list, still persist", (){

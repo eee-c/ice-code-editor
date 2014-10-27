@@ -108,7 +108,8 @@ class Full {
         <button>Leave Snapshot Mode</button>'''
       )
       ..onClick.listen((e){
-        throw "Can't click yet";
+        window.location.hash = '';
+        window.location.search = '';
       })
       ..style.color = 'red'
       ..style.fontWeight = 'bold';
@@ -214,6 +215,14 @@ changed.''';
   _showMainMenu() {
     var menu = new Element.html('<ul class=ice-menu>');
     el.append(menu);
+
+    if (store.show_snapshots) {
+      menu
+        ..append(_openDialog)
+        ..append(_copyDialog)
+        ..append(_helpDialog);
+      return;
+    }
 
     menu
       ..append(_newProjectDialog)
