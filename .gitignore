@@ -7,3 +7,4 @@ out
 docs
 .DS_Store
 build
+.pub
