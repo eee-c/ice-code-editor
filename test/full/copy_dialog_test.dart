@@ -208,6 +208,49 @@ copy_dialog_tests() {
         'The project name cannot be blank'
       );
     });
+  });
 
+  solo_group('Copy Dialog in Snapshot mode', () {
+    var editor;
+
+    setUp((){
+      window.location.hash = '#s';
+
+      var store = new Store(storage_key: "ice-test-${currentTestCase.id}");
+      store['SNAPSHOT: Saved Project (2014-11-03 16:58)'] = {'code': 'asdf', 'snapshot': true};
+
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      return editor.editorReady.then((_) {
+        helpers.click('button', text: '☰');
+        helpers.click('li', text: 'Make a Copy');
+        helpers.typeIn('Project #1');
+        helpers.click('button', text: 'Save');
+      });
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+      window.location.hash = '';
+    });
+
+    test('creates a new Project', () {
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Open');
+
+      expect(
+        queryAll('div'),
+        helpers.elementsContain('Project #1')
+      );
+    });
+
+    test('leaves snapshot mode', () {
+      expect(
+        window.location.hash,
+        ''
+      );
+    });
   });
 }

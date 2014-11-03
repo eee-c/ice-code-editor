@@ -143,7 +143,7 @@ changed.''';
     _hide_code_button.style.display = 'none';
     _main_menu_button.style.display = 'none';
     _update_button.style.display = 'none';
-    _leave_snapshot_mode_button.display = 'none';
+    _leave_snapshot_mode_button.style.display = 'none';
     _show_code_button.style.display = '';
     _focusAfterPreviewChange();
   }
