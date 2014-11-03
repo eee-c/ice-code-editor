@@ -40,12 +40,17 @@ class CopyDialog extends Dialog implements MenuAction {
   get _copiedProjectName => store.nextProjectNamed();
 
   _copyProject() {
+    store.show_snapshots = false;
+
     var title = _field.value;
     if (!new Validate(title, store, parent).isValid) return;
 
     store[title] = {'code': ice.content};
 
     query('.ice-dialog').remove();
+
+    window.location.hash = '';
+    if(window.location.search.contains('s')) window.location.search = '';
   }
 
   InputElement get _field => query('.ice-dialog').query('input');

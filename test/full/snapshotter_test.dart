@@ -79,10 +79,9 @@ snapshotter_tests() {
     //       - Make a Copy
     //       - Help
     //   5. Open only shows snapshots (no "real" projects)
-
-    // *** START Here ****
     //   6. Make a Copy drop out of snapshot mode.
 
+    // *** START Here ****
     // TODO: Show code button still needs to work
     // TODO: multiple snapshots of a projects that had parens should only produce one snapshot
     // TODO: projectsExcludingSnapshots should prolly be private (ensure nothing outside the class is using it first, maybe rename)
