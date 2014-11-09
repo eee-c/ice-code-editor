@@ -81,7 +81,8 @@ class Full {
 
   Element _update_button;
   get _updateButton {
-    if (store.show_snapshots) return new Element.span();
+    if (_update_button != null) return _update_button;
+    if (store.show_snapshots) return _update_button = new Element.span();
 
     return _update_button = new Element.html('''
         <button>
@@ -99,12 +100,10 @@ class Full {
 
   Element _leave_snapshot_mode_button;
   get _leaveSnapshotModeButton {
-    if (!store.show_snapshots) return new Element.span();
+    if (_leave_snapshot_mode_button != null) return _leave_snapshot_mode_button;
+    if (!store.show_snapshots) return _leave_snapshot_mode_button = new Element.span();
 
-   // new_indicator.style
-   //    ..color = 'red'
-
-   return _leave_snapshot_mode_button = new Element.html('''
+    return _leave_snapshot_mode_button = new Element.html('''
         <button>Leave Snapshot Mode</button>'''
       )
       ..onClick.listen((e){
@@ -142,8 +141,8 @@ changed.''';
     ice.hideCode();
     _hide_code_button.style.display = 'none';
     _main_menu_button.style.display = 'none';
-    _update_button.style.display = 'none';
-    _leave_snapshot_mode_button.style.display = 'none';
+    _updateButton.style.display = 'none';
+    _leaveSnapshotModeButton.style.display = 'none';
     _show_code_button.style.display = '';
     _focusAfterPreviewChange();
   }
@@ -171,8 +170,8 @@ changed.''';
     ice.showCode();
     _show_code_button.style.display = 'none';
     _main_menu_button.style.display = '';
-    _update_button.style.display = '';
-    _leave_snapshot_mode_button.display = '';
+    _updateButton.style.display = '';
+    _leaveSnapshotModeButton.style.display = '';
     _hide_code_button.style.display = '';
   }
 
