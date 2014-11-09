@@ -15,7 +15,7 @@ class Snapshotter {
   }
 
   void take() {
-    var currentProjectTitle = full.store.currentProjectTitle;
+    var currentProjectTitle = full.store.currentProjectTitle.replaceAll('(', '\\(');
 
     var lastSnapshot = allSnapshots(full.store).
       firstWhere((item) => item[Store.title].
@@ -25,10 +25,7 @@ class Snapshotter {
 
     if( lastSnapshot['code'] == full.store.currentProject['code']) return;
 
-    var oldTitle = currentProjectTitle.
-      replaceFirst('SNAPSHOT: ', '').
-      replaceFirst(new RegExp(r' \([^(]+\)$'), '');
-    var title = 'SNAPSHOT: $oldTitle ($dateStr)';
+    var title = 'SNAPSHOT: ${full.store.currentProjectTitle} ($dateStr)';
 
     full.store[title] = new Map.from(full.store.currentProject)
       ..[Store.title] = title

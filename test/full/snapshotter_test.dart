@@ -10,6 +10,7 @@ snapshotter_tests() {
 
       editor.store..clear()..['Saved Project'] = {'code': 'asdf'};
 
+
       return editor.editorReady;
     });
 
@@ -56,17 +57,11 @@ snapshotter_tests() {
       expect(snapshot, isNull);
     });
 
-    test('snapshotting an old snapshot that is now active, strips SNAPSHOT from title', (){
-      editor.store['SNAPSHOT: Saved Project (2014-09-06 23:33)'] = {
-        'code': 'old snapshot',
-        'snapshot': false
-      };
 
-      expect(editor.store.currentProject['code'], 'old snapshot');
-
+    test('snapshotter works with parens in the title', () {
+      editor.store..clear()..['Parens Project (1)'] = {'code': 'asdf'};
       editor.snapshotter.take();
-      var snapshot = editor.store['SNAPSHOT: Saved Project (${Snapshotter.dateStr})'];
-      expect(snapshot['snapshot'], isTrue);
+      expect(editor.store['SNAPSHOT: Parens Project (1) (${Snapshotter.dateStr})'], isNotNull);
     });
 
     // Snapshot mode:
@@ -82,10 +77,9 @@ snapshotter_tests() {
     //   6. Make a Copy drop out of snapshot mode.
 
     // *** START Here ****
-    // TODO: Show code button still needs to work
-    // TODO: multiple snapshots of a projects that had parens should only produce one snapshot
     // TODO: projectsExcludingSnapshots should prolly be private (ensure nothing outside the class is using it first, maybe rename)
     // TODO: write test to verify that sync does not occur in snapshot mode
+    // TODO: do a manual test of snapshots (with or without titles that include parens)
     // TODO: snapshots every 10 minutes, not 8 seconds
   });
 }
