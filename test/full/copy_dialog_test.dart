@@ -210,7 +210,7 @@ copy_dialog_tests() {
     });
   });
 
-  solo_group('Copy Dialog in Snapshot mode', () {
+  group('Copy Dialog in Snapshot mode', () {
     var editor;
 
     setUp((){

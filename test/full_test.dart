@@ -1,7 +1,7 @@
 part of ice_tests;
 
 full_tests() {
-  solo_group("initial UI", (){
+  group("initial UI", (){
     var editor;
 
     setUp((){
@@ -160,14 +160,14 @@ full_tests() {
       window.location.hash = '';
     });
 
-    test("is enabled when the ?g query param is present", (){
+    test("hides the code when the ?g query param is present", (){
       expect(
         query('.ice-code-editor-editor').style.visibility,
         equals('hidden')
       );
     });
 
-    test("is enabled when the ?g query param is present", (){
+    test("hides the show code button when the ?g query param is present", (){
       expect(
         helpers.queryWithContent('button', 'Show Code').style.display,
         equals('')
@@ -175,7 +175,7 @@ full_tests() {
     });
   });
 
-  solo_group("Snapshot Mode", (){
+  group("Snapshot Mode", (){
     var editor;
 
     setUp((){

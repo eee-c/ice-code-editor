@@ -156,7 +156,7 @@ class Editor {
       _ace.focus();
     }
     else {
-      preview_el.children[0].focus();
+      preview_el.children.first.focus();
     }
   }
 

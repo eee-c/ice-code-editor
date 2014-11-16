@@ -17,7 +17,7 @@ class Snapshotter {
   void take() {
     var currentProjectTitle = full.store.currentProjectTitle.replaceAll('(', '\\(');
 
-    var lastSnapshot = allSnapshots(full.store).
+    var lastSnapshot = full.store.snapshots.
       firstWhere((item) => item[Store.title].
         contains(new RegExp('^SNAPSHOT: $currentProjectTitle \\(')),
         orElse: () => {}
@@ -35,7 +35,7 @@ class Snapshotter {
   }
 
   static trimTo20(store) {
-    var all = allSnapshots(store).toList();
+    var all = store.snapshots;
 
     if (all.length <= 20) return;
 
@@ -44,11 +44,7 @@ class Snapshotter {
     }
   }
 
-  static allSnapshots(store) {
-    return store.
-      projectsIncludingSnapshots.
-      where((item) => item['snapshot']);
-  }
+
 
   void _startTimer() {
     new Timer.periodic(duration, (_){ take(); });

@@ -46,7 +46,7 @@ class Store implements HashMap<String, HashMap> {
     if (this.isEmpty)
       return {'code': ''}..[title] = 'Untitled';
 
-    return projectsExcludingSnapshots.first;
+    return _projectsExcludingSnapshots.first;
   }
 
   String get currentProjectTitle => currentProject[title];
@@ -122,16 +122,22 @@ class Store implements HashMap<String, HashMap> {
   /// The list of all projects in the store.
   List get projects {
     return show_snapshots ?
-      _projectSnapshots : projectsExcludingSnapshots;
+      _projectSnapshots : _projectsExcludingSnapshots;
   }
 
-  List get projectsExcludingSnapshots {
-    return projectsIncludingSnapshots.
+  List get snapshots {
+    return _projectsIncludingSnapshots.
+      where((item) => item['snapshot']).
+      toList();
+  }
+
+  List get _projectsExcludingSnapshots {
+    return _projectsIncludingSnapshots.
       where((p)=> p['snapshot'] != true).
       toList();
   }
 
-  List get projectsIncludingSnapshots {
+  List get _projectsIncludingSnapshots {
     if (_projects == null) return [];
 
     return _projects.
@@ -142,7 +148,7 @@ class Store implements HashMap<String, HashMap> {
   }
 
   List get _projectSnapshots {
-    return projectsIncludingSnapshots.
+    return _projectsIncludingSnapshots.
       where((p)=> p['snapshot']).
       toList();
   }
@@ -161,7 +167,7 @@ class Store implements HashMap<String, HashMap> {
     if (_frozen) return;
     if (show_snapshots) return;
 
-    window.localStorage[storage_key] = JSON.encode(projectsIncludingSnapshots);
+    window.localStorage[storage_key] = JSON.encode(_projectsIncludingSnapshots);
     _syncController.add(true);
   }
 

@@ -218,7 +218,7 @@ store_tests() {
     });
   });
 
-  solo_group("Store", (){
+  group("Store", (){
     var it;
     setUp((){
       it = new Store()
@@ -286,7 +286,7 @@ store_tests() {
     });
   });
 
-  solo_group("Snapshots", (){
+  group("Snapshots", (){
     var it;
     setUp((){
       it = new Store()
