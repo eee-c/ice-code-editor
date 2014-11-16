@@ -23,12 +23,13 @@ class Full {
     _fullScreenStyles();
 
     editorReady
-      ..then((_)=> _applyQueryStringSettings())
+      ..then((_)=> _applySnapshotQueryString())
       ..then((_)=> _attachCodeToolbar())
       ..then((_)=> _attachPreviewToolbar())
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
       ..then((_)=> _initializeSettingForFirstUse())
+      ..then((_)=> _applyQueryStringSettings())
       ..then((_)=> _applyStyles());
   }
 
@@ -405,11 +406,14 @@ changed.''';
 
     if (window.location.search.contains('?g')) hideCode();
     if (window.location.hash.startsWith('#g')) hideCode();
+  }
 
+  _applySnapshotQueryString() {
     if (window.location.search.contains('?s')) {
       store.show_snapshots = true;
       ice.read_only = true;
     }
+
     if (window.location.hash.startsWith('#s')) {
       store.show_snapshots = true;
       ice.read_only = true;

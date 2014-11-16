@@ -1,7 +1,7 @@
 part of ice_test;
 
 snapshotter_tests() {
-  solo_group('Snapshotter', () {
+  group('Snapshotter', () {
     var editor;
 
     setUp((){
