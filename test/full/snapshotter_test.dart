@@ -77,8 +77,6 @@ snapshotter_tests() {
     //   6. Make a Copy drop out of snapshot mode.
 
     // *** START Here ****
-    // TODO: projectsExcludingSnapshots should prolly be private (ensure nothing outside the class is using it first, maybe rename)
-    // TODO: write test to verify that sync does not occur in snapshot mode
     // TODO: do a manual test of snapshots (with or without titles that include parens)
     // TODO: snapshots every 10 minutes, not 8 seconds
   });

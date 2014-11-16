@@ -341,5 +341,16 @@ store_tests() {
 
       expect(it.projects.length, 0);
     });
+
+    test('does not persist in snapshot mode', (){
+      it.show_snapshots = true;
+      it['four'] = {'code': 4};
+
+      it.refresh();
+
+      it.show_snapshots = false;
+
+      expect(it.length, equals(2));
+    });
   });
 }
