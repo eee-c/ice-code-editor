@@ -58,8 +58,21 @@ snapshotter_tests() {
     });
 
 
-    test('snapshotter works with parens in the title', () {
+    test('works with parens in the title', () {
       editor.store..clear()..['Parens Project (1)'] = {'code': 'asdf'};
+      editor.snapshotter.take();
+      expect(editor.store['SNAPSHOT: Parens Project (1) (${Snapshotter.dateStr})'], isNotNull);
+    });
+
+    test('works with parens in title when previous snapshot exists', () {
+      editor.store
+        ..clear()
+        ..['SNAPSHOT: Parens Project (1) (2014-11-22: 22:48)'] = {
+          'code': 'old code',
+          'snapshot': true
+          }
+        ..['Parens Project (1)'] = {'code': 'asdf'};
+
       editor.snapshotter.take();
       expect(editor.store['SNAPSHOT: Parens Project (1) (${Snapshotter.dateStr})'], isNotNull);
     });

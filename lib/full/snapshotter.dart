@@ -15,17 +15,17 @@ class Snapshotter {
   }
 
   void take() {
-    var currentProjectTitle = full.store.currentProjectTitle.replaceAll('(', '\\(');
+    var currentProjectTitle = full.store.currentProjectTitle;
 
     var lastSnapshot = full.store.snapshots.
       firstWhere((item) => item[Store.title].
-        contains(new RegExp('^SNAPSHOT: $currentProjectTitle \\(')),
+        startsWith('SNAPSHOT: $currentProjectTitle ('),
         orElse: () => {}
       );
 
-    if( lastSnapshot['code'] == full.store.currentProject['code']) return;
+    if (lastSnapshot['code'] == full.store.currentProject['code']) return;
 
-    var title = 'SNAPSHOT: ${full.store.currentProjectTitle} ($dateStr)';
+    var title = 'SNAPSHOT: $currentProjectTitle ($dateStr)';
 
     full.store[title] = new Map.from(full.store.currentProject)
       ..[Store.title] = title
@@ -43,8 +43,6 @@ class Snapshotter {
       store.remove(all[i][Store.title]);
     }
   }
-
-
 
   void _startTimer() {
     new Timer.periodic(duration, (_){ take(); });
