@@ -76,21 +76,5 @@ snapshotter_tests() {
       editor.snapshotter.take();
       expect(editor.store['SNAPSHOT: Parens Project (1) (${Snapshotter.dateStr})'], isNotNull);
     });
-
-    // Snapshot mode:
-    //   1. Read-only ACE
-    //   2. Hide Update button
-    //   3. Show a snapshot-mode warning (in-place of update button)
-    //       - Leave snapshot when button is clicked
-    //   4. Menu button only includes:
-    //       - Open
-    //       - Make a Copy
-    //       - Help
-    //   5. Open only shows snapshots (no "real" projects)
-    //   6. Make a Copy drop out of snapshot mode.
-
-    // *** START Here ****
-    // TODO: do a manual test of snapshots (with or without titles that include parens)
-    // TODO: snapshots every 10 minutes, not 8 seconds
   });
 }
