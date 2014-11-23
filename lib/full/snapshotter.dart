@@ -2,7 +2,7 @@ part of ice;
 
 class Snapshotter {
   Full full;
-  final duration = const Duration(seconds: 8);
+  final duration = const Duration(minutes: 10);
 
   static get dateStr => new DateTime.
     now().
