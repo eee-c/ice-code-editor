@@ -188,8 +188,6 @@ changed.''';
   _drawWhatsNewIndicator(toolbar) {
     if (_whatsNewClicked) return;
 
-    var menu_button = toolbar.children.last;
-
     var new_indicator = new Element.html('<span id=somethingsnew>★</span>');
     new_indicator.style
       ..color = 'red'
