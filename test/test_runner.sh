@@ -44,4 +44,9 @@ do
   then
       exit 1
   fi
+
+  if [[ "$results" != *"tests passed."* ]]
+  then
+      exit 1
+  fi
 done
