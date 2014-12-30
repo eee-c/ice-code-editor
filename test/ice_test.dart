@@ -31,6 +31,7 @@ part 'full/whats_new_test.dart';
 part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 part 'full/snapshotter_test.dart';
+part 'full/editor_lock_test.dart';
 
 main(){
   // useHtmlConfiguration();
@@ -59,6 +60,7 @@ main(){
   whats_new_tests();
   remove_dialog_tests();
   snapshotter_tests();
+  editor_lock_tests();
 
   // Leave these tests last b/c they were failing at one point, but only when
   // last (hoping to see this again).

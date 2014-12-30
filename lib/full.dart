@@ -5,6 +5,7 @@ class Full {
   Editor ice;
   Store store;
   Snapshotter snapshotter;
+  EditorLock lock;
   Settings settings;
 
   Full() {

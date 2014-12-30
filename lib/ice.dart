@@ -38,3 +38,4 @@ part 'full/remove_dialog.dart';
 part 'full/whats_new_action.dart';
 part 'full/help_action.dart';
 part 'full/snapshotter.dart';
+part 'full/editor_lock.dart';
