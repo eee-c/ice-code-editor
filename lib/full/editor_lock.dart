@@ -2,12 +2,17 @@ part of ice;
 
 class EditorLock {
   Settings settings;
-  EditorLock(this.settings) {
-    // Last thoughts were to add a check for existing sessions here, and, if
-    // they are present, then do not create lock, do not start lock timer, but
-    // set some error property that the editor class can read.
+  bool existing = false;
 
-    createLock();
+  final updatePeriod = const Duration(seconds: 10);
+
+  EditorLock(this.settings) {
+    if (_activeLockPresent) existing = true;
+
+    if (!existing) {
+      createLock();
+      startTimer();
+    }
   }
 
   void createLock() {
@@ -18,5 +23,22 @@ class EditorLock {
     this.settings['lock'] = new DateTime.now().millisecondsSinceEpoch;
   }
 
-  static get existing => false;
+  void startTimer() {
+    new Timer.periodic(
+      updatePeriod,
+      (_)=> this.updateLock()
+    );
+  }
+
+  bool get _activeLockPresent => _lockPresent && !_lockStale;
+
+  bool get _lockPresent => this.settings['lock'] != null;
+
+  bool get _lockStale {
+    var lockDate = new DateTime.fromMillisecondsSinceEpoch(this.settings['lock']);
+    var now = new DateTime.now();
+    var diff = now.difference(lockDate);
+
+    return (diff > updatePeriod);
+  }
 }

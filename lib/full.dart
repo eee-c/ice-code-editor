@@ -15,6 +15,8 @@ class Full {
     ice = new Editor('#ice');
     store = new Store();
     settings = new Settings();
+    lock = new EditorLock(settings);
+
 
     _attachKeyboardHandlers();
     _attachMouseHandlers();
@@ -22,6 +24,10 @@ class Full {
     _attachDropHandlers();
 
     _fullScreenStyles();
+
+    // START HERE!!!!
+    // Look for existing session here..
+    //_checkReadOnly();
 
     editorReady
       ..then((_)=> _applySnapshotQueryString())
