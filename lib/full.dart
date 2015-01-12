@@ -80,6 +80,69 @@ class Full {
     el.children.add(toolbar);
   }
 
+  get _update_tooltip => '''
+If not checked, then the preview is not auto-updated. The
+only way to see changes is to click the button.
+
+If checked, the preview is updated whenever the code is
+changed.''';
+
+  toggleCode() {
+    if (ice.isCodeVisible) {
+      hideCode();
+    }
+    else {
+      showCode();
+    }
+  }
+
+  void hideCode() {
+    ice.hideCode();
+    _showCodeButton.style.display = '';
+    _hideCodeButton.style.display = 'none';
+    _mainMenuButton.style.display = 'none';
+    _updateButton.style.display = 'none';
+    _leaveSnapshotModeButton.style.display = 'none';
+    _focusAfterPreviewChange();
+  }
+
+  void showCode() {
+    ice.showCode();
+    _showCodeButton.style.display = 'none';
+    _hideCodeButton.style.display = '';
+    _mainMenuButton.style.display = '';
+    _updateButton.style.display = '';
+    _leaveSnapshotModeButton.style.display = '';
+  }
+
+  Element _show_code_button;
+  get _showCodeButton {
+    if (_show_code_button != null) return _show_code_button;
+
+    return _show_code_button = new Element.html('<button>Show Code</button>')
+      ..style.display = 'none'
+      ..onClick.listen((e)=> showCode());
+  }
+
+  Element _hide_code_button;
+  get _hideCodeButton {
+    if (_hide_code_button != null) return _hide_code_button;
+
+    return _hide_code_button = new Element.html('<button>Hide Code</button>')
+      ..onClick.listen((e)=> hideCode());
+  }
+
+  Element _main_menu_button;
+  get _mainMenuButton {
+    if (_main_menu_button != null) return _main_menu_button;
+
+    return _main_menu_button = new Element.html('<button>☰</button>')
+      ..onClick.listen((e) {
+        this.toggleMainMenu();
+        e.stopPropagation();
+      });
+  }
+
   Element _update_button;
   get _updateButton {
     if (_update_button != null) return _update_button;
@@ -115,39 +178,6 @@ class Full {
       ..style.fontWeight = 'bold';
   }
 
-
-  get _update_tooltip => '''
-If not checked, then the preview is not auto-updated. The
-only way to see changes is to click the button.
-
-If checked, the preview is updated whenever the code is
-changed.''';
-
-  toggleCode() {
-    if (ice.isCodeVisible) {
-      hideCode();
-    }
-    else {
-      showCode();
-    }
-  }
-
-  Element _hide_code_button;
-  get _hideCodeButton {
-    return _hide_code_button = new Element.html('<button>Hide Code</button>')
-      ..onClick.listen((e)=> hideCode());
-  }
-
-  void hideCode() {
-    ice.hideCode();
-    _hide_code_button.style.display = 'none';
-    _main_menu_button.style.display = 'none';
-    _updateButton.style.display = 'none';
-    _leaveSnapshotModeButton.style.display = 'none';
-    _show_code_button.style.display = '';
-    _focusAfterPreviewChange();
-  }
-
   _focusAfterPreviewChange() {
     var listener;
 
@@ -158,31 +188,6 @@ changed.''';
     new Timer(new Duration(milliseconds: 2500), (){
       listener.cancel();
     });
-  }
-
-  Element _show_code_button;
-  get _showCodeButton {
-    return _show_code_button = new Element.html('<button>Show Code</button>')
-      ..style.display = 'none'
-      ..onClick.listen((e)=> showCode());
-  }
-
-  void showCode() {
-    ice.showCode();
-    _show_code_button.style.display = 'none';
-    _main_menu_button.style.display = '';
-    _updateButton.style.display = '';
-    _leaveSnapshotModeButton.style.display = '';
-    _hide_code_button.style.display = '';
-  }
-
-  Element _main_menu_button;
-  get _mainMenuButton {
-    return _main_menu_button = new Element.html('<button>☰</button>')
-      ..onClick.listen((e) {
-        this.toggleMainMenu();
-        e.stopPropagation();
-      });
   }
 
   _drawWhatsNewIndicator(toolbar) {

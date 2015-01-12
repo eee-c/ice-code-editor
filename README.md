@@ -79,6 +79,7 @@ $ pub build --mode=development
  * [Michael Risse](https://github.com/rissem)
  * [Chris Sciolla](https://github.com/chrisski)
  * [Christian Smith](https://github.com/christiansmith)
+ * [Paul Spain](https://github.com/pvspain)
  * [Alper Sunar](https://github.com/asunar)
  * Stefan Dausend-Werner
 
