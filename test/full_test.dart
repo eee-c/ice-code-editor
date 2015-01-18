@@ -238,6 +238,54 @@ full_tests() {
     });
   });
 
+  group('Existing lock is present', (){
+    var editor, settings;
+
+    setUp((){
+      settings = new Settings()
+        ..clear()
+        ..['lock'] = new DateTime.now().
+                       subtract(new Duration(seconds: 9)).
+                       millisecondsSinceEpoch;
+
+      editor = new Full()
+        ..store.storage_key = "ice-test-${currentTestCase.id}";
+
+      editor.store
+        ..clear()
+        ..['Current Project'] = {'code': 'Test'};
+
+      return editor.editorReady;
+    });
+
+    tearDown(() {
+      editor.remove();
+      editor.store..clear()..freeze();
+      settings..clear();
+    });
+
+    test('new editor opens in read-only mode', (){
+      expect(editor.readOnly, isTrue);
+    });
+
+    test("menu only includes Open and Help", (){
+      helpers.click('button', text: '☰');
+
+      var items = queryAll('li');
+
+      expect(
+       items.map((i)=> i.text),
+       ['Open', 'Help']
+      );
+    });
+
+    test("alerts user that this session is locked", (){
+      expect(
+        query('#alert').text,
+        matches('ICE is locked because another tab or window is running')
+      );
+    });
+  });
 
   group("Focus", (){
     var editor;

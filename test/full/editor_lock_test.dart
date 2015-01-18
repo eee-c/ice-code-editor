@@ -1,7 +1,7 @@
 part of ice_test;
 
 editor_lock_tests() {
-  solo_group('Editor Lock', () {
+  group('Editor Lock', () {
     var settings, it;
 
     setUp((){
@@ -35,7 +35,7 @@ editor_lock_tests() {
     });
   });
 
-  solo_group('Editor Lock, stale previous session', (){
+  group('Editor Lock, stale previous session', (){
     var settings, it;
 
     setUp((){
@@ -57,7 +57,7 @@ editor_lock_tests() {
     });
   });
 
-  solo_group('Editor Lock, recently active previous session', (){
+  group('Editor Lock, recently active previous session', (){
     var settings, it;
 
     setUp((){
@@ -79,7 +79,7 @@ editor_lock_tests() {
     });
   });
 
-  solo_group('Editor Lock, no previous sessions', (){
+  group('Editor Lock, no previous sessions', (){
     test('it knows that no sessions exist', (){
       var settings = new Settings()..clear();
       var it = new EditorLock(settings);

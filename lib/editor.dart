@@ -64,8 +64,8 @@ class Editor {
     if (v) removePreview();
   }
 
-  bool get read_only => _read_only;
-  void set read_only(v) {
+  bool get readOnly => _read_only;
+  void set readOnly(v) {
     _read_only = v;
     if (v) {
       _ace.readOnly = true;

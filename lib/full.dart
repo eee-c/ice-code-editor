@@ -17,7 +17,6 @@ class Full {
     settings = new Settings();
     lock = new EditorLock(settings);
 
-
     _attachKeyboardHandlers();
     _attachMouseHandlers();
     _attachMessageHandlers();
@@ -25,11 +24,8 @@ class Full {
 
     _fullScreenStyles();
 
-    // START HERE!!!!
-    // Look for existing session here..
-    //_checkReadOnly();
-
     editorReady
+      ..then((_)=> _checkForLock())
       ..then((_)=> _applySnapshotQueryString())
       ..then((_)=> _attachCodeToolbar())
       ..then((_)=> _attachPreviewToolbar())
@@ -90,7 +86,7 @@ class Full {
   Element _update_button;
   get _updateButton {
     if (_update_button != null) return _update_button;
-    if (store.show_snapshots) return _update_button = new Element.span();
+    if (readOnly) return _update_button = new Element.span();
 
     return _update_button = new Element.html('''
         <button>
@@ -221,11 +217,12 @@ changed.''';
     var menu = new Element.html('<ul class=ice-menu>');
     el.append(menu);
 
-    if (store.show_snapshots) {
-      menu
-        ..append(_openDialog)
-        ..append(_copyDialog)
-        ..append(_helpDialog);
+    if (readOnly) {
+      menu.append(_openDialog);
+      if (store.show_snapshots) {
+        menu.append(_copyDialog);
+      }
+      menu.append(_helpDialog);
       return;
     }
 
@@ -403,6 +400,15 @@ changed.''';
     }
   }
 
+  _checkForLock() {
+    if (lock.existing) readOnly = true;
+    Notify.alert('''
+ICE is locked because another tab or window is running an active ICE session. You should either close this ICE and edit in the other ICE or close the other ICE and reload this page to edit here.
+
+Opening in read-only mode.
+''');
+  }
+
   _applyQueryStringSettings() {
     // Users should use query params. Checking hash because it plays better
     // with tests. Query params cause a browser reload (bad in unit tests).
@@ -416,18 +422,21 @@ changed.''';
   _applySnapshotQueryString() {
     if (window.location.search.contains('?s')) {
       store.show_snapshots = true;
-      ice.read_only = true;
+      readOnly = true;
     }
 
     if (window.location.hash.startsWith('#s')) {
       store.show_snapshots = true;
-      ice.read_only = true;
+      readOnly = true;
     }
 
     if (!store.show_snapshots) {
       snapshotter = new Snapshotter(this);
     }
   }
+
+  bool get readOnly => ice.readOnly;
+  void set readOnly(bool v) { ice.readOnly = v; }
 
   Element get editor_el => ice.editor_el;
   Element get preview_el => ice.preview_el;
