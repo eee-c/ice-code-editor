@@ -21,6 +21,7 @@ class Full {
     _attachMouseHandlers();
     _attachMessageHandlers();
     _attachDropHandlers();
+    _attachUnloadHanders();
 
     _fullScreenStyles();
 
@@ -28,8 +29,10 @@ class Full {
     // We may have to clear the settings before (or after) *every* test so
     // that check-for-lock does not lock later tests (when the entire suite
     // takes 10+ seconds).
+    // UPDATE: now remove the lock on page / editor close, but still have
+    // 4 failing tests for unknown reasons.
     editorReady
-      // ..then((_)=> _checkForLock())
+      ..then((_)=> _checkForLock())
       ..then((_)=> _applySnapshotQueryString())
       ..then((_)=> _attachCodeToolbar())
       ..then((_)=> _attachPreviewToolbar())
@@ -52,6 +55,7 @@ class Full {
   void remove() {
     Keys.cancel();
     el.remove();
+    lock.remove();
   }
 
   _attachCodeToolbar() {
@@ -333,6 +337,12 @@ changed.''';
     });
   }
 
+  _attachUnloadHanders() {
+    window.onBeforeUnload.listen((_){
+      lock.remove();
+    });
+  }
+
   import(String contents, String title) {
     // TODO: don't use exceptions for normal workflow
     try {
@@ -405,7 +415,9 @@ changed.''';
   }
 
   _checkForLock() {
-    if (lock.existing) readOnly = true;
+    if (!lock.existing) return;
+
+    readOnly = true;
     Notify.alert('''
 ICE is locked because another tab or window is running an active ICE session. You should either close this ICE and edit in the other ICE or close the other ICE and reload this page to edit here.
 

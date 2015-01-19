@@ -10,23 +10,27 @@ class EditorLock {
     if (_activeLockPresent) existing = true;
 
     if (!existing) {
-      createLock();
+      create();
       startTimer();
     }
   }
 
-  void createLock() {
+  void create() {
     this.settings['lock'] = new DateTime.now().millisecondsSinceEpoch;
   }
 
-  void updateLock() {
+  void update() {
     this.settings['lock'] = new DateTime.now().millisecondsSinceEpoch;
+  }
+
+  void remove() {
+    this.settings.remove('lock');
   }
 
   void startTimer() {
     new Timer.periodic(
       updatePeriod,
-      (_)=> this.updateLock()
+      (_)=> this.update()
     );
   }
 

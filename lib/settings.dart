@@ -20,7 +20,10 @@ class Settings implements Map<String, Object> {
   bool get isEmpty => model.isEmpty;
   bool get isNotEmpty => model.isNotEmpty;
   addAll(Map<String, Object> all) => model.addAll(all);
-  remove(String k) => model.remove(k);
+  remove(String k){
+    model.remove(k);
+    _sync();
+  }
   bool containsKey(String k) => model.containsKey(k);
   bool containsValue(Object v) => model.containsValue(v);
   void clear() {

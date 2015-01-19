@@ -17,12 +17,17 @@ editor_lock_tests() {
       expect(settings['lock'], isNotNull);
     });
 
+    test('it can remove a lock (e.g. when browser closes)', (){
+      it.remove();
+      expect(settings['lock'], isNull);
+    });
+
     test('it updates the lock regularly', (){
       var old = settings['lock'];
       new Timer(
         new Duration(milliseconds: 1),
         expectAsync((){
-          it.updateLock();
+          it.update();
           expect(settings['lock'], greaterThan(old));
         })
       );
