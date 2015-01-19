@@ -25,8 +25,8 @@ class Full {
     _fullScreenStyles();
 
     // START HERE
-    // We may have to clear the settings before *every* test so that
-    // check-for-lock does not lock later tests (when the entire suite
+    // We may have to clear the settings before (or after) *every* test so
+    // that check-for-lock does not lock later tests (when the entire suite
     // takes 10+ seconds).
     editorReady
       // ..then((_)=> _checkForLock())
