@@ -22,7 +22,7 @@ whats_new_tests() {
       editor.settings..clear();
     });
 
-    test("links to friendly release summary", (){
+    solo_test("links to friendly release summary", (){
       var action = new WhatsNewAction(editor);
       expect(action.el.href, contains('github'));
     });
@@ -32,8 +32,16 @@ whats_new_tests() {
       expect(action.el.target, '_blank');
     });
 
+
+    // START HERE! Why does this fail if the test above is also run, but it
+    // passes when run in isolation??!!!
+
+    // Also may need global tearDown to remove alerts as one alert *may* be
+    // sticking around.
+    //   queryAll('#alert').forEach((e)=> e.remove());
+
     group("existing editor, what's new hasn't been clicked", (){
-      test("what's new menu item should be highlighted", (){
+      solo_test("what's new menu item should be highlighted", (){
         helpers.click('button', text: '☰');
         expect(query('.ice-menu li.highlighted').text, "What's New");
       });

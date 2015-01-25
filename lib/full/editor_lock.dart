@@ -3,6 +3,7 @@ part of ice;
 class EditorLock {
   Settings settings;
   bool existing = false;
+  var timer;
 
   final updatePeriod = const Duration(seconds: 10);
 
@@ -25,10 +26,11 @@ class EditorLock {
 
   void remove() {
     this.settings.remove('lock');
+    if (timer != null) timer.cancel();
   }
 
   void startTimer() {
-    new Timer.periodic(
+    timer = new Timer.periodic(
       updatePeriod,
       (_)=> this.update()
     );

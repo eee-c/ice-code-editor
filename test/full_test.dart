@@ -262,6 +262,7 @@ full_tests() {
       editor.remove();
       editor.store..clear()..freeze();
       settings..clear();
+      queryAll('#alert').forEach((e)=> e.remove());
     });
 
     test('new editor opens in read-only mode', (){
