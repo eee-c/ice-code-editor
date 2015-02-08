@@ -6,6 +6,7 @@ whats_new_tests() {
 
     setUp((){
       editor = new Full()
+        ..settings.storage_key = "ice-test-settings-${currentTestCase.id}"
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -19,6 +20,11 @@ whats_new_tests() {
       editor.remove();
       editor.store..clear()..freeze();
       editor.settings..clear();
+
+      // Even though we set the settings storage key above, the default setting
+      // storage key is used by the editor lock when Full is first
+      // instantiated. So we clear it here:
+      Settings.clearAll();
     });
 
     test("links to friendly release summary", (){
@@ -30,22 +36,6 @@ whats_new_tests() {
       var action = new WhatsNewAction(editor);
       expect(action.el.target, '_blank');
     });
-
-    // START HERE! One ICE is locked alert is sticking around from
-    // somewhere. We need to find and eliminate it.
-
-    // The previous test failures were caused by the editor lock reading from
-    // the default settings before we changed the settings localStorage
-    // key. This is a lock bleeding through from some other test (see below) so
-    // the editor.lock was true. The test then changed the localStorage key
-    // (which would be useful for these tests), so that when tearDown reset the
-    // settings, it was resetting the per-test settings, not the default setting
-    // that retained the lock.
-
-    // May also want to improve the setup of the settings in this code. Might be
-    // nice to have new settings key for each test (like the data store), but
-    // would then need a mechanism to reset the lock since it would already
-    // think an existing lock is present.
 
     group("existing editor, what's new hasn't been clicked", (){
       test("what's new menu item should be highlighted", (){

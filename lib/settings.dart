@@ -11,6 +11,10 @@ class Settings implements Map<String, Object> {
 
   Settings({this.storage_key: codeEditor});
 
+  static clearAll({storage_key: codeEditor}) {
+    new Settings(storage_key: storage_key).clear();
+  }
+
   // Be Map-like
   int get length => model.length;
   List<String> get keys => model.keys;

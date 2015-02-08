@@ -5,7 +5,9 @@ editor_lock_tests() {
     var settings, it;
 
     setUp((){
-      settings = new Settings()..clear();
+      settings = new Settings()
+        ..storage_key = "ice-test-settings-${currentTestCase.id}"
+        ..clear();
       it = new EditorLock(settings);
     });
 
@@ -34,7 +36,9 @@ editor_lock_tests() {
     });
 
     test('can detect an existing lock', (){
-      var newSettings = new Settings();
+      var newSettings = new Settings()
+        ..storage_key = settings.storage_key;
+
       var newLock = new EditorLock(newSettings);
       expect(newLock.existing, isTrue);
     });
@@ -45,6 +49,7 @@ editor_lock_tests() {
 
     setUp((){
       settings = new Settings()
+        ..storage_key = "ice-test-settings-${currentTestCase.id}"
         ..clear()
         ..['lock'] = new DateTime.now().
                        subtract(new Duration(seconds: 11)).
@@ -67,6 +72,7 @@ editor_lock_tests() {
 
     setUp((){
       settings = new Settings()
+        ..storage_key = "ice-test-settings-${currentTestCase.id}"
         ..clear()
         ..['lock'] = new DateTime.now().
                        subtract(new Duration(seconds: 9)).
@@ -86,10 +92,15 @@ editor_lock_tests() {
 
   group('Editor Lock, no previous sessions', (){
     tearDown(() {
-      new Settings()..clear();
+      // Even though we set the settings storage key above, the default setting
+      // storage key is used by the editor lock when Full is first
+      // instantiated. So we clear it here:
+      Settings.clearAll();
     });
     test('it knows that no sessions exist', (){
-      var settings = new Settings()..clear();
+      var settings = new Settings()
+        ..storage_key = "ice-test-settings-${currentTestCase.id}"
+        ..clear();
       var it = new EditorLock(settings);
       expect(it.existing, isFalse);
     });
