@@ -25,12 +25,6 @@ class Full {
 
     _fullScreenStyles();
 
-    // START HERE
-    // We may have to clear the settings before (or after) *every* test so
-    // that check-for-lock does not lock later tests (when the entire suite
-    // takes 10+ seconds).
-    // UPDATE: now remove the lock on page / editor close, but still have
-    // 4 failing tests for unknown reasons.
     editorReady
       ..then((_)=> _checkForLock())
       ..then((_)=> _applySnapshotQueryString())

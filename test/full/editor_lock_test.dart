@@ -85,6 +85,9 @@ editor_lock_tests() {
   });
 
   group('Editor Lock, no previous sessions', (){
+    tearDown(() {
+      new Settings()..clear();
+    });
     test('it knows that no sessions exist', (){
       var settings = new Settings()..clear();
       var it = new EditorLock(settings);
