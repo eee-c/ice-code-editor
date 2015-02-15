@@ -81,6 +81,7 @@ $ pub build --mode=development
  * [Christian Smith](https://github.com/christiansmith)
  * [Paul Spain](https://github.com/pvspain)
  * [Alper Sunar](https://github.com/asunar)
+ * [Dmitriy Vasilyev](https://github.com/kelegorm)
  * Stefan Dausend-Werner
 
 ## Want to Help?
