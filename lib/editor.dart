@@ -202,8 +202,8 @@ class Editor {
     if (_scripts != null) return [];
 
     var script_paths = [
-      "packages/ice_code_editor/js/ace/ace.js",
-      "packages/ice_code_editor/js/ace/keybinding-emacs.js",
+      "packages/ace/src/js/ace.js",
+      "packages/ace/src/js/keybinding-emacs.js",
       "packages/ice_code_editor/js/deflate/rawdeflate.js",
       "packages/ice_code_editor/js/deflate/rawinflate.js"
     ];
