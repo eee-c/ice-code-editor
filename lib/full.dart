@@ -409,8 +409,10 @@ changed.''';
   }
 
   _checkForLock() {
+    print('check for lock');
     if (!lock.existing) return;
 
+    print('check for lock 2');
     readOnly = true;
     Notify.alert('''
 ICE is locked because another tab or window is running an active ICE session. You should either close this ICE and edit in the other ICE or close the other ICE and reload this page to edit here.
