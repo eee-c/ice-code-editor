@@ -57,8 +57,15 @@ echo >> $APPCACHE
 find | \
   grep -e \\.js$ -e \\.map$ -e \\.html$ -e \\.css$ | \
   grep -v -e unittest -e /lib/ -e polymer -e web_components -e js/deflate | \
+  grep -v packages/ace/src | \
   sed 's/^\.\///' \
   >> $APPCACHE
+
+find packages/ace/src | \
+  grep -f ~/repos/ice-code-editor/bin/ace_src_files.txt | \
+  sed 's/^\.\///' \
+  >> $APPCACHE
+
 
 ##
 # Network

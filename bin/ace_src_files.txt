@@ -1,0 +1,8 @@
+ace/src/js/mode-css.js$
+ace/src/js/ace.js$
+ace/src/js/theme-textmate.js$
+ace/src/js/theme-chrome.js$
+ace/src/js/ext-searchbox.js$
+ace/src/js/mode-html.js$
+ace/src/js/mode-javascript.js$
+ace/src/js/keybinding-emacs.js$

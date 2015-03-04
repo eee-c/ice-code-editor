@@ -3,8 +3,8 @@
 Scripts are run in the following order:
 
 ```
-~/repos/ice-code-editor/bin/ice-appcache.sh
 ~/repos/ice-code-editor/bin/ice-de-symlink-packages.sh
+~/repos/ice-code-editor/bin/ice-appcache.sh
 ~/repos/ice-code-editor/bin/ice-compile.sh main.dart
 ```
 
