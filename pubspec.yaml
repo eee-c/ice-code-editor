@@ -15,6 +15,7 @@ dependencies:
   polymer: any
 dev_dependencies:
   scheduled_test: any
+  unittest: '0.11.4'
 transformers:
 - polymer:
     entry_points: web/polymer.html
