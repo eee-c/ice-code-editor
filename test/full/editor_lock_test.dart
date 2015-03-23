@@ -35,12 +35,23 @@ editor_lock_tests() {
       );
     });
 
-    test('can detect an existing lock', (){
-      var newSettings = new Settings()
-        ..storage_key = settings.storage_key;
+    group('new session', (){
+      EditorLock newLock;
+      setUp((){
+        var newSettings = new Settings()
+          ..storage_key = settings.storage_key;
 
-      var newLock = new EditorLock(newSettings);
-      expect(newLock.existing, isTrue);
+        newLock = new EditorLock(newSettings);
+      });
+
+      test('can detect an existing lock', (){
+        expect(newLock.existing, isTrue);
+      });
+
+      test('remove does not remove other session\'s lock', (){
+        newLock.remove();
+        expect(settings['lock'], isNotNull);
+      });
     });
   });
 

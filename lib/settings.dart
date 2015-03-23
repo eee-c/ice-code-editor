@@ -9,9 +9,7 @@ class Settings implements Map<String, Object> {
 
   Map _model;
 
-  Settings({this.storage_key: codeEditor}) {
-    model;
-  }
+  Settings({this.storage_key: codeEditor});
 
   static clearAll({storage_key: codeEditor}) {
     new Settings(storage_key: storage_key).clear();
@@ -55,7 +53,6 @@ class Settings implements Map<String, Object> {
   refresh() => _model = null;
 
   void _sync() {
-    print('syncing: ${_model}');
     window.localStorage[storage_key] = JSON.encode(_model);
   }
 }

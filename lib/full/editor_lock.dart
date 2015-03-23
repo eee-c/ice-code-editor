@@ -8,8 +8,6 @@ class EditorLock {
   final updatePeriod = const Duration(seconds: 10);
 
   EditorLock(this.settings) {
-//    print('check activelock');
-//    print(settings['lock']);
     if (_activeLockPresent) existing = true;
 
     if (!existing) {
@@ -27,8 +25,7 @@ class EditorLock {
   }
 
   void remove() {
-    print('remove: $existing');
-    if(existing == false) this.settings.remove('lock');
+    if (existing == false) this.settings.remove('lock');
     if (timer != null) timer.cancel();
   }
 
@@ -41,13 +38,7 @@ class EditorLock {
 
   bool get _activeLockPresent => _lockPresent && !_lockStale;
 
-  bool get _lockPresent {
-    var ret = this.settings['lock'] != null;
-//    print(ret);
-
-//    print(this.settings.model);
-    return ret;
-  }
+  bool get _lockPresent => this.settings['lock'] != null;
 
   bool get _lockStale {
     var lockDate = new DateTime.fromMillisecondsSinceEpoch(this.settings['lock']);
