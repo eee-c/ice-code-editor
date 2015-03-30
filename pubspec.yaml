@@ -11,7 +11,7 @@ dependencies:
   browser: '>=0.10.0 <0.11.0'
   crypto: '>=0.9.0 < 0.10.0'
   ctrl_alt_foo: '>=0.3.0 <0.3.1'
-  ace: ">=0.5.10 <0.5.11"
+  ace: ">=0.5.0 <0.6.0"
   polymer: any
 dev_dependencies:
   scheduled_test: any

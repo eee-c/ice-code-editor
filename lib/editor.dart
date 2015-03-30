@@ -308,6 +308,7 @@ class Ace {
   Ace(this.jsAce) {
     js.context['ace']['config'].
       callMethod('set', ["workerPath", "packages/ice_code_editor/js/ace"]);
+    jsAce[r'$blockScrolling'] = double.INFINITY;
   }
 
   set fontSize(String size) =>
