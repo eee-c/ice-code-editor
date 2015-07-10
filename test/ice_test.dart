@@ -1,9 +1,10 @@
+@TestOn('dartium || content-shell')
 library ice_test;
 
-import 'package:unittest/unittest.dart';
-// import 'package:unittest/html_config.dart';
+import 'package:test/test.dart';
 import 'dart:html';
 import 'dart:async';
+import 'dart:developer';
 
 import 'helpers.dart' as helpers;
 import 'package:ice_code_editor/ice.dart';
@@ -32,11 +33,11 @@ part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 part 'full/snapshotter_test.dart';
 
-main(){
-  // useHtmlConfiguration();
+void main(){
   Editor.disableJavaScriptWorker = true;
 
   editor_tests();
+
   store_tests();
   settings_tests();
   gzip_tests();
@@ -63,16 +64,13 @@ main(){
   // Leave these tests last b/c they were failing at one point, but only when
   // last (hoping to see this again).
   keyboard_shortcuts_tests();
-
-  pollForDone(testCases);
 }
 
-pollForDone(List tests) {
-  if (tests.every((t)=> t.isComplete)) {
-    window.postMessage('dart-main-done', window.location.href);
-    return;
-  }
+get currentTestCase => new CurrentTestCase();
 
-  var wait = new Duration(milliseconds: 100);
-  new Timer(wait, ()=> pollForDone(tests));
- }
+class CurrentTestCase {
+  String id;
+  CurrentTestCase(){
+    id = new DateTime.now().millisecondsSinceEpoch.toString();
+  }
+}

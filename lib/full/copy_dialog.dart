@@ -30,7 +30,6 @@ class CopyDialog extends Dialog implements MenuAction {
         _copyProject();
       });
 
-
     parent.children.add(dialog);
 
     dialog.query('input')
@@ -49,8 +48,7 @@ class CopyDialog extends Dialog implements MenuAction {
 
     query('.ice-dialog').remove();
 
-    window.location.hash = '';
-    if(window.location.search.contains('s')) window.location.search = '';
+    if (window.location.search.contains('s')) window.location.search = '';
   }
 
   InputElement get _field => query('.ice-dialog').query('input');

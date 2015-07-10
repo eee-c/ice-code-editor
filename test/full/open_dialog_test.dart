@@ -170,9 +170,6 @@ Last Updated: ${today}'''
 
       expect(queryAll('li'), helpers.elementsAreEmpty);
     });
-
-
-    skip_test("contains a default project on first load", (){});
   });
 
   group("Open Dialog Filter", (){
