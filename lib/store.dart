@@ -149,7 +149,7 @@ class Store implements HashMap<String, HashMap> {
 
   List get _projectSnapshots {
     return _projectsIncludingSnapshots.
-      where((p)=> p['snapshot']).
+      where((p)=> p['snapshot'] == true).
       toList();
   }
 

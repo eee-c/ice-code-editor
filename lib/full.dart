@@ -36,7 +36,7 @@ class Full {
   Stream get onPreviewChange => ice.onPreviewChange;
   Future get editorReady => ice.editorReady;
   String get content => ice.content;
-  void set content(data) => ice.content = data;
+  String set content(data) => ice.content = data;
 
   String get lineContent => ice.lineContent;
   int get lineNumber => ice.lineNumber;
@@ -268,7 +268,8 @@ changed.''';
 
   bool get _highlightWhatsNew => !_whatsNewClicked;
 
-  bool get _whatsNewClicked => settings['clicked_whats_new'];
+  bool get _whatsNewClicked =>
+    (settings['clicked_whats_new'] != null) && settings['clicked_whats_new'];
 
   bool get _isFirstUse =>
     store.isEmpty ||

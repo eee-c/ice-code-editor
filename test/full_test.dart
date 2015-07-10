@@ -364,7 +364,7 @@ full_tests() {
   // editor.dart before we have confidence in this test. Manually calling the
   // session's undo has no effect -- maybe using a different undoManager under
   // test?
-  skip_group("undo", (){
+  group("undo", (){
     var editor;
 
     setUp((){
@@ -401,7 +401,7 @@ full_tests() {
 
       expect(editor.content, 'Old Test');
     });
-  });
+  }, skip: true);
 
   // TODO: put current project title in the browser title
 }

@@ -345,7 +345,7 @@ class Ace {
 
   get renderer => jsAce['renderer'];
 
-  void resize() => renderer.callMethod('onResize');
+  int resize() => renderer.callMethod('onResize');
 
   var _session;
   AceSession get session {

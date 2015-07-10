@@ -14,8 +14,7 @@ dependencies:
   ace: ">=0.5.0 <0.6.0"
   polymer: any
 dev_dependencies:
-  scheduled_test: any
-  unittest: '0.11.4'
+  test: any
 transformers:
 - polymer:
     entry_points: web/polymer.html
