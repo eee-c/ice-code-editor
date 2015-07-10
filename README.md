@@ -61,6 +61,7 @@ $ pub build --mode=development
  * [Joe Curtis](http://github.com/toklok)
  * [Jon Davison](https://github.com/jcdavison)
  * [Damon Douglas](https://github.com/damondouglas)
+ * [Ashok Dudhade](https://github.com/ashokdudhade)
  * [William Estoque](https://github.com/westoque)
  * [Daniel Gempesaw](https://github.com/gempesaw)
  * [Abtin Ghods](https://github.com/abetss)

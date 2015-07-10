@@ -9,7 +9,7 @@ class Editor {
   Element __el, _editor_el, _preview_el;
 
   var _ace;
-  Completer _waitForAce, _waitForPreview;
+  Completer _waitForAce;
 
   static bool disableJavaScriptWorker = false;
 
