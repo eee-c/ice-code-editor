@@ -32,36 +32,36 @@ part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
 part 'full/snapshotter_test.dart';
 
-main(){
+void main(){
   Editor.disableJavaScriptWorker = true;
 
   editor_tests();
-  store_tests();
-  settings_tests();
-  gzip_tests();
+  // store_tests();
+  // settings_tests();
+  // gzip_tests();
 
-  full_tests();
+  // full_tests();
 
-  update_button_tests();
-  hide_button_tests();
-  show_button_tests();
-  notification_tests();
-  new_project_dialog_tests();
-  open_dialog_tests();
-  copy_dialog_tests();
-  rename_dialog_tests();
-  save_dialog_tests();
-  share_dialog_tests();
-  download_tests();
-  export_tests();
-  import_tests();
-  whats_new_tests();
-  remove_dialog_tests();
-  snapshotter_tests();
+  // update_button_tests();
+  // hide_button_tests();
+  // show_button_tests();
+  // notification_tests();
+  // new_project_dialog_tests();
+  // open_dialog_tests();
+  // copy_dialog_tests();
+  // rename_dialog_tests();
+  // save_dialog_tests();
+  // share_dialog_tests();
+  // download_tests();
+  // export_tests();
+  // import_tests();
+  // whats_new_tests();
+  // remove_dialog_tests();
+  // snapshotter_tests();
 
-  // Leave these tests last b/c they were failing at one point, but only when
-  // last (hoping to see this again).
-  keyboard_shortcuts_tests();
+  // // Leave these tests last b/c they were failing at one point, but only when
+  // // last (hoping to see this again).
+  // keyboard_shortcuts_tests();
 }
 
 get currentTestCase => new CurrentTestCase();

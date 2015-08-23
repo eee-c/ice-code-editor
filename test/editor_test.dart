@@ -2,23 +2,21 @@ part of ice_test;
 
 editor_tests() {
   group("defaults", () {
+    var el;
     setUp(() {
-      var el = new Element.html('<div id=ice-${currentTestCase.id}>');
+      el = new Element.html('<div>');
       document.body.nodes.add(el);
     });
-    tearDown(() {
-      var el = document.query('#ice-${currentTestCase.id}');
-      document.body.nodes.remove(el);
-    });
+    tearDown(()=> el.remove());
 
     test("defaults to auto-update the preview", () {
-      var it = new Editor('#ice-${currentTestCase.id}');
+      var it = new Editor(el);
       expect(it.autoupdate, equals(true));
       expect(it.editorReady, completes);
     });
 
     test("starts an ACE instance", (){
-      var it = new Editor('#ice-${currentTestCase.id}');
+      var it = new Editor(el);
       it.editorReady.then(
         expectAsync((_) {
           expect(document.query('.ace_content'), isNotNull);
@@ -27,7 +25,7 @@ editor_tests() {
     });
 
     test("defaults to disable edit-only mode", () {
-      var it = new Editor('#ice-${currentTestCase.id}');
+      var it = new Editor(el);
       expect(it.edit_only, equals(false));
       expect(it.editorReady, completes);
     });
@@ -35,17 +33,15 @@ editor_tests() {
   });
 
   group("content", () {
+    var el;
     setUp(() {
-      var el = new Element.html('<div id=ice-${currentTestCase.id}>');
-      document.body.nodes.add(el);
+      el = new DivElement();
+      document.body.append(el);
     });
-    tearDown(() {
-      var el = document.query('#ice-${currentTestCase.id}');
-      document.body.nodes.remove(el);
-    });
+    tearDown(()=> el.remove());
 
     test("can set the content", () {
-      var it = new Editor('#ice-${currentTestCase.id}');
+      var it = new Editor(el);
 
       it.content = 'asdf';
 
@@ -59,15 +55,13 @@ editor_tests() {
   });
 
   group("focus", (){
-    var editor;
+    var el, editor;
 
     setUp((){
-      document.body.nodes.
-        add(new Element.html('<div id=ice-${currentTestCase.id}>'));
+      el = new DivElement();
+      document.body.append(el);
 
-      editor = new Editor('#ice-${currentTestCase.id}');
-
-      editor.content = '<h1>preview</h1>';
+      editor = new Editor(el)..content = '<h1>preview</h1>';
 
       var preview_ready = new Completer();
       editor.onPreviewChange.listen((e){
@@ -77,34 +71,28 @@ editor_tests() {
       return preview_ready.future;
     });
 
-    tearDown(()=> document.body.nodes.
-        remove(document.query('#ice-${currentTestCase.id}')));
+    tearDown(()=> el.remove());
 
     test('code is visibile by default', (){
-      var el = document.
-        query('#ice-${currentTestCase.id}').
-        query('.ice-code-editor-editor');
+      var _el = el.query('.ice-code-editor-editor');
 
-      expect(el.style.visibility, isNot('hidden'));
+      expect(_el.style.visibility, isNot('hidden'));
     });
 
     test('focus goes to code if code is visibile', (){
-      var el = document.
-        query('#ice-${currentTestCase.id}').
+      var _el = el.
         query('.ice-code-editor-editor').
         query('textarea.ace_text-input');
 
-      expect(document.activeElement, el);
+      expect(document.activeElement, _el);
     });
 
     test('focus goes to preview if code is hidden', (){
       editor.hideCode();
 
-      var el = document.
-        query('#ice-${currentTestCase.id}').
-        query('iframe');
+      var _el = el.query('iframe');
 
-      expect(document.activeElement, el);
+      expect(document.activeElement, _el);
     });
 
     group("hide code after an update", (){
@@ -121,11 +109,9 @@ editor_tests() {
       });
 
       test('focus goes to preview if code is hidden', (){
-        var el = document.
-          query('#ice-${currentTestCase.id}').
-          query('iframe');
+        var _el = el.query('iframe');
 
-        expect(document.activeElement, el);
+        expect(document.activeElement, _el);
       });
     });
     // focus goes to preview if code is hidden
@@ -133,15 +119,14 @@ editor_tests() {
   });
 
   group("line number", (){
-    var editor;
+    var el, editor;
 
     setUp((){
-      document.body.nodes.
-        add(new Element.html('<div id=ice-${currentTestCase.id}>'));
+      el = new DivElement();
+      document.body.append(el);
 
-      editor = new Editor('#ice-${currentTestCase.id}');
-
-      editor.content = '''
+      editor = new Editor(el)
+        ..content = '''
 Code line 01
 Code line 02
 Code line 03
@@ -158,9 +143,7 @@ Code line 07''';
       return preview_ready.future;
     });
 
-    tearDown(()=> document.body.nodes.
-        remove(document.query('#ice-${currentTestCase.id}')));
-
+    tearDown(()=> el.remove());
 
     test("defaults to 1", (){
       expect(editor.lineNumber, 1);

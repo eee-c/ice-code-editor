@@ -17,7 +17,7 @@ fi
 echo "Looks good!"
 echo
 
-which content_shell
+which content_shell >/dev/null
 if [[ $? -ne 0 ]]; then
   $DART_SDK/../chromium/download_contentshell.sh
   unzip content_shell-linux-x64-release.zip
@@ -27,25 +27,22 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Run different test contexts
-for X in html5 index
+for X in ice_test
 do
   # Run a set of Dart Unit tests
-  results=$(content_shell --dump-render-tree test/$X.html)
-  echo -e "$results"
+  results=$(pub run test -p 'content-shell' -r expanded test/$X.dart)
 
   # check to see if DumpRenderTree tests
   # fails, since it always returns 0
-  if [[ "$results" == *"Some tests failed"* ]]
+  if [[ $? -ne 0 ]]
   then
+      echo -e "$results"
       exit 1
   fi
 
-  if [[ "$results" == *"Exception: "* ]]
-  then
-      exit 1
-  fi
+  echo -e "$results"
 
-  if [[ "$results" != *"tests passed."* ]]
+  if [[ "$results" != *"tests passed"* ]]
   then
       exit 1
   fi
