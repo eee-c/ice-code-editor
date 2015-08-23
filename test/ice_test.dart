@@ -36,6 +36,11 @@ void main(){
   Editor.disableJavaScriptWorker = true;
 
   editor_tests();
+
+  // START HERE!
+  // Tests all pass when run in Dartium, but hang in content-shell (via
+  // test_runner),  so start by trying to isolate failure.
+
   // store_tests();
   // settings_tests();
   // gzip_tests();
