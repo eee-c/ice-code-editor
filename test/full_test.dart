@@ -112,131 +112,131 @@ full_tests() {
     });
   });
 
-  group("Edit Only Mode", (){
-    var editor;
+  // group("Edit Only Mode", (){
+  //   var editor;
 
-    setUp((){
-      window.location.hash = '#e';
+  //   setUp((){
+  //     window.location.hash = '#e';
 
-      editor = new Full()
-        ..store.storage_key = "ice-test-${currentTestCase.id}";
+  //     editor = new Full()
+  //       ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      editor.store
-        ..clear()
-        ..['Current Project'] = {'code': 'Test'};
+  //     editor.store
+  //       ..clear()
+  //       ..['Current Project'] = {'code': 'Test'};
 
-      return editor.editorReady;
-    });
+  //     return editor.editorReady;
+  //   });
 
-    tearDown(() {
-      editor.remove();
-      editor.store..clear()..freeze();
-      window.location.hash = '';
-    });
+  //   tearDown(() {
+  //     editor.remove();
+  //     editor.store..clear()..freeze();
+  //     window.location.hash = '';
+  //   });
 
-    test("is enabled when the ?e query param is present", (){
-      expect(editor.ice.edit_only,isTrue);
-    });
-  });
+  //   test("is enabled when the ?e query param is present", (){
+  //     expect(editor.ice.edit_only,isTrue);
+  //   });
+  // });
 
-  group("Gaming Mode", (){
-    var editor;
+  // group("Gaming Mode", (){
+  //   var editor;
 
-    setUp((){
-      window.location.hash = '#g';
-      editor = new Full()
-        ..store.storage_key = "ice-test-${currentTestCase.id}";
+  //   setUp((){
+  //     window.location.hash = '#g';
+  //     editor = new Full()
+  //       ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      editor.store
-        ..clear()
-        ..['Current Project'] = {'code': 'Test'};
+  //     editor.store
+  //       ..clear()
+  //       ..['Current Project'] = {'code': 'Test'};
 
-      return editor.editorReady;
-    });
+  //     return editor.editorReady;
+  //   });
 
-    tearDown(() {
-      editor.remove();
-      editor.store..clear()..freeze();
-      window.location.hash = '';
-    });
+  //   tearDown(() {
+  //     editor.remove();
+  //     editor.store..clear()..freeze();
+  //     window.location.hash = '';
+  //   });
 
-    test("hides the code when the ?g query param is present", (){
-      expect(
-        query('.ice-code-editor-editor').style.visibility,
-        equals('hidden')
-      );
-    });
+  //   test("hides the code when the ?g query param is present", (){
+  //     expect(
+  //       query('.ice-code-editor-editor').style.visibility,
+  //       equals('hidden')
+  //     );
+  //   });
 
-    test("hides the show code button when the ?g query param is present", (){
-      expect(
-        helpers.queryWithContent('button', 'Show Code').style.display,
-        equals('')
-      );
-    });
-  });
+  //   test("hides the show code button when the ?g query param is present", (){
+  //     expect(
+  //       helpers.queryWithContent('button', 'Show Code').style.display,
+  //       equals('')
+  //     );
+  //   });
+  // });
 
-  group("Snapshot Mode", (){
-    var editor;
+  // group("Snapshot Mode", (){
+  //   var editor;
 
-    setUp((){
-      window.location.hash = '#s';
+  //   setUp((){
+  //     window.location.hash = '#s';
 
-      editor = new Full()
-        ..store.storage_key = "ice-test-${currentTestCase.id}";
+  //     editor = new Full()
+  //       ..store.storage_key = "ice-test-${currentTestCase.id}";
 
-      return editor.editorReady;
-    });
+  //     return editor.editorReady;
+  //   });
 
-    tearDown(() {
-      editor.remove();
-      editor.store..clear()..freeze();
-      window.location.hash = '';
-    });
+  //   tearDown(() {
+  //     editor.remove();
+  //     editor.store..clear()..freeze();
+  //     window.location.hash = '';
+  //   });
 
-    test("is enabled when the ?s query param is present", (){
-      expect(editor.store.show_snapshots, isTrue);
-    });
+  //   test("is enabled when the ?s query param is present", (){
+  //     expect(editor.store.show_snapshots, isTrue);
+  //   });
 
-    test("does not have a running snapshotter", (){
-      expect(editor.snapshotter, isNull);
-    });
+  //   test("does not have a running snapshotter", (){
+  //     expect(editor.snapshotter, isNull);
+  //   });
 
-    test("does not include update button", (){
-      expect(
-        queryAll('button'),
-        helpers.elementsDoNotContain('Update')
-      );
-    });
+  //   test("does not include update button", (){
+  //     expect(
+  //       queryAll('button'),
+  //       helpers.elementsDoNotContain('Update')
+  //     );
+  //   });
 
-    test("shows leave snapshot mode button", (){
-      expect(
-        helpers.queryWithContent('button', 'Leave Snapshot Mode'),
-        isNotNull
-      );
-    });
+  //   test("shows leave snapshot mode button", (){
+  //     expect(
+  //       helpers.queryWithContent('button', 'Leave Snapshot Mode'),
+  //       isNotNull
+  //     );
+  //   });
 
-    test("clicking leave snapshot mode button leaves snapshot mode", (){
-      helpers.
-        queryWithContent('button', 'Leave Snapshot Mode').
-        click();
+  //   test("clicking leave snapshot mode button leaves snapshot mode", (){
+  //     helpers.
+  //       queryWithContent('button', 'Leave Snapshot Mode').
+  //       click();
 
-      expect(
-        window.location.hash,
-        ''
-      );
-    });
+  //     expect(
+  //       window.location.hash,
+  //       ''
+  //     );
+  //   });
 
-    test("menu only includes Open, Make a Copy, and Help", (){
-      helpers.click('button', text: '☰');
+  //   test("menu only includes Open, Make a Copy, and Help", (){
+  //     helpers.click('button', text: '☰');
 
-      var items = queryAll('li');
+  //     var items = queryAll('li');
 
-      expect(
-       items.map((i)=> i.text),
-       ['Open', 'Make a Copy', 'Help']
-      );
-    });
-  });
+  //     expect(
+  //      items.map((i)=> i.text),
+  //      ['Open', 'Make a Copy', 'Help']
+  //     );
+  //   });
+  // });
 
 
   group("Focus", (){

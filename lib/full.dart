@@ -36,7 +36,7 @@ class Full {
   Stream get onPreviewChange => ice.onPreviewChange;
   Future get editorReady => ice.editorReady;
   String get content => ice.content;
-  void set content(data) => ice.content = data;
+  void set content(data) { ice.content = data; }
 
   String get lineContent => ice.lineContent;
   int get lineNumber => ice.lineNumber;

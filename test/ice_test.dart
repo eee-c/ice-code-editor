@@ -35,7 +35,7 @@ part 'full/snapshotter_test.dart';
 void main(){
   Editor.disableJavaScriptWorker = true;
 
-  editor_tests();
+  // editor_tests();
 
   // START HERE!
   // Tests all pass when run in Dartium, but hang in content-shell (via
@@ -45,7 +45,7 @@ void main(){
   // settings_tests();
   // gzip_tests();
 
-  // full_tests();
+  full_tests();
 
   // update_button_tests();
   // hide_button_tests();
