@@ -56,6 +56,10 @@ copy_dialog_tests() {
       );
     });
 
+    // START HERE. When tests prior to here are commented out, then this test
+    // locks under content-shell. This probably is not the only offender, but is
+    // one that exibited problematic behavior.
+
     test("works with existing projects", (){
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');

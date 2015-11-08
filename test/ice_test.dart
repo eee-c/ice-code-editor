@@ -35,38 +35,41 @@ part 'full/snapshotter_test.dart';
 void main(){
   Editor.disableJavaScriptWorker = true;
 
-  // editor_tests();
+  editor_tests();
 
-  // START HERE!
-  // Tests all pass when run in Dartium, but hang in content-shell (via
-  // test_runner),  so start by trying to isolate failure.
-
-  // store_tests();
-  // settings_tests();
-  // gzip_tests();
+  store_tests();
+  settings_tests();
+  gzip_tests();
 
   full_tests();
 
-  // update_button_tests();
-  // hide_button_tests();
-  // show_button_tests();
-  // notification_tests();
-  // new_project_dialog_tests();
-  // open_dialog_tests();
+  update_button_tests();
+  hide_button_tests();
+  show_button_tests();
+  notification_tests();
+  new_project_dialog_tests();
+  open_dialog_tests();
+
+  // START HERE: the two commented our tests are locking, but only under
+  // content-shell / dartium, not directly from dartium connecting to port
+  // 8081. Very probably a bug in the test package. Maybe figure these out, but
+  // start with fixing the remaing 7 failures and then moving the remaining
+  // failures to a separate test file (maybe it would have to be manualy testing
+  // only, ick).
   // copy_dialog_tests();
-  // rename_dialog_tests();
-  // save_dialog_tests();
+  rename_dialog_tests();
+  save_dialog_tests();
   // share_dialog_tests();
-  // download_tests();
-  // export_tests();
-  // import_tests();
-  // whats_new_tests();
-  // remove_dialog_tests();
-  // snapshotter_tests();
+  download_tests();
+  export_tests();
+  import_tests();
+  whats_new_tests();
+  remove_dialog_tests();
+  snapshotter_tests();
 
   // // Leave these tests last b/c they were failing at one point, but only when
   // // last (hoping to see this again).
-  // keyboard_shortcuts_tests();
+  keyboard_shortcuts_tests();
 }
 
 get currentTestCase => new CurrentTestCase();
