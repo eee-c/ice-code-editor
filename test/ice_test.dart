@@ -56,7 +56,7 @@ void main(){
   // start with fixing the remaing 7 failures and then moving the remaining
   // failures to a separate test file (maybe it would have to be manualy testing
   // only, ick).
-  // copy_dialog_tests();
+  copy_dialog_tests();
   rename_dialog_tests();
   save_dialog_tests();
   // share_dialog_tests();
