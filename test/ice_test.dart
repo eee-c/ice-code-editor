@@ -1,4 +1,4 @@
-@TestOn('content-shell')
+@TestOn('dartium')
 library ice_test;
 
 import 'package:test/test.dart';
