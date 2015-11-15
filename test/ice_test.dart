@@ -4,6 +4,7 @@ library ice_test;
 import 'package:test/test.dart';
 import 'dart:html';
 import 'dart:async';
+import 'dart:developer';
 
 import 'helpers.dart' as helpers;
 import 'package:ice_code_editor/ice.dart';
@@ -35,20 +36,20 @@ part 'full/snapshotter_test.dart';
 void main(){
   Editor.disableJavaScriptWorker = true;
 
-  editor_tests();
-
-  store_tests();
-  settings_tests();
-  gzip_tests();
-
-  full_tests();
-
-  update_button_tests();
-  hide_button_tests();
-  show_button_tests();
-  notification_tests();
-  new_project_dialog_tests();
-  open_dialog_tests();
+//  editor_tests();
+//
+//  store_tests();
+//  settings_tests();
+//  gzip_tests();
+//
+//  full_tests();
+//
+//  update_button_tests();
+//  hide_button_tests();
+//  show_button_tests();
+//  notification_tests();
+//  new_project_dialog_tests();
+//  open_dialog_tests();
 
   // START HERE: the two commented our tests are locking, but only under
   // content-shell / dartium, not directly from dartium connecting to port
