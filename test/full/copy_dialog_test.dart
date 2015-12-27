@@ -60,11 +60,12 @@ copy_dialog_tests() {
     // locks under content-shell. This probably is not the only offender, but is
     // one that exibited problematic behavior.
 
-
+    // Can hit the debugger in Dartium with:
+    // pub run test -p 'dartium' --pub-serve=8081 --pause-after-load -r expanded test/ice_test.dart
 
     test("works with existing projects", (){
-      _test() {
-        debugger();
+
+      debugger();
         helpers.click('button', text: '☰');
         helpers.click('li', text: 'New');
 
@@ -105,9 +106,6 @@ copy_dialog_tests() {
             editor.content,
             equals('Code #2')
         );
-      }
-      expectAsync(_test);
-      new Timer(new Duration(seconds: 10), _test);
     });
 
 //    test("project name field is pre-populated", (){
