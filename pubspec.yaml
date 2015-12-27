@@ -14,9 +14,10 @@ dependencies:
   ace: ">=0.5.0 <0.6.0"
   # polymer: any
 dev_dependencies:
-  test: any
+  unittest: '<0.12.0'
+  matcher: '>=0.10.0 <0.11.0'
 transformers:
 # - polymer:
 #     entry_points: web/polymer.html
-- test/pub_serve:
-    $include: test/ice_test.dart
+# - test/pub_serve:
+#     $include: test/ice_test.dart

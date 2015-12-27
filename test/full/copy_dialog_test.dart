@@ -65,7 +65,6 @@ copy_dialog_tests() {
 
     test("works with existing projects", (){
 
-      debugger();
         helpers.click('button', text: '☰');
         helpers.click('li', text: 'New');
 
