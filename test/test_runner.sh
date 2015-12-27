@@ -10,7 +10,7 @@ results_ignoring_ok_deprecations=$(
 )
 echo "$results_ignoring_ok_deprecations"
 count=$(echo "$results_ignoring_ok_deprecations" | wc -l)
-if [[ "$count" != "2" ]]
+if [[ "$count" != "1" ]]
 then
   exit 1
 fi
