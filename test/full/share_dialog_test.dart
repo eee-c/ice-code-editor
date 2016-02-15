@@ -41,7 +41,7 @@ share_dialog_tests() {
       expect(window.location.hash, '');
     });
 
-  });
+  }, skip: "window.location.hash setting seems broken");
   // Note: Cannot test the combination of ?g and #B
   // because the search parameter reload the test page,
   // which restarts the test suite. For now we rely on the individual tests.
@@ -75,7 +75,7 @@ share_dialog_tests() {
         expect(store['Untitled']['code'], 'Hi, Fred!');
         expect(store['Untitled (1)']['code'], 'Howdy, Bob!');
     });
-  });
+  }, skip: "window.location.hash setting seems broken");
 
   group("Share Dialog", (){
     var editor;

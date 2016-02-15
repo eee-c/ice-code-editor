@@ -49,8 +49,10 @@ class CopyDialog extends Dialog implements MenuAction {
 
     query('.ice-dialog').remove();
 
-    window.location.hash = '';
-    if(window.location.search.contains('s')) window.location.search = '';
+    print('[_copyProject] 1');
+    //    window.location.hash = '';
+    print('[_copyProject] 2');
+    // if(window.location.search.contains('s')) window.location.search = '';
   }
 
   InputElement get _field => query('.ice-dialog').query('input');
