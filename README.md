@@ -73,6 +73,7 @@ $ pub build --mode=development
  * [Jonathan Kaye](https://github.com/jonkaye)
  * [Colin Kennedy](https://github.com/cmkcmk)
  * [Jon Kirkman](https://github.com/jonkirkman)
+ * [Kashyap Kondamudi](https://github.com/kgrz)
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)
  * [Morgan Nelson](https://github.com/korishev)
