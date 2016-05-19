@@ -116,9 +116,7 @@ full_tests() {
     var editor;
 
     setUp((){
-      window.location.hash = '#e';
-
-      editor = new Full()
+      editor = new Full(mode: 'edit-only')
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -131,20 +129,18 @@ full_tests() {
     tearDown(() {
       editor.remove();
       editor.store..clear()..freeze();
-      window.location.hash = '';
     });
 
     test("is enabled when the ?e query param is present", (){
       expect(editor.ice.edit_only,isTrue);
     });
-  }, skip: "window.location.hash setting seems broken");
+  });
 
   group("Gaming Mode", (){
     var editor;
 
     setUp((){
-      window.location.hash = '#g';
-      editor = new Full()
+      editor = new Full(mode: '?g')
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       editor.store
@@ -157,7 +153,6 @@ full_tests() {
     tearDown(() {
       editor.remove();
       editor.store..clear()..freeze();
-      window.location.hash = '';
     });
 
     test("hides the code when the ?g query param is present", (){
@@ -173,15 +168,13 @@ full_tests() {
         equals('')
       );
     });
-  }, skip: "window.location.hash setting seems broken");
+  });
 
   group("Snapshot Mode", (){
     var editor;
 
     setUp((){
-      window.location.hash = '#s';
-
-      editor = new Full()
+      editor = new Full(mode: '?s')
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       return editor.editorReady;
@@ -190,7 +183,6 @@ full_tests() {
     tearDown(() {
       editor.remove();
       editor.store..clear()..freeze();
-      window.location.hash = '';
     });
 
     test("is enabled when the ?s query param is present", (){
@@ -224,7 +216,7 @@ full_tests() {
         window.location.hash,
         ''
       );
-    });
+    }, skip: "Unsure if it's possible to test this");
 
     test("menu only includes Open, Make a Copy, and Help", (){
       helpers.click('button', text: '☰');
@@ -236,7 +228,7 @@ full_tests() {
        ['Open', 'Make a Copy', 'Help']
       );
     });
-  }, skip: "window.location.hash setting seems broken");
+  });
 
 
   group("Focus", (){

@@ -6,14 +6,16 @@ class Full {
   Store store;
   Snapshotter snapshotter;
   Settings settings;
+  String mode;
 
-  Full() {
+  Full({mode}) {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
     ice = new Editor('#ice');
     store = new Store();
     settings = new Settings();
+    this.mode = mode?.replaceFirst(new RegExp(r'^\?'), '');
 
     _attachKeyboardHandlers();
     _attachMouseHandlers();
@@ -23,13 +25,13 @@ class Full {
     _fullScreenStyles();
 
     editorReady
-      ..then((_)=> _applySnapshotQueryString())
+      ..then((_)=> _startSnapshotter())
       ..then((_)=> _attachCodeToolbar())
       ..then((_)=> _attachPreviewToolbar())
       ..then((_)=> _startAutoSave())
       ..then((_)=> _openProject())
       ..then((_)=> _initializeSettingForFirstUse())
-      ..then((_)=> _applyQueryStringSettings())
+      ..then((_)=> _initializeMode())
       ..then((_)=> _applyStyles());
   }
 
@@ -171,7 +173,6 @@ changed.''';
         <button>Leave Snapshot Mode</button>'''
       )
       ..onClick.listen((e){
-        window.location.hash = '';
         window.location.search = '';
       })
       ..style.color = 'red'
@@ -276,6 +277,10 @@ changed.''';
     (store.length == 1 && store.currentProjectTitle == 'Untitled');
 
   String get encodedContent => Gzip.encode(ice.content);
+
+  _applyMode(String mode) {
+
+  }
 
   _attachKeyboardHandlers() {
     Keys.shortcuts({
@@ -402,28 +407,18 @@ changed.''';
     }
   }
 
-  _applyQueryStringSettings() {
-    // Users should use query params. Checking hash because it plays better
-    // with tests. Query params cause a browser reload (bad in unit tests).
-    if (window.location.search.contains('?e')) ice.edit_only = true;
-    if (window.location.hash.startsWith('#e')) ice.edit_only = true;
-
-    if (window.location.search.contains('?g')) hideCode();
-    if (window.location.hash.startsWith('#g')) hideCode();
+  _initializeMode() {
+    if (mode == null) return;
+    if (mode.startsWith('e')) ice.edit_only = true;
+    if (mode.startsWith('g')) hideCode();
   }
 
-  _applySnapshotQueryString() {
-    if (window.location.search.contains('?s')) {
+  _startSnapshotter() {
+    if (mode != null && mode.startsWith('s')) {
       store.show_snapshots = true;
       ice.read_only = true;
     }
-
-    if (window.location.hash.startsWith('#s')) {
-      store.show_snapshots = true;
-      ice.read_only = true;
-    }
-
-    if (!store.show_snapshots) {
+    else {
       snapshotter = new Snapshotter(this);
     }
   }
