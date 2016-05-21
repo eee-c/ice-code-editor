@@ -212,11 +212,8 @@ full_tests() {
         queryWithContent('button', 'Leave Snapshot Mode').
         click();
 
-      expect(
-        window.location.hash,
-        ''
-      );
-    }, skip: "Unsure if it's possible to test this");
+      expect(window.location.search, '');
+    }, skip: 'Cannot test window.location changes with current test runner');
 
     test("menu only includes Open, Make a Copy, and Help", (){
       helpers.click('button', text: '☰');

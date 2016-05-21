@@ -245,11 +245,8 @@ copy_dialog_tests() {
    });
 
    test('leaves snapshot mode', () {
-     expect(
-       window.location.hash,
-       ''
-     );
-   }, skip: "Unsure that it's possible to test this");
+     expect(window.location.search, '');
+   }, skip: "Cannot test window.location changes with current test runner");
  });
 
 }
