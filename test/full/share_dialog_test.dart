@@ -5,9 +5,7 @@ share_dialog_tests() {
     var editor, store;
 
     setUp((){
-      window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
-
-      editor = new Full()
+      editor = new Full(compressedContent: '#B/88gvT6nUUXDKT1IEAA==')
         ..store.storage_key = "ice-test-${currentTestCase.id}";
 
       store = editor.store
@@ -18,7 +16,6 @@ share_dialog_tests() {
     });
 
     tearDown((){
-      window.location.hash = '';
       editor.remove();
       editor.store..clear()..freeze();
     });
@@ -36,23 +33,13 @@ share_dialog_tests() {
         'Howdy, Bob!'
       );
     });
-
-    test("removes share hash", (){
-      expect(window.location.hash, '');
-    });
-
-  }, skip: "window.location.hash setting seems broken");
-  // Note: Cannot test the combination of ?g and #B
-  // because the search parameter reload the test page,
-  // which restarts the test suite. For now we rely on the individual tests.
+  });
 
   group("Opening Shared Link with an existing untitled project", (){
     var editor, store;
 
     setUp((){
-      window.location.hash = 'B/88gvT6nUUXDKT1IEAA==';
-
-      editor = new Full()
+      editor = new Full(compressedContent: 'B/88gvT6nUUXDKT1IEAA==')
         ..store.storage_key = "ice-test-${currentTestCase.id}"
         ..store['Untitled'] = {'code': 'Hi, Fred!'};
 
@@ -63,7 +50,6 @@ share_dialog_tests() {
 
 
     tearDown((){
-      window.location.hash = '';
       editor.remove();
       editor.store..clear()..freeze();
     });
@@ -75,7 +61,7 @@ share_dialog_tests() {
         expect(store['Untitled']['code'], 'Hi, Fred!');
         expect(store['Untitled (1)']['code'], 'Howdy, Bob!');
     });
-  }, skip: "window.location.hash setting seems broken");
+  });
 
   group("Share Dialog", (){
     var editor;

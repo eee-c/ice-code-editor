@@ -6,9 +6,11 @@ class Full {
   Store store;
   Snapshotter snapshotter;
   Settings settings;
-  String mode;
 
-  Full({mode}) {
+  String mode;
+  String compressedContent;
+
+  Full({mode, this.compressedContent:''}) {
     el = new Element.html('<div id=ice>');
     document.body.nodes.add(el);
 
@@ -378,11 +380,11 @@ changed.''';
   }
 
   _openProject() {
-    if (window.location.hash.startsWith('#B/')) {
+    var matchCompressedContent = new RegExp(r'#?B/');
+    if (compressedContent.startsWith(matchCompressedContent)) {
       var title = store.nextProjectNamed('Untitled');
-      content = Gzip.decode(window.location.hash.substring(3));
+      content = Gzip.decode(compressedContent.replaceFirst(matchCompressedContent, ''));
       store[title] = {'code': content};
-      window.location.hash = '';
       return;
     }
 
