@@ -280,10 +280,6 @@ changed.''';
 
   String get encodedContent => Gzip.encode(ice.content);
 
-  _applyMode(String mode) {
-
-  }
-
   _attachKeyboardHandlers() {
     Keys.shortcuts({
       'Ctrl+N, Ctrl+O, ⌘+O, Ctrl+Shift+H': ()=> _hideDialog(focus: false)

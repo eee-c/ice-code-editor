@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # Static type analysis
-# results=$(dartanalyzer lib/ice.dart 2>&1)
-# results_ignoring_ok_deprecations=$(
-#   echo "$results" | \
-#     grep -v "'CryptoUtils' is deprecated" | \
-#     grep -v "'query' is deprecated" | \
-#     grep -v "'queryAll' is deprecated" | \
-#     grep -v "hints found.$"
-# )
-# echo "$results_ignoring_ok_deprecations"
-# count=$(echo "$results_ignoring_ok_deprecations" | wc -l)
-# if [[ "$count" != "1" ]]
-# then
-#   exit 1
-# fi
-# echo "Looks good!"
-# echo
+results=$(dartanalyzer lib/ice.dart 2>&1)
+results_ignoring_ok_deprecations=$(
+  echo "$results" | \
+    grep -v "'CryptoUtils' is deprecated" | \
+    grep -v "'query' is deprecated" | \
+    grep -v "'queryAll' is deprecated" | \
+    grep -v "hints found.$"
+)
+echo "$results_ignoring_ok_deprecations"
+count=$(echo "$results_ignoring_ok_deprecations" | wc -l)
+if [[ "$count" != "1" ]]
+then
+  exit 1
+fi
+echo "Looks good!"
+echo
 
 which content_shell >/dev/null
 if [[ $? -ne 0 ]]; then
