@@ -4,7 +4,6 @@
 results=$(dartanalyzer lib/ice.dart 2>&1)
 results_ignoring_ok_deprecations=$(
   echo "$results" | \
-    grep -v "'CryptoUtils' is deprecated" | \
     grep -v "'query' is deprecated" | \
     grep -v "'queryAll' is deprecated" | \
     grep -v "hints found.$"
