@@ -10,7 +10,7 @@ results_ignoring_ok_deprecations=$(
     grep -v "hints found.$"
 )
 echo "$results_ignoring_ok_deprecations"
-count=$(echo "$results_ignoring_ok_deprecations" | wc -l)
+count=$(echo "$results_ignoring_ok_deprecations" | wc -l | tr -d " ")
 if [[ "$count" != "1" ]]
 then
   exit 1
