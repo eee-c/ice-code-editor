@@ -29,8 +29,8 @@ fi
 
 pwd
 ls -l test/ice_test.dart
-ldd `which content_shell`
-pub run test -p content-shell
+# ldd `which content_shell`
+pub run test -p firefox test/ice_test.dart
 
 # Run different test contexts
 for X in ice_test
