@@ -30,6 +30,9 @@ fi
 # Run different test contexts
 for X in ice_test
 do
+
+  pwd
+
   # Run a set of Dart Unit tests
   results=$(pub run test -p 'content-shell' -r expanded test/$X.dart)
 
