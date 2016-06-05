@@ -29,6 +29,7 @@ fi
 
 pwd
 ls -l test/ice_test.dart
+ldd `which content_shell`
 pub run test -p content-shell
 
 # Run different test contexts
