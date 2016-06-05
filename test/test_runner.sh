@@ -27,6 +27,9 @@ if [[ $? -ne 0 ]]; then
   PATH=$cs_path:$PATH
 fi
 
+pwd
+pub run test -p content-shell test/ice_test.dart
+
 # Run different test contexts
 for X in ice_test
 do
