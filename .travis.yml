@@ -1,3 +1,3 @@
 language: dart
-with_content_shell: true
+  with_content_shell: true
 dart:
