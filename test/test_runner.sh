@@ -28,7 +28,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 pwd
-pub run test -p content-shell test/ice_test.dart
+ls -l test/ice_test.dart
+pub run test -p content-shell
 
 # Run different test contexts
 for X in ice_test
