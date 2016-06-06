@@ -6,8 +6,6 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 
-import 'package:crypto/crypto.dart';
-
 import 'package:ctrl_alt_foo/keys.dart';
 
 part 'editor.dart';
