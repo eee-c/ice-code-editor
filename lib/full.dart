@@ -38,7 +38,7 @@ class Full {
   }
 
   Stream get onPreviewChange => ice.onPreviewChange;
-  Future get editorReady => ice.editorReady;
+  Future get editorReady => Future.wait([ice.editorReady, Gzip._ready]);
   String get content => ice.content;
   void set content(data) { ice.content = data; }
 

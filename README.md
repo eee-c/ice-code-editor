@@ -45,10 +45,14 @@ $ pub build --mode=development
 
 ## Core Collaborators
 
- * [Santiago Arias](https://github.com/santiaago)
- * [Timothy King](https://github.com/lordzork)
  * [Srdjan Pejic](http://batasrki.github.io/)
  * [James Hurford](https://github.com/terrasea)
+ * [Kashyap Kondamudi](https://github.com/kgrz)
+
+## Emeritus Collaborators
+
+ * [Santiago Arias](https://github.com/santiaago)
+ * [Timothy King](https://github.com/lordzork)
 
 ## Contributors
 
@@ -73,7 +77,6 @@ $ pub build --mode=development
  * [Jonathan Kaye](https://github.com/jonkaye)
  * [Colin Kennedy](https://github.com/cmkcmk)
  * [Jon Kirkman](https://github.com/jonkirkman)
- * [Kashyap Kondamudi](https://github.com/kgrz)
  * [Anita Kuno](https://github.com/anteaya)
  * [Lindsey Miller](https://github.com/tech-bluenette)
  * [Morgan Nelson](https://github.com/korishev)
