@@ -1,6 +1,6 @@
 # ICE Code Editor
 
-[![Build Status](https://drone.io/github.com/eee-c/ice-code-editor/status.png)](https://drone.io/github.com/eee-c/ice-code-editor/latest)
+[![Build Status](https://travis-ci.org/eee-c/ice-code-editor.svg?branch=master)](https://travis-ci.org/eee-c/ice-code-editor)
 
 __*** [Try it now!](http://gamingjs.com/ice/) ***__
 
