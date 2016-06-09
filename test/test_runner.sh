@@ -17,17 +17,17 @@ fi
 echo "Looks good!"
 echo
 
-which content_shell >/dev/null
-if [[ $? -ne 0 ]]; then
-  $DART_SDK/../chromium/download_contentshell.sh
-  unzip content_shell-linux-x64-release.zip
+# Run different test contexts
+for X in ice_test
+do
+  # Run a set of Dart Unit tests
+  pub run test -p content-shell -r expanded test/$X.dart
 
-  cs_path=$(ls -d drt-*)
-  PATH=$cs_path:$PATH
-fi
+  # Can hit the debugger in Dartium with:
+  # pub run test -p 'dartium' --pub-serve=8081 --pause-after-load -r expanded test/ice_test.dart
 
-firefox --version
-pwd
-ls -l test/ice_test.dart
-# ldd `which content_shell`
-pub run test -p content-shell test/ice_test.dart
+  if [[ $? -ne 0 ]]
+  then
+      exit 1
+  fi
+done
