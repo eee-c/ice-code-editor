@@ -30,4 +30,4 @@ firefox --version
 pwd
 ls -l test/ice_test.dart
 # ldd `which content_shell`
-pub run test -p firefox test/ice_test.dart
+pub run test -p content-shell test/ice_test.dart
