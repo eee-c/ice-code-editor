@@ -49,10 +49,6 @@ echo >> $APPCACHE
 echo "$EXTERNAL_LIBS" >> $APPCACHE
 echo >> $APPCACHE
 
-# Dart script referenced in a <script> tag:
-echo main.dart >> $APPCACHE
-echo >> $APPCACHE
-
 # Dart and JS code used to make the editor:
 find | \
   grep -e \\.js$ -e \\.map$ -e \\.html$ -e \\.css$ | \
