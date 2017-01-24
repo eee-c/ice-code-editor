@@ -239,6 +239,7 @@ changed.''';
       ..append(_shareDialog)
       ..append(_downloadDialog)
       ..append(_removeDialog)
+      ..append(_imageDialog)
       ..append(_menuDivider)
       ..append(_exportDialog)
       ..append(_importDialog)
@@ -257,6 +258,7 @@ changed.''';
   get _downloadDialog=>   new MenuItem(new DownloadDialog(this)).el;
   get _exportDialog=>     new MenuItem(new ExportDialog(this)).el;
   get _importDialog=>     new MenuItem(new ImportDialog(this)).el;
+  get _imageDialog=>      new MenuItem(new ImageDialog(this)).el;
   get _whatsNewDialog=>   new MenuItem(
                             new WhatsNewAction(this),
                             isHighlighted: _highlightWhatsNew
