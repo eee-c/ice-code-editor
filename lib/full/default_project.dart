@@ -3,49 +3,46 @@ part of ice;
 class DefaultProject {
   static String get content => '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
+<link rel="stylesheet" href="/full-screen.css"></link>
+<script src="/babylon.js"></script>
 <script>
-  var camera, scene, renderer;
-  var geometry, material, mesh;
+                                                                            // (1) TRY clicking the HIDE CODE button! -->
+  // Start the 3D engine
+  var canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  var engine = new BABYLON.Engine(canvas);
+  window.addEventListener('resize', function(){ engine.resize(); });
 
-  init();
-  animate();
+  // This is where stuff in our game will happen:
+  var scene = new BABYLON.Scene(engine);
+  scene.useRightHandedSystem = true;
 
-  function init() {
-    scene = new THREE.Scene();
+  // This is what sees the stuff:
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas);
 
-    var aspect = window.innerWidth / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(75, aspect, 1, 1000);
-    camera.position.z = 500;
-    scene.add(camera);
+  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
 
-    geometry = new THREE.IcosahedronGeometry(200, 1);
-    material = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      wireframe: true,
-      wireframeLinewidth: 2
-    });
+  /*** (2) TRY changing the number after radius! ***/
 
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+  var sphere = BABYLON.MeshBuilder.CreateIcoSphere("isosphere1", {radius: 5}, scene);
 
-    renderer = new THREE.CanvasRenderer();
-    renderer.setClearColorHex(0xffffff);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+  var cover = new BABYLON.StandardMaterial("texture1", scene);
 
-    document.body.style.margin = 0;
-    document.body.style.overflow = 'hidden';
-    document.body.appendChild(renderer.domElement);
-  }
+  /*** (3) Try other colors like Blue, Red, Yellow! ***/
 
-  function animate() {
-    requestAnimationFrame(animate);
+  cover.diffuseColor = BABYLON.Color3.Magenta();
+  sphere.material = cover;
 
-    mesh.rotation.x = Date.now() * 0.0005;
-    mesh.rotation.y = Date.now() * 0.001;
+  // Now, animate the scene:
+  engine.runRenderLoop(function(){
+    scene.render();
 
-    renderer.render(scene, camera);
-  }
+    /*** (4) Try changing the numbers! ***/
+
+    sphere.rotation.x = Date.now() * 0.0005;
+    sphere.rotation.y = Date.now() * 0.001;
+  });
 </script>''';
 }
