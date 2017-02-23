@@ -16,22 +16,25 @@ class Templates {
 
   static String get threeD => '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
+<link rel="stylesheet" href="/full-screen.css"></link>
+<script src="/babylon.js"></script>
 <script>
+  // Start the 3D engine
+  var canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  var engine = new BABYLON.Engine(canvas);
+  window.addEventListener('resize', function(){ engine.resize(); });
+
   // This is where stuff in our game will happen:
-  var scene = new THREE.Scene();
+  var scene = new BABYLON.Scene(engine);
+  scene.useRightHandedSystem = true;
 
   // This is what sees the stuff:
-  var aspect_ratio = window.innerWidth / window.innerHeight;
-  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
-  camera.position.z = 500;
-  scene.add(camera);
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas);
 
-  // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.CanvasRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
 
   // ******** START CODING ON THE NEXT LINE ********
 
@@ -39,67 +42,52 @@ class Templates {
 
 
   // Now, show what the camera sees on the screen:
-  renderer.render(scene, camera);
+  engine.runRenderLoop(function(){
+    scene.render();
+  });
 </script>''';
 
   static String get empty => '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
 <script>
   // Your code goes here...
 </script>''';
 
   static String get physics => '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/physi.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
-
+<link rel="stylesheet" href="/full-screen.css"></link>
+<script src="/babylon.js"></script>
+<script src="/cannon.js"></script>
 <script>
-  // Physics settings
-  Physijs.scripts.ammo = 'http://gamingJS.com/ammo.js';
-  Physijs.scripts.worker = 'http://gamingJS.com/physijs_worker.js';
+  // Start the 3D engine
+  var canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  var engine = new BABYLON.Engine(canvas);
+  window.addEventListener('resize', function(){ engine.resize(); });
 
   // This is where stuff in our game will happen:
-  var scene = new Physijs.Scene({ fixedTimeStep: 2 / 60 });
-  scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
+  var scene = new BABYLON.Scene(engine);
+  scene.useRightHandedSystem = true;
+
+  // Enable Physics
+  var gravityVector = new BABYLON.Vector3(0,-9.81, 0);
+  var physicsPlugin = new BABYLON.CannonJSPlugin();
+  scene.enablePhysics(gravityVector, physicsPlugin);
 
   // This is what sees the stuff:
-  var width = window.innerWidth,
-      height = window.innerHeight,
-      aspect_ratio = width / height;
-  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
-  // var camera = new THREE.OrthographicCamera(
-  //   -width/2, width/2, height/2, -height/2, 1, 10000
-  // );
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas);
 
-  camera.position.z = 500;
-  scene.add(camera);
-
-  // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.CanvasRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-  document.body.style.backgroundColor = '#ffffff';
+  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
 
   // ******** START CODING ON THE NEXT LINE ********
 
 
 
-  // Animate motion in the game
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Run physics
-  function gameStep() {
-    scene.simulate();
-    // Update physics 60 times a second so that motion is smooth
-    setTimeout(gameStep, 1000/60);
-  }
-  gameStep();
+  // Now, show what the camera sees on the screen:
+  engine.runRenderLoop(function(){
+    scene.render();
+  });
 </script>''';
 }
