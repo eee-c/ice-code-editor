@@ -5,43 +5,75 @@ class DefaultProject {
 <body></body>
 <link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
+<script src="/examples/js/controls/OrbitControls.js"></script>
 <script>
-                                                  // (1) TRY clicking the HIDE CODE button! -->
-  // This is where stuff in our game will happen:
+                                                      // (1) TRY clicking the HIDE CODE button! -->
+
+  // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
 
-  // This is what sees the stuff:
+  // The "camera" is what sees the stuff:
   var aspect_ratio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
 
-  // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.WebGLRenderer();
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add( light );
+
+  // The "renderer" draws what the camera sees onto the screen:
+  var renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  /*** (2) TRY changing the number! ***/
+  var orbit = new THREE.OrbitControls( camera, renderer.domElement );
+	orbit.enableZoom = false;
 
-  var geometry = new THREE.IcosahedronGeometry(200);
+  /****** (2) PLAY with the numbers!! ******/
+  var geometry = new THREE.IcosahedronGeometry(200, 1);
 
-  /*** (3) Try other colors like puce, vermillion, goldenrod! ***/
+  var material = new THREE.MeshPhongMaterial({
 
-  material = new THREE.MeshBasicMaterial({ color: 'magenta' });
+    /*** (3) Try other COLORS like lime, magenta, or blue!! ***/
+    color: 'goldenrod',
 
-  mesh = new THREE.Mesh(geometry, material);
+    shininess: 20,
+    specular: 'lightgrey',
+    side: THREE.DoubleSide,
+		shading: THREE.FlatShading
+  });
+
+  var mesh = new THREE.Object3D();
+	mesh.add(new THREE.Mesh(geometry,  material));
   scene.add(mesh);
 
   animate();
-
   function animate() {
     requestAnimationFrame(animate);
+    var t = Date.now() * 0.0001;
 
-    /*** (4) Try changing the numbers! ***/
-    mesh.rotation.x = Date.now() * 0.0005;
-    mesh.rotation.y = Date.now() * 0.001;
+    /*** (4) PLAY with the numbers!! ***/
+    mesh.rotation.x = 2*t;
+    mesh.rotation.y = 5*t;
 
     renderer.render(scene, camera);
   }
+
+  // Light up the scene
+  var light = new THREE.PointLight('white', 0.75);
+  light.position.set(400, 400, 600);
+  scene.add( light );
+
+  // Highlight the lines in the shape
+	mesh.add(
+	  new THREE.LineSegments(
+		  geometry,
+		  new THREE.LineBasicMaterial({
+			  color: 'white',
+			  transparent: true,
+			  opacity: 0.5
+		  })
+	  )
+	);
 </script>''';
 }
