@@ -21,16 +21,18 @@ class Templates {
 <link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script>
-  // This is where stuff in our game will happen:
+  // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
 
-  // This is what sees the stuff:
+  // The "camera" is what sees the stuff:
   var aspect_ratio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add( light );
 
-  // This will draw what the camera sees onto the screen:
+  // The "renderer" draws what the camera sees onto the screen:
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -49,16 +51,18 @@ class Templates {
 <link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script>
-  // This is where stuff in our game will happen:
+  // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
 
-  // This is what sees the stuff:
+  // The "camera" is what sees the stuff:
   var aspect_ratio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add( light );
 
-  // This will draw what the camera sees onto the screen:
+  // The "renderer" draws what the camera sees onto the screen:
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -102,11 +106,11 @@ class Templates {
   Physijs.scripts.ammo = '/ammo.js';
   Physijs.scripts.worker = '/physijs_worker.js';
 
-  // This is where stuff in our game will happen:
+  // The "scene" is where stuff in our game will happen:
   var scene = new Physijs.Scene({ fixedTimeStep: 2 / 60 });
   scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
 
-  // This is what sees the stuff:
+  // The "camera" is what sees the stuff:
   var width = window.innerWidth,
       height = window.innerHeight,
       aspect_ratio = width / height;
@@ -117,8 +121,10 @@ class Templates {
 
   camera.position.z = 500;
   scene.add(camera);
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add( light );
 
-  // This will draw what the camera sees onto the screen:
+  // The "renderer" draws what the camera sees onto the screen:
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
