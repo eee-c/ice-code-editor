@@ -31,7 +31,7 @@ class Templates {
   scene.add(camera);
 
   // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.CanvasRenderer();
+  var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -59,7 +59,7 @@ class Templates {
   scene.add(camera);
 
   // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.CanvasRenderer();
+  var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -119,7 +119,7 @@ class Templates {
   scene.add(camera);
 
   // This will draw what the camera sees onto the screen:
-  var renderer = new THREE.CanvasRenderer();
+  var renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
   document.body.style.backgroundColor = '#ffffff';
