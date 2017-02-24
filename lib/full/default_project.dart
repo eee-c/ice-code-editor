@@ -3,45 +3,41 @@ part of ice;
 class DefaultProject {
   static String get content => '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
+<link rel="stylesheet" href="/full-screen.css"></link>
+<script src="/three.js"></script>
 <script>
-  var camera, scene, renderer;
-  var geometry, material, mesh;
+                                                  // (1) TRY clicking the HIDE CODE button! -->
+  // This is where stuff in our game will happen:
+  var scene = new THREE.Scene();
 
-  init();
+  // This is what sees the stuff:
+  var aspect_ratio = window.innerWidth / window.innerHeight;
+  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
+  camera.position.z = 500;
+  scene.add(camera);
+
+  // This will draw what the camera sees onto the screen:
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  /*** (2) TRY changing the number! ***/
+
+  var geometry = new THREE.IcosahedronGeometry(200);
+
+  /*** (3) Try other colors like puce, vermillion, goldenrod! ***/
+
+  material = new THREE.MeshBasicMaterial({ color: 'magenta' });
+
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
   animate();
-
-  function init() {
-    scene = new THREE.Scene();
-
-    var aspect = window.innerWidth / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(75, aspect, 1, 1000);
-    camera.position.z = 500;
-    scene.add(camera);
-
-    geometry = new THREE.IcosahedronGeometry(200, 1);
-    material = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      wireframe: true,
-      wireframeLinewidth: 2
-    });
-
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    renderer = new THREE.CanvasRenderer();
-    renderer.setClearColorHex(0xffffff);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    document.body.style.margin = 0;
-    document.body.style.overflow = 'hidden';
-    document.body.appendChild(renderer.domElement);
-  }
 
   function animate() {
     requestAnimationFrame(animate);
 
+    /*** (4) Try changing the numbers! ***/
     mesh.rotation.x = Date.now() * 0.0005;
     mesh.rotation.y = Date.now() * 0.001;
 
