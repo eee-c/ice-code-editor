@@ -173,11 +173,12 @@ class Templates {
   scene.useRightHandedSystem = true;
 
   // This is what sees the stuff:
-  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20));
   camera.setTarget(BABYLON.Vector3.Zero());
   camera.attachControl(canvas);
-
-  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
+  //camera.attachPostProcess(new BABYLON.FxaaPostProcess("fxaa", 1.0, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE, engine, true));
+  var light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(-1, -2, -1));
+  light.intensity = 1.4;
 
   // ******** START CODING ON THE NEXT LINE ********
 
@@ -204,11 +205,12 @@ class Templates {
   scene.useRightHandedSystem = true;
 
   // This is what sees the stuff:
-  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20));
   camera.setTarget(BABYLON.Vector3.Zero());
   camera.attachControl(canvas);
-
-  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
+  //camera.attachPostProcess(new BABYLON.FxaaPostProcess("fxaa", 1.0, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE, engine, true));
+  var light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(-1, -2, -1));
+  light.intensity = 1.4;
 
   // ******** START CODING ON THE NEXT LINE ********
 
@@ -237,16 +239,17 @@ class Templates {
   scene.useRightHandedSystem = true;
 
   // Enable Physics
-  var gravityVector = new BABYLON.Vector3(0,-9.81, 0);
+  var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
   var physicsPlugin = new BABYLON.CannonJSPlugin();
   scene.enablePhysics(gravityVector, physicsPlugin);
 
   // This is what sees the stuff:
-  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20), scene);
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 20));
   camera.setTarget(BABYLON.Vector3.Zero());
   camera.attachControl(canvas);
-
-  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 2, 0), scene);
+  //camera.attachPostProcess(new BABYLON.FxaaPostProcess("fxaa", 1.0, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE, engine, true));
+  var light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(-1, -2, -1));
+  light.intensity = 1.4;
 
   // ******** START CODING ON THE NEXT LINE ********
 
