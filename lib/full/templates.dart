@@ -29,17 +29,18 @@ class Templates {
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
+  var flat = {shading: THREE.FlatShading};
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add(light);
 
   // The "camera" is what sees the stuff:
   var aspect_ratio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
-  scene.add( light );
 
   // The "renderer" draws what the camera sees onto the screen:
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -59,17 +60,18 @@ class Templates {
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
+  var flat = {shading: THREE.FlatShading};
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add(light);
 
   // The "camera" is what sees the stuff:
   var aspect_ratio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
-  scene.add( light );
 
   // The "renderer" draws what the camera sees onto the screen:
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -115,6 +117,9 @@ class Templates {
   // The "scene" is where stuff in our game will happen:
   var scene = new Physijs.Scene({ fixedTimeStep: 2 / 60 });
   scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
+  var flat = {shading: THREE.FlatShading};
+  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  scene.add(light);
 
   // The "camera" is what sees the stuff:
   var width = window.innerWidth,
@@ -124,14 +129,11 @@ class Templates {
   // var camera = new THREE.OrthographicCamera(
   //   -width/2, width/2, height/2, -height/2, 1, 10000
   // );
-
   camera.position.z = 500;
   scene.add(camera);
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
-  scene.add( light );
 
   // The "renderer" draws what the camera sees onto the screen:
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
   document.body.style.backgroundColor = '#ffffff';
