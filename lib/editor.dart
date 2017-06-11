@@ -109,7 +109,7 @@ class Editor {
   }
 
   createPreviewIframe() {
-    var src = "preview_frame${window.navigator.onLine ? '' : '-OFFLINE'}";
+    var src = "code${window.navigator.onLine ? '' : '-OFFLINE'}";
 
     var iframe = new IFrameElement();
     iframe
