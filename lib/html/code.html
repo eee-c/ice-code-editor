@@ -1,8 +1,6 @@
 <body></body>
 <script>
-window.addEventListener("message", receiveMessage, false);
-
-function receiveMessage(event) {
+window.addEventListener("message", function(event) {
 
   // IE will hang on document.open() for some reason...
   // document.open();
@@ -21,6 +19,7 @@ function receiveMessage(event) {
      );
   }
   html = html.replace(/http:\/\/gamingjs/ig, 'https://gamingjs');
+  html = html.replace(/<\/script>\s*$/, "\n//@ sourceURL=code.html\n<\/script>");
   document.write(html);
   document.write(
     "\n<script>\n" +
@@ -34,6 +33,6 @@ function receiveMessage(event) {
   document.close();
 
   document.body.style.margin = '0';
-}
+}, false);
 
 </script>
