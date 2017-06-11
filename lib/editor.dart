@@ -109,12 +109,14 @@ class Editor {
   }
 
   createPreviewIframe() {
+    var src = "preview_frame${window.navigator.onLine ? '' : '-OFFLINE'}";
+
     var iframe = new IFrameElement();
     iframe
       ..width = "${this.preview_el.clientWidth}"
       ..height = "${this.preview_el.clientHeight}"
       ..style.border = '0'
-      ..src = 'packages/ice_code_editor/html/preview_frame.html';
+      ..src = 'packages/ice_code_editor/html/${src}.html';
 
     this.preview_el.children.add( iframe );
 
