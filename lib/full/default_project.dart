@@ -4,7 +4,7 @@ class DefaultProject {
   static String get content => '''
 <body></body>
 <script src="/three.js"></script>
-<script src="/examples/js/controls/OrbitControls.js"></script>
+<script src="/controls/OrbitControls.js"></script>
 <script>
                                                       // (1) TRY clicking the HIDE CODE button! -->
 
