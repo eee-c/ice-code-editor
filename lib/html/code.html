@@ -2,37 +2,48 @@
 <script>
 window.addEventListener("message", function(event) {
 
-  // IE will hang on document.open() for some reason...
+  // IE will hang on document.open() for some reason, otherwise, we'd
+  // do this for consistency's sake:
   // document.open();
 
-  var html = event.data;
+  var html = _prepHtml(event.data);
+
+  document.write(html);
+  document.close();
+
+  document.body.style.margin = '0';
+
+}, false);
+
+function _prepHtml(srcHtml) {
+  var html = srcHtml;
+
   // Trying to get line numbers for error reporting.
   var start = html.indexOf("<script>\n");
   if (start > 0) {
     var open = html.substr(0, start + 9),
         size = open.match(/\n/g).length-1;
-     var pad = "";
-     while (pad.length < size) pad += "\n";
-     html = html.replace(
-       /<script>/m,
-       "$&" + pad
-     );
+    var pad = "";
+    while (pad.length < size) pad += "\n";
+    html = html.replace(
+      /<script>/m,
+      "$&" + pad
+    );
   }
   html = html.replace(/http:\/\/gamingjs/ig, 'https://gamingjs');
   html = html.replace(/<\/script>\s*$/, "\n//@ sourceURL=code.html\n<\/script>");
-  document.write(html);
-  document.write(
-    "\n<script>\n" +
-    'document.addEventListener("keydown", function(event) {' +
-    '  if (event.keyCode == 72 && event.shiftKey && event.ctrlKey) {' +
-    '    parent.postMessage("showCode", "*");' +
-    '  }' +
-    '});' +
-    "\n<\/script>\n"
-  );
-  document.close();
+  html +=
+  "\n<script>\n" +
+  'document.addEventListener("keydown", function(event) {' +
+  '  if (event.keyCode == 72 && event.shiftKey && event.ctrlKey) {' +
+  '    parent.postMessage("showCode", "*");' +
+  '  }' +
+  '});' +
+  "\n<\/script>\n";
 
-  document.body.style.margin = '0';
-}, false);
+  return html;
+}
 
+// De-emphasize this source when it shows up in stack traces
+//@ sourceURL=_.html
 </script>
