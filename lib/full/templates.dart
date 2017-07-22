@@ -12,10 +12,10 @@ class Templates {
   ];
 
   static String byTitle(title) {
-    if (title == 'THREE starter project') return threeD;
+    if (title == '3D starter project') return threeD;
     if (title == 'Empty project') return empty;
-    if (title == 'THREE starter project (with Physics)') return physics;
-    if (title == 'THREE starter project (with Animation)') return animation;
+    if (title == '3D starter project (with Physics)') return physics;
+    if (title == '3D starter project (with Animation)') return animation;
     if (title == 'BABYLON starter project') return bthreeD;
     if (title == 'BABYLON starter project (with Physics)') return bphysics;
     if (title == 'BABYLON starter project (with Animation)') return banimation;
@@ -24,7 +24,6 @@ class Templates {
 
   static String get threeD => '''
 <body></body>
-<link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
@@ -55,7 +54,6 @@ class Templates {
 
   static String get animation => '''
 <body></body>
-<link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
@@ -97,7 +95,6 @@ class Templates {
 
   static String get empty => '''
 <body></body>
-<link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script>
   // Your code goes here...
@@ -105,7 +102,6 @@ class Templates {
 
   static String get physics => '''
 <body></body>
-<link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script src="/physi.js"></script>
 

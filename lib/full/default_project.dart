@@ -3,7 +3,6 @@ part of ice;
 class DefaultProject {
   static String get content => '''
 <body></body>
-<link rel="stylesheet" href="/full-screen.css"></link>
 <script src="/three.js"></script>
 <script src="/examples/js/controls/OrbitControls.js"></script>
 <script>
