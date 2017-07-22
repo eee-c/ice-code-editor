@@ -176,7 +176,7 @@ new_project_dialog_tests(){
       );
       expect(
         query('.ice-dialog').query('option').text,
-        'THREE starter project'
+        '3D starter project'
       );
     });
     test("can create from default template", (){

@@ -2,9 +2,9 @@ part of ice;
 
 class Templates {
   static get list => [
-    'THREE starter project',
-    'THREE starter project (with Animation)',
-    'THREE starter project (with Physics)',
+    '3D starter project',
+    '3D starter project (with Animation)',
+    '3D starter project (with Physics)',
     'BABYLON starter project',
     'BABYLON starter project (with Animation)',
     'BABYLON starter project (with Physics)',
