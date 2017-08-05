@@ -91,6 +91,6 @@ $ pub build --mode=development
 
 ## Want to Help?
 
-[![#pairwithme](http://www.pairprogramwith.me/badge.png)](https://www.google.com/calendar/selfsched?sstoken=UUNwdmNwR09IRm4wfGRlZmF1bHR8NmVjZjU2MGY0MzU4MTBlMjFkZTE0ZDgzYjdkMGU4ZjM)
+[![#pairwithme](http://www.pairprogramwith.me/badge.png)](https://calendar.google.com/calendar/selfsched?sstoken=UUNwdmNwR09IRm4wfGRlZmF1bHR8NmVjZjU2MGY0MzU4MTBlMjFkZTE0ZDgzYjdkMGU4ZjM)
 
 Chris ([twitter](https://twitter.com/eee_c) / [blog](http://japhr.blogspot.com/)) runs nightly (1030pm EDT / 0230 UTC) pairing sessions. [Sign up for free](https://www.google.com/calendar/selfsched?sstoken=UUNwdmNwR09IRm4wfGRlZmF1bHR8NmVjZjU2MGY0MzU4MTBlMjFkZTE0ZDgzYjdkMGU4ZjM) to help out and learn some [Dart](http://dartlang.org)! _Absolutely no experience required. Really :)_
