@@ -29,7 +29,7 @@ class Templates {
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
   var flat = {shading: THREE.FlatShading};
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
   // The "camera" is what sees the stuff:
@@ -59,7 +59,7 @@ class Templates {
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
   var flat = {shading: THREE.FlatShading};
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
   // The "camera" is what sees the stuff:
@@ -114,7 +114,7 @@ class Templates {
   var scene = new Physijs.Scene({ fixedTimeStep: 2 / 60 });
   scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
   var flat = {shading: THREE.FlatShading};
-  var light = new THREE.HemisphereLight('white', 'grey', 0.5);
+  var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
   // The "camera" is what sees the stuff:
