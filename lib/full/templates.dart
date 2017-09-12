@@ -33,8 +33,8 @@ class Templates {
   scene.add(light);
 
   // The "camera" is what sees the stuff:
-  var aspect_ratio = window.innerWidth / window.innerHeight;
-  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
+  var aspectRatio = window.innerWidth / window.innerHeight;
+  var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
 
@@ -63,8 +63,8 @@ class Templates {
   scene.add(light);
 
   // The "camera" is what sees the stuff:
-  var aspect_ratio = window.innerWidth / window.innerHeight;
-  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
+  var aspectRatio = window.innerWidth / window.innerHeight;
+  var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   camera.position.z = 500;
   scene.add(camera);
 
@@ -120,8 +120,8 @@ class Templates {
   // The "camera" is what sees the stuff:
   var width = window.innerWidth,
       height = window.innerHeight,
-      aspect_ratio = width / height;
-  var camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, 10000);
+      aspectRatio = width / height;
+  var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   // var camera = new THREE.OrthographicCamera(
   //   -width/2, width/2, height/2, -height/2, 1, 10000
   // );
