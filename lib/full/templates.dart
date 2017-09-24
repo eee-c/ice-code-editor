@@ -104,27 +104,21 @@ class Templates {
 <body></body>
 <script src="/three.js"></script>
 <script src="/physi.js"></script>
-
 <script>
   // Physics settings
   Physijs.scripts.ammo = '/ammo.js';
   Physijs.scripts.worker = '/physijs_worker.js';
 
   // The "scene" is where stuff in our game will happen:
-  var scene = new Physijs.Scene({ fixedTimeStep: 2 / 60 });
+  var scene = new Physijs.Scene();
   scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
   var flat = {shading: THREE.FlatShading};
   var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
   // The "camera" is what sees the stuff:
-  var width = window.innerWidth,
-      height = window.innerHeight,
-      aspectRatio = width / height;
+  var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  // var camera = new THREE.OrthographicCamera(
-  //   -width/2, width/2, height/2, -height/2, 1, 10000
-  // );
   camera.position.z = 500;
   scene.add(camera);
 
@@ -132,7 +126,6 @@ class Templates {
   var renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
-  document.body.style.backgroundColor = '#ffffff';
 
   // ******** START CODING ON THE NEXT LINE ********
 
