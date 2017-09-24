@@ -1,6 +1,4 @@
 language: dart
 dart_task:
-- test: --platform dartium
+- test: --platform dartium test/ice_test.dart
   install_dartium: true
-script:
-  - test/test_runner.sh
