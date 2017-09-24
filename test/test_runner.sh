@@ -21,7 +21,7 @@ echo
 for X in ice_test
 do
   # Run a set of Dart Unit tests
-  pub run test -p content-shell -r expanded test/$X.dart
+  pub run test -p dartium -r expanded test/$X.dart
 
   # Can hit the debugger in Dartium with:
   # pub run test -p 'dartium' --pub-serve=8081 --pause-after-load -r expanded test/ice_test.dart
