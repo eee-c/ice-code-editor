@@ -1,4 +1,5 @@
 language: dart
 dart_task:
+- dartanalyzer: --fatal-warnings lib/ice.dart
 - test: --platform dartium test/ice_test.dart
   install_dartium: true
