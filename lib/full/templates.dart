@@ -22,7 +22,7 @@ class Templates {
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
-  var flat = {shading: THREE.FlatShading};
+  var flat = {flatShading: true};
   var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
@@ -52,7 +52,7 @@ class Templates {
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
-  var flat = {shading: THREE.FlatShading};
+  var flat = {flatShading: true};
   var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 
@@ -106,7 +106,7 @@ class Templates {
   // The "scene" is where stuff in our game will happen:
   var scene = new Physijs.Scene();
   scene.setGravity(new THREE.Vector3( 0, -100, 0 ));
-  var flat = {shading: THREE.FlatShading};
+  var flat = {flatShading: true};
   var light = new THREE.AmbientLight('white', 0.8);
   scene.add(light);
 

@@ -39,7 +39,7 @@ class DefaultProject {
     shininess: 20,
     specular: 'lightgrey',
     side: THREE.DoubleSide,
-		shading: THREE.FlatShading
+		flatShading: true
   });
 
   var mesh = new THREE.Object3D();
