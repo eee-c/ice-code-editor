@@ -139,6 +139,32 @@ rename_dialog_tests() {
       );
     });
 
+    test("hitting the enter key does NOT add a blank line to code", (){
+      helpers.click('button', text: '☰');
+
+      helpers.click('li', text: 'New');
+      helpers.typeIn('My New Project');
+      helpers.click('button', text: 'Save');
+
+      editor.content = 'asdf';
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Save');
+
+      expect(editor.store['My New Project'], isNotNull);
+      expect(editor.store['My New Project']['code'], 'asdf');
+
+      helpers.click('button', text: '☰');
+      helpers.click('li', text: 'Rename');
+
+      helpers.typeIn('Project #1');
+      helpers.hitEnter();
+
+      expect(editor.store['My New Project'], isNull);
+      expect(editor.store['Project #1'], isNotNull);
+      expect(editor.store['Project #1']['code'], 'asdf');
+    });
+
     test("stays active after alert", () {
       helpers.click('button', text: '☰');
       helpers.click('li', text: 'New');

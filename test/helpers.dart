@@ -69,15 +69,15 @@ arrowUp([times=1]) {
 }
 
 hitEnter() {
-  // var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
+  var e = new KeyEvent('keydown', keyCode: KeyCode.ENTER).wrapped;
 
-  // document.
-  //   activeElement.
-  //   dispatchEvent(e);
+  document.
+    activeElement.
+    dispatchEvent(e);
 
-  var fake_button = document.query('#fake_enter_key');
-  if (fake_button == null) return;
-  fake_button.click();
+  // var fake_button = document.query('#fake_enter_key');
+  // if (fake_button == null) return;
+  // fake_button.click();
 }
 
 queryWithContent(selector, text) {

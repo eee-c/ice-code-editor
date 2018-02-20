@@ -28,6 +28,7 @@ class RenameDialog extends Dialog implements MenuAction {
       listen((e) {
         if (e.keyCode != KeyCode.ENTER) return;
         _renameProject();
+        e.preventDefault();
       });
 
     parent.children.add(dialog);
