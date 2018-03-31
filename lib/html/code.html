@@ -31,7 +31,8 @@ function _prepHtml(srcHtml) {
     );
   }
   html = html.replace(/http:\/\/gamingjs/ig, 'https://gamingjs');
-  html = html.replace(/<\/script>\s*$/, "\n//@ sourceURL=code.html\n<\/script>");
+  html = html.replace(/<\/script>\s*$/, "\n//# sourceURL=code.html\n<\/script>");
+
   html +=
   "\n<script>\n" +
   'document.addEventListener("keydown", function(event) {' +
@@ -41,9 +42,41 @@ function _prepHtml(srcHtml) {
   '});' +
   "\n<\/script>\n";
 
+  html +=
+    '\n<script>\n' +
+    'window.parent.addEventListener("resize", function(event) {\n' +
+    '  if (!THREE) return;\n' +
+    '  if (!scene) return;\n' +
+    '  var w = window.parent.innerWidth;\n' +
+    '  var h = window.parent.innerHeight;\n' +
+    '  renderer.setSize( w, h );\n' +
+    '  window.frameElement.style.width = w + "px";\n' +
+    '  window.frameElement.style.height = h + "px";\n' +
+    '  resizeCameras(scene, w, h);\n' +
+    '}, false);\n' +
+    '\n' +
+    'function resizeCameras(container, w, h) {\n' +
+    '  container.children.forEach(function(c){\n '+
+    '    if (c.children && c.children.length) resizeCameras(c, w, h);\n' +
+    '    if (!c.isCamera) return;\n' +
+    '    if (c.isPerspectiveCamera){\n' +
+    '      c.aspect = w / h;\n' +
+    '      c.updateProjectionMatrix();\n' +
+    '    }\n' +
+    '    else{\n' +
+    '      c.left = w / - 2;\n' +
+    '      c.right = w / 2;\n' +
+    '      c.top = h / 2;\n' +
+    '      c.bottom = h / - 2;\n' +
+    '      c.updateProjectionMatrix();\n' +
+    '    }\n' +
+    '  });\n' +
+    '}\n' +
+    '\n<\/script>\n';
+
   return html;
 }
 
 // De-emphasize this source when it shows up in stack traces
-//@ sourceURL=_.html
+//# sourceURL=_.html
 </script>
