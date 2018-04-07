@@ -45,21 +45,26 @@ function _prepHtml(srcHtml) {
   html +=
    "\n<script>\n" +
   'window.parent.addEventListener("resize", function(event) {' +
-   '  var p = window.parent;' +
-  '  if(true || camera.inPerspectiveMode){' +
-  '    camera.aspect = p.innerWidth / p.innerHeight;' +
-  '    camera.updateProjectionMatrix();' +
-  '  }' +
-  '  else{' +
-  '    camera.left = p.innerWidth / - 2;' +
-  '    camera.right = p.innerWidth / 2;' +
-  '    camera.top = p.innerHeight / 2;' +
-  '    camera.bottom = p.innerHeight / - 2;' +
-  '    camera.updateProjectionMatrix();' +
-   '  }' +
-   '  window.frameElement.style.width = p.innerWidth + "px";' +
-   '  window.frameElement.style.height = p.innerHeight + "px";' +
+  '  if (!THREE) return; ' +
+  '  if (!scene) return; ' +
+  '  var p = window.parent;' +
   '  renderer.setSize( p.innerWidth, p.innerHeight );' +
+  '  window.frameElement.style.width = p.innerWidth + "px";' +
+  '  window.frameElement.style.height = p.innerHeight + "px";' +
+  '  scene.children.forEach(function(c){ '+
+  '    if (!c.isCamera) return; ' +
+  '    if (c.isPerspectiveCamera){' +
+  '      c.aspect = p.innerWidth / p.innerHeight;' +
+  '      c.updateProjectionMatrix();' +
+  '    }' +
+  '    else{' +
+  '      c.left = p.innerWidth / - 2;' +
+  '      c.right = p.innerWidth / 2;' +
+  '      c.top = p.innerHeight / 2;' +
+  '      c.bottom = p.innerHeight / - 2;' +
+  '      c.updateProjectionMatrix();' +
+  '    }' +
+  '  }); ' +
   '}, false);' +
   "\n<\/script>\n";
 
