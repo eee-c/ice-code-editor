@@ -15,6 +15,8 @@ dependencies:
 dev_dependencies:
   test: any
 transformers:
+- $dart2js:
+    minify: true
 # - polymer:
 #     entry_points: web/polymer.html
 - test/pub_serve:

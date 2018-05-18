@@ -1,6 +1,26 @@
 <head>
-  <script src="packages/browser/dart.js"></script>
   <script src="main.dart" type="application/dart"></script>
+  <script src="packages/browser/dart.js"></script>
+  <style>
+  #ice { height: 85% !important; width: 100% !important; }
+  #ice .ice-code-editor-editor {
+    font-size: 20pt !important;
+    width: 47% !important;
+    left: 2% !important;
+  }
+  #ice .ice-code-editor-preview {
+    height: 100% !important;
+    width: 47% !important;
+    top: 0 !important;
+    left: 51% !important;
+  }
+  #ice .ice-code-editor-preview iframe {
+    border-radius: 8px;
+  }
+  </style>
 </head>
 <h1>Hello</h1>
 <div style="width:600px; height: 400px" id="ice"></div>
+<script>
+  setLineNumber(18);
+</script>
