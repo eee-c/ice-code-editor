@@ -33,6 +33,15 @@ function _prepHtml(srcHtml) {
   html = html.replace(/http:\/\/gamingjs/ig, 'https://gamingjs');
   html = html.replace(/<\/script>\s*$/, "\n//# sourceURL=code.html\n<\/script>");
 
+  var images = window.localStorage.getItem('uploaded_images');
+  if (images) {
+    images = JSON.parse(images);
+    html = html.replace(
+      /\/3de\/([\w-_\.\/]*)/,
+      function(_, imageName) { return images[imageName]; }
+    );
+  }
+
   html +=
   "\n<script>\n" +
   'document.addEventListener("keydown", function(event) {' +
