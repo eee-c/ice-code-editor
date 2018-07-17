@@ -5,8 +5,7 @@ main() {
 
   ice.content = '''
 <body></body>
-<script src="http://gamingJS.com/Three.js"></script>
-<script src="http://gamingJS.com/ChromeFixes.js"></script>
+<script src="https://code3dgames.com/three.js"></script>
 <script>
   // This is where stuff in our game will happen:
   var scene = new THREE.Scene();

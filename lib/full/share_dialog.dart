@@ -50,7 +50,7 @@ class ShareDialog extends Dialog implements MenuAction {
   String get content_for_sharing {
     var query_string = game_mode ? '?g' : '';
 
-    return "http://gamingjs.com/ice/${query_string}#B/${full.encodedContent}";
+    return "https://www.code3dgames.com/3de/${query_string}#B/${full.encodedContent}";
   }
 
   InputElement get _field => query('.ice-dialog').query('input');

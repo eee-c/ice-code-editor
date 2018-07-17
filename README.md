@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/eee-c/ice-code-editor.svg?branch=master)](https://travis-ci.org/eee-c/ice-code-editor)
 
-__*** [Try it now!](http://gamingjs.com/ice/) ***__
+__*** [Try it now!](https://code3dgames.com/3de/) ***__
 
-The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](http://gamingjs.com).” Written in **[Dart](http://dartlang.org)**.
+The Code Editor + Visualization Preview used in the book “[3D Game Programming for Kids](https://code3dgames.com).” Written in **[Dart](http://dartlang.org)**.
 
 ![ICE Code Editor Screenshot](https://raw.github.com/eee-c/ice-code-editor/master/ice_code_editor.png)
 

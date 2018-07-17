@@ -9,7 +9,7 @@ Scripts are run in the following order:
 ```
 
 
-To use, the scripts expect the following directory structure (used on gamingjs.com):
+To use, the scripts expect the following directory structure (used on code3dgames.com):
 
 ```
 appcache.js

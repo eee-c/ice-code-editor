@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Generates an application cache manifest file suitable for
-# deployment. The EXTERNAL_LIBS shown are specific to the gamingjs.com
+# deployment. The EXTERNAL_LIBS shown are specific to the code3dgames.com
 # site, but can be tweaked for deployments to other sites.
 
 # TODO: investigate excluding main.dart.precompiled.js from manifest
