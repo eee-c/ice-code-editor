@@ -6,7 +6,7 @@ class ImportDialog extends Dialog implements MenuAction {
     full = f;
   }
 
-  get name => "Import";
+  get name => "Import Projects";
 
   open() => el.click();
 

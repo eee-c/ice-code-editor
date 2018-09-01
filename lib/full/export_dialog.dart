@@ -4,7 +4,7 @@ class ExportDialog extends Dialog implements MenuAction {
 
   ExportDialog(Full f): super(f);
 
-  get name => "Export";
+  get name => "Export All Projects";
 
   open()=> el.click();
 

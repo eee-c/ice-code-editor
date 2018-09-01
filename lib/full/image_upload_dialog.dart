@@ -1,12 +1,12 @@
 part of ice;
 
-class ImageDialog extends Dialog implements MenuAction {
+class ImageUploadDialog extends Dialog implements MenuAction {
   Full full;
-  ImageDialog(Full f): super(f) {
+  ImageUploadDialog(Full f): super(f) {
     full = f;
   }
 
-  get name => "Image";
+  get name => "Upload Image";
 
   open() => el.click();
 
