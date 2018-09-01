@@ -241,6 +241,7 @@ changed.''';
       ..append(_removeDialog)
       ..append(_menuDivider)
       ..append(_imageUploadDialog)
+      ..append(_imageListDialog)
       ..append(_menuDivider)
       ..append(_exportDialog)
       ..append(_importDialog)
@@ -249,23 +250,24 @@ changed.''';
       ..append(_helpDialog);
   }
 
-  get _openDialog=>       new MenuItem(new OpenDialog(this)).el;
-  get _newProjectDialog=> new MenuItem(new NewProjectDialog(this)).el;
-  get _renameDialog=>     new MenuItem(new RenameDialog(this)).el;
-  get _copyDialog=>       new MenuItem(new CopyDialog(this)).el;
-  get _saveDialog=>       new MenuItem(new SaveAction(this)).el;
-  get _shareDialog=>      new MenuItem(new ShareDialog(this)).el;
-  get _removeDialog=>     new MenuItem(new RemoveDialog(this)).el;
-  get _downloadDialog=>   new MenuItem(new DownloadDialog(this)).el;
-  get _exportDialog=>     new MenuItem(new ExportDialog(this)).el;
-  get _importDialog=>     new MenuItem(new ImportDialog(this)).el;
-  get _imageUploadDialog=>      new MenuItem(new ImageUploadDialog(this)).el;
-  get _whatsNewDialog=>   new MenuItem(
-                            new WhatsNewAction(this),
-                            isHighlighted: _highlightWhatsNew
-                          ).el;
-  get _helpDialog=>       new MenuItem(new HelpAction(this)).el;
-  get _menuDivider=>      new Element.hr();
+  get _openDialog=>        new MenuItem(new OpenDialog(this)).el;
+  get _newProjectDialog=>  new MenuItem(new NewProjectDialog(this)).el;
+  get _renameDialog=>      new MenuItem(new RenameDialog(this)).el;
+  get _copyDialog=>        new MenuItem(new CopyDialog(this)).el;
+  get _saveDialog=>        new MenuItem(new SaveAction(this)).el;
+  get _shareDialog=>       new MenuItem(new ShareDialog(this)).el;
+  get _removeDialog=>      new MenuItem(new RemoveDialog(this)).el;
+  get _downloadDialog=>    new MenuItem(new DownloadDialog(this)).el;
+  get _exportDialog=>      new MenuItem(new ExportDialog(this)).el;
+  get _importDialog=>      new MenuItem(new ImportDialog(this)).el;
+  get _imageUploadDialog=> new MenuItem(new ImageUploadDialog(this)).el;
+  get _imageListDialog=>   new MenuItem(new ImageListDialog(this)).el;
+  get _whatsNewDialog=>    new MenuItem(
+                             new WhatsNewAction(this),
+                             isHighlighted: _highlightWhatsNew
+                           ).el;
+  get _helpDialog=>        new MenuItem(new HelpAction(this)).el;
+  get _menuDivider=>       new Element.hr();
 
   rememberWhatsNewClicked() {
     settings['clicked_whats_new'] = true;

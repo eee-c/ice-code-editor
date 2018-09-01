@@ -32,6 +32,7 @@ part 'full/download_dialog.dart';
 part 'full/export_dialog.dart';
 part 'full/import_dialog.dart';
 part 'full/image_upload_dialog.dart';
+part 'full/image_list_dialog.dart';
 part 'full/copy_dialog.dart';
 part 'full/remove_dialog.dart';
 part 'full/whats_new_action.dart';
