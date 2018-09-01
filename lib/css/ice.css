@@ -134,6 +134,11 @@ div.ice-menu ul {
   font-size: 100%;
 }
 
+.ice-menu .instructions {
+  text-transform: none;
+  padding: 0px;
+}
+
 .ice-dialog .instructions {
   padding-top: 0.25em;
   float: right;

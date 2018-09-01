@@ -15,6 +15,7 @@ class ImageListDialog extends Dialog implements MenuAction {
       '''
       <div class=ice-menu>
       <h2>3DE Images</h2>
+      <p class="instructions">You can use the following<br> images in your code:</p>
       <ul></ul>
       </div>
       '''
@@ -33,7 +34,7 @@ class ImageListDialog extends Dialog implements MenuAction {
 
     var uploadedImages = JSON.decode(window.localStorage['uploaded_images']);
     var images = uploadedImages.keys.map((image){
-        return new Element.html('<li>${image}</li>');
+        return new Element.html('<li>/3de/${image}</li>');
       });
 
     menu.query('ul').children.addAll(images);
