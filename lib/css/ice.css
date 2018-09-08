@@ -144,3 +144,18 @@ div.ice-menu ul {
   float: right;
   text-transform: lowercase;
 }
+
+#info {
+  position: absolute;
+  top: 10px;
+  opacity: 0.8;
+  border-radius: 4px;
+  z-index: 999;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  font-family: sans-serif;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}

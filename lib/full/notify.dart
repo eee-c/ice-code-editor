@@ -21,4 +21,14 @@ class Notify {
     if (!testMode) return window.confirm(message);
     return true;
   }
+
+  static info(message, {parent}) {
+    if (parent == null) parent = document.body;
+
+    var el = new Element.html('<div id="info">$message</div>');
+    parent.children.add(el);
+
+    const timeout = const Duration(seconds: 5);
+    new Timer(timeout, ()=> el.remove());
+  }
 }
