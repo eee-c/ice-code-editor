@@ -159,3 +159,9 @@ div.ice-menu ul {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
 }
+
+img.clipboard {
+  height: 17px;
+  vertical-align: bottom;
+  padding-left: 3px;
+}

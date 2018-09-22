@@ -36,7 +36,7 @@ class ImageListDialog extends Dialog implements MenuAction {
     var uploadedImages = JSON.decode(window.localStorage['uploaded_images']);
 
     var images = uploadedImages.keys.map((image){
-        return new Element.html('<li>/3de/${image}</li>')
+        return new Element.html('<li>/3de/${image} <img src="packages/ice_code_editor/images/clipboard.png" class="clipboard"/></li>')
           ..tabIndex = 0
           ..onClick.listen((e) => _copyToClipboard('/3de/${image}'))
           ..onClick.listen((e) => _hideMenu())
