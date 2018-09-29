@@ -19,11 +19,15 @@ class ImageUploadDialog extends Dialog implements MenuAction {
           var reader = new FileReader();
 
           reader.onLoad.listen((e) {
-            String json = window.localStorage.putIfAbsent('uploaded_images', ()=>'{}');
-            Map images = JSON.decode(json);
-            images[filename] = reader.result;
-            window.localStorage['uploaded_images'] = JSON.encode(images);
+            import(reader.result.toString(), filename);
           });
           reader.readAsDataUrl(files[0]);
         });
+
+  void import(String image, String filename) {
+    String json = window.localStorage.putIfAbsent('uploaded_images', ()=>'{}');
+    Map images = JSON.decode(json);
+    images[filename] = image;
+    window.localStorage['uploaded_images'] = JSON.encode(images);
+  }
 }
