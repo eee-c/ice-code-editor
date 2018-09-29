@@ -28,6 +28,7 @@ part 'full/share_dialog_test.dart';
 part 'full/download_test.dart';
 part 'full/export_test.dart';
 part 'full/import_test.dart';
+part 'full/image_upload_test.dart';
 part 'full/whats_new_test.dart';
 part 'full/remove_dialog_test.dart';
 part 'full/keyboard_shortcuts_test.dart';
@@ -57,6 +58,7 @@ void main(){
   download_tests();
   export_tests();
   import_tests();
+  image_upload_tests();
   whats_new_tests();
   remove_dialog_tests();
   snapshotter_tests();

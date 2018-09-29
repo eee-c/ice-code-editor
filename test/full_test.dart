@@ -1,4 +1,4 @@
-part of ice_tests;
+part of ice_test;
 
 full_tests() {
   group("initial UI", (){

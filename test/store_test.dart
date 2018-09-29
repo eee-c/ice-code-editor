@@ -1,4 +1,4 @@
-part of ice_tests;
+part of ice_test;
 
 store_tests() {
   group("store/retrieve", (){
