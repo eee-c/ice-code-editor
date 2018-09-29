@@ -356,7 +356,7 @@ changed.''';
   _importFromJson(String json) {
     var projects = JSON.decode(json);
     projects.reversed.forEach((project) {
-      _createNewProject(project);
+      _createNewProject(new HashMap.from(project));
     });
     showCurrentProject();
   }

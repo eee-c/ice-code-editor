@@ -37,7 +37,7 @@ class Store implements HashMap<String, HashMap> {
 
     var map = new LinkedHashMap();
     projects.reversed.forEach((p){
-      map[p[title]] = p;
+      map[p[title]] = new HashMap.from(p);
     });
     return map;
   }
